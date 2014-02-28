@@ -30,4 +30,10 @@ class ColorField(models.CharField):
         kwargs['widget'] = ColorWidget
         return super(ColorField, self).formfield(**kwargs)
 
+try:
+    from south.modelsinspector import add_introspection_rules
+    add_introspection_rules([], ["^colorfield\.fields\.ColorField"])
+except ImportError:
+    pass
+
 # vim: et sw=4 sts=4
