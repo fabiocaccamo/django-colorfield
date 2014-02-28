@@ -16,6 +16,7 @@ setup(
         "License :: OSI Approved :: MIT License",
     ],
     packages=['colorfield'],
+    include_package_data=True,
     install_requires=['django>=1.2'],
     requires=['django (>=1.2)'],
 )
