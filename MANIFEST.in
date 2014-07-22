@@ -1,4 +1,4 @@
 include setup.py
 recursive-include colorfield *.py
-recursive-include colorfield/media *.gif *.png *.html *.js
+recursive-include colorfield/static *.gif *.png *.html *.js
 recursive-include colorfield/templates *.html
