@@ -15,7 +15,7 @@ validate_color = RegexValidator(color_re, _(u'Enter a valid color.'), 'invalid')
 
 class ColorWidget(forms.Widget):
     class Media:
-        js = [settings.MEDIA_URL + 'colorfield/jscolor.js']
+        js = [settings.STATIC_URL + 'colorfield/jscolor/jscolor.js']
         
     def render(self, name, value, attrs=None):
         return render_to_string('colorfield/color.html', locals())

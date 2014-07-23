@@ -14,6 +14,8 @@ Installation
 
 Add `colorfield` to your `INSTALLED_APPS`.
 
+Collect static files with ``./manage.py collectstatic``.
+
 Then in your models, you can use it like this:
 
 .. code-block:: python
