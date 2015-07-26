@@ -10,7 +10,7 @@ from django.template.loader import render_to_string
 from django.utils.translation import ugettext_lazy as _
 
 color_re = re.compile('^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$')
-validate_color = RegexValidator(color_re, _(u'Enter a valid color.'), 'invalid')
+validate_color = RegexValidator(color_re, _('Enter a valid color.'), 'invalid')
 
 
 class ColorWidget(forms.Widget):
