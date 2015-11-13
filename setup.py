@@ -1,25 +1,21 @@
 import os
 from distutils.core import setup
 
-version = '0.1.4'
+version = '0.1.7'
 
 setup(
-    name="django-colorfield",
+    name='django-colorfield',
+    packages=['colorfield'],
+    include_package_data=True,
+    license='MIT License',
     version=version,
-    keywords=["django", "color"],
+    description='A small app providing a colorpicker field for django',
+    long_description='A small app providing a colorpicker field for django',
     author='Jared Forsyth',
     author_email='jared@jaredforsyth.com',
-    license='MIT',
-    long_description="A small app providing a colorpicker field for django",
-    description="A small app providing a colorpicker field for django",
-    classifiers=[
-        "License :: OSI Approved :: MIT License",
-    ],
-    packages=['colorfield'],
-    package_data={
-        'colorfield': ['static/colorfield/jscolor/*', 'templates/colorfield/*'],
-    },
-    install_requires=['django>=1.2'],
-    requires=['django (>=1.2)'],
+    url='https://github.com/jaredly/django-colorfield',
+    download_url='https://github.com/jaredly/django-colorfield/archive/%s.tar.gz' % version,
+    keywords=['django', 'color', 'field', 'admin'],
+    requires=['django (>=1.2)'], 
+    classifiers=['License :: OSI Approved :: MIT License']
 )
-
