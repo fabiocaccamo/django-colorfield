@@ -1,12 +1,24 @@
 import os
 from distutils.core import setup
 
-version = '0.1.7'
+version = '0.1.8'
 
 setup(
     name='django-colorfield',
     packages=['colorfield'],
-    include_package_data=True,
+    data_files=[
+        ('static', [
+            'colorfield/jscolor/arrow.gif', 
+            'colorfield/jscolor/cross.gif', 
+            'colorfield/jscolor/hs.png',
+            'colorfield/jscolor/hv.png',
+            'colorfield/jscolor/jscolor.js'
+        ]),
+        ('templates', [
+            'colorfield/color.html'
+        ])
+    ],
+    #include_package_data=True,
     license='MIT License',
     version=version,
     description='A small app providing a colorpicker field for django',
