@@ -1,5 +1,3 @@
-**Notice:** I no longer use django on a day-to-day basis (actually, it's been several years), and am **not actively maintaining this module**. If you would like to take over, please let me know. If you find a bug and file a pull request, I'll happily accept it.
-
 Django Colorfield
 ---------------------
 
@@ -26,3 +24,8 @@ Then in your models, you can use it like this:
     class Show(ExtendedModel):
         title = models.CharField(u'Title', max_length=250)
         color = ColorField()
+
+Maintainers:
+============
+- @gtnx
+- @fabiocaccamo
