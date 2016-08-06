@@ -26,6 +26,7 @@ class MyModel(model.Model):
 ##Maintainers
 - [@gtnx](https://github.com/gtnx)
 - [@fabiocaccamo](https://github.com/fabiocaccamo)
+- [@ignitedPotato](https://github.com/ignitedPotato)
 
 
 ##License
