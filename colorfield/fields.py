@@ -5,6 +5,7 @@ import re
 from django import forms
 from django.db import models
 from django.conf import settings
+from django.core.files.storage import default_storage
 from django.core.validators import RegexValidator
 from django.template.loader import render_to_string
 from django.utils.translation import ugettext_lazy as _
@@ -15,8 +16,8 @@ validate_color = RegexValidator(color_re, _('Enter a valid color.'), 'invalid')
 
 class ColorWidget(forms.Widget):
     class Media:
-        js = [settings.STATIC_URL + 'colorfield/jscolor/jscolor.js']
-        
+        js = [default_storage.url('colorfield/jscolor/jscolor.js')]
+
     def render(self, name, value, attrs=None):
         return render_to_string('colorfield/color.html', locals())
 
