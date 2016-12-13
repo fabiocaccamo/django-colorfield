@@ -1,3 +1,8 @@
 MANIFEST
 dist
 *.pyc
+
+# Intellij
+.idea/
+*.iml
+*.iws
