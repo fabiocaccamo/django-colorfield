@@ -25,7 +25,7 @@ class ColorField(models.CharField):
     default_validators = [validate_color]
 
     def __init__(self, *args, **kwargs):
-        kwargs['max_length'] = 10
+        kwargs['max_length'] = 18
         super(ColorField, self).__init__(*args, **kwargs)
 
     def formfield(self, **kwargs):
