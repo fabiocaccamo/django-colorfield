@@ -18,7 +18,12 @@ class ColorWidget(forms.Widget):
         js = ['colorfield/jscolor/jscolor.min.js']
 
     def render(self, name, value, attrs=None):
-        return render_to_string('colorfield/color.html', locals())
+        return render_to_string('colorfield/color.html', {
+            'name': name,
+            'value': value,
+            'attrs': attrs,
+            'is_required': self.is_required
+        })
 
 
 class ColorField(models.CharField):

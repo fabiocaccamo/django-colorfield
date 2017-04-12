@@ -1,2 +1,7 @@
-<input type="text" name="{{ name }}" value="{{ value }}" id="{{ attrs.id }}"
-class="colorfield_field jscolor {hash:true}"/>
+<input
+  type="text"
+  name="{{ name }}"
+  value="{{ value|default_if_none:'' }}"
+  id="{{ attrs.id }}"
+  class="colorfield_field jscolor {hash:true, required:{{ is_required|lower }}}"
+/>
