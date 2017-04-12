@@ -9,13 +9,16 @@ from django.core.validators import RegexValidator
 from django.template.loader import render_to_string
 from django.utils.translation import ugettext_lazy as _
 
-color_re = re.compile('^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$')
+color_re = re.compile('^(#(?:[0-9a-f]{2}){2,4}|#[0-9a-f]{3}|(?:rgba?|hsla?)\((?:\d+%?(?:deg|rad|grad|turn)?(?:,|\s)+){2,3}[\s\/]*[\d\.]+%?\))')
 validate_color = RegexValidator(color_re, _('Enter a valid color.'), 'invalid')
 
 
 class ColorWidget(forms.Widget):
     class Media:
-        js = ['colorfield/jscolor/jscolor.min.js']
+        js = ['colorfield/spectrum/spectrum.js']
+        css = {
+            'all': ('colorfield/spectrum/spectrum.css',)
+        }
 
     def render(self, name, value, attrs=None):
         return render_to_string('colorfield/color.html', locals())
