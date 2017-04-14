@@ -1,4 +1,4 @@
-#django-colorfield
+# django-colorfield
 
 This module fills the need of having a **colorfield** that's usable in both
 django models and forms.
@@ -7,12 +7,12 @@ django models and forms.
 
 Makes use of [jscolor](http://jscolor.com/).
 
-##Installation
+## Installation
 - Run ``pip install django-colorfield``
 - Add ``colorfield`` to your ``INSTALLED_APPS``
 - Collect static files with ``./manage.py collectstatic``
 
-##Usage
+## Usage
 In your models, you can use it like this:
 
 ```python
@@ -23,12 +23,12 @@ class MyModel(model.Model):
     
     color = ColorField(default='#FF0000')
 ```
-##Maintainers
+## Maintainers
 - [@gtnx](https://github.com/gtnx)
 - [@fabiocaccamo](https://github.com/fabiocaccamo)
 
 
-##License
+## License
 
 The MIT License (MIT)
 
