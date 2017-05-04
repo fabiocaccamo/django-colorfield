@@ -4,7 +4,6 @@ import re
 
 from django import forms
 from django.db import models
-from django.conf import settings
 from django.core.validators import RegexValidator
 from django.template.loader import render_to_string
 from django.utils.translation import ugettext_lazy as _
@@ -17,7 +16,7 @@ class ColorWidget(forms.Widget):
     class Media:
         js = ['colorfield/jscolor/jscolor.min.js']
 
-    def render(self, name, value, attrs=None):
+    def render(self, name, value, attrs=None, renderer=None):
         return render_to_string('colorfield/color.html', {
             'name': name,
             'value': value,
