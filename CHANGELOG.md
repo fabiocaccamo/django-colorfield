@@ -1,6 +1,6 @@
 # Changelog
 
-# 0.1.13
+## 0.1.13
 
 - Use not minified jscolor when `DEBUG=true`
 - Fix rendering when `value is None`
