@@ -15,10 +15,19 @@ validate_color = RegexValidator(color_re, _('Enter a valid color.'), 'invalid')
 
 class ColorWidget(forms.Widget):
     class Media:
-        js = ['colorfield/jscolor/jscolor.min.js']
+        if settings.DEBUG:
+            js = ['colorfield/jscolor/jscolor.js']
+        else:
+            js = ['colorfield/jscolor/jscolor.min.js']
 
     def render(self, name, value, attrs=None):
+        is_required = self.is_required
         return render_to_string('colorfield/color.html', locals())
+
+    def value_from_datadict(self, data, files, name):
+        ret = super().value_from_datadict(data, files, name)
+        ret = '#%s' % ret if ret else ret
+        return ret
 
 
 class ColorField(models.CharField):
