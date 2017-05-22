@@ -1,6 +1,6 @@
 from setuptools import find_packages, setup
 
-version = '0.1.13'
+version = '0.1.14'
 
 setup(
     name='django-colorfield',
