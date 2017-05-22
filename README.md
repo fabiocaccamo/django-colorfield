@@ -1,3 +1,5 @@
+[![PyPI version](https://badge.fury.io/py/django-colorfield.svg)](https://badge.fury.io/py/django-colorfield)
+
 # django-colorfield
 
 This module fills the need of having a **colorfield** that's usable in both
