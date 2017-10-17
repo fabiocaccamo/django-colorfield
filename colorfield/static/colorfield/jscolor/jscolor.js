@@ -59,7 +59,7 @@ var jsc = {
 				var opts = {};
 				if (optsStr) {
 					try {
-						opts = (new Function ('return (' + optsStr + ')'))();
+						opts = JSON.parse(optsStr);
 					} catch(eParseError) {
 						jsc.warn('Error parsing jscolor options: ' + eParseError + ':\n' + optsStr);
 					}
