@@ -1,21 +1,28 @@
 {% extends 'polls/base.html' %}
+{% load addclass %}
 
 {% block polls_content %}
-<div class="row" style="padding-top:50px">
-    <div class="col-md-12">
+<div class="row" style="padding-top:50px;">
+    <div class="col-md-6" style="margin:auto">
 
-        <h1 class='title'>{{ poll.question }}</h1>
+        <h1 style="padding-bottom:30px">{{ poll.question }}</h1>
         {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
         <form action="{% url 'vote' poll.id %}" method="post">
             {% csrf_token %}
+
             {% for field in form %}
             <div class="form-group">
-            <label for="{{ field.name }}">{{ field.name }}</label>
+            <label for="id_{{ field.name }}">{{ field.name }}</label>
             {{ field }}
             {% endfor %}
             </div>
-            <button type="submit" class="btn btn-primary">Vote</button>
+            <button type="submit" style="margin-top:30px" class="btn btn-primary">Vote</button>
         </form>
     </div>
 </div>
+<script>
+$(document).ready(function(){
+   $('#id_color').addClass('form-control');
+})
+</script>
 {% endblock %}

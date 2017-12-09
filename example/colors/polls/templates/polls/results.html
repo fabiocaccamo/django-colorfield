@@ -1,6 +1,8 @@
 {% extends 'polls/base.html' %}
 
 {% block polls_content %}
+
+{% if poll.choice_set.count > 0 %}
 <div class="row" style="padding-top:50px">
     <div class="col-md-12">
     <h2 style='margin:30px'>{{ poll.question }}</h2>
@@ -12,10 +14,19 @@
         </ul>
     </div>
 </div>
-<div class="row" style="padding-top:50px">
-    <div class="col-md-12" style="margin:auto">
+<div class="row" style="margin:auto;padding-top:50px">
+    <div class="col-md-12">
        <button type="button" class="btn btn-primary">
           <a style="color:white; font-weight:500;" href="{% url 'detail' poll.id %}">Vote again?</a></button>
     </div>
 </div>
+{% else %}
+<div class="row" style="padding-top:50px">
+    <div class="col-md-12" style="margin:auto">
+       <h2 style="margin-top:30px; margin-bottom:30px">{{ poll.question }}</h2>
+       <button type="button" class="btn btn-primary">
+          <a style="color:white; font-weight:500;" href="{% url 'detail' poll.id %}">Go Vote!</a></button>
+    </div>
+</div>
+{% endif %}
 {% endblock %}

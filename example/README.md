@@ -1,15 +1,45 @@
 # django-colorfield-example
 
-You can use the app and corresponding Dockerfile to preview Django Colorfield.
-To build and run the image:
-
-```
-docker-compose build
-docker-compose up -d
-```
-
 This is the example Django polls app with fields that demonstrate the colorfield.
 Open to your browser at [127.0.0.1:8000](http://127.0.0.1:8000), and click the
-button to create the example polls:
+button to create the example poll. To build the image:
+
+```
+docker build vanessa/django-colorfield .
+```
+
+and to run it:
+
+```
+docker run -d -p 8000:8000 vanessa/django-colorfield
+```
+
+If you want to run the container in a development mode so that changes to your host update the container, then mount the present working directory (`$PWD`) to `/code` in the container:
+
+```
+docker run -d -v $PWD:/code -p 8000:8000 vanessa/django-colorfield
+```
+
+## Preview
+
+The opening screen asks the user to generate the example poll.
+
+![img/example1.png](img/example1.png)
+
+The user can then vote in the poll! If the application had more than one poll, they would appear here in a list. Currently adding polls is only do-able via an admin view (not developed fully from the original polls application).
+
+
+![img/example2.png](img/example2.png)
+
+
+Voting in the poll shows the basic colorfield.
+
+![img/example3.png](img/example3.png)
+
+
+And finally, after voting the user can see the counts for previous colors selected.
+
+![img/example4.png](img/example4.png)
+
 
 **note** I can't seem to get colorfield to install cleanly, meaning having all templates and static files found by Django. If Django needs custom configuration, this needs to be documented. It's also not clear how to interact with the field in the form, or how to grab the color after getting it.

@@ -42,12 +42,11 @@ def vote(request, poll_id):
     return HttpResponseRedirect(reverse('results', args=(p.id,)))
 
 
-def create_polls(request):
+def create_poll(request):
     '''create example poll'''
     if Poll.objects.count() == 0:
        question = "What is your favorite color?"
        poll = Poll.objects.create(question=question)
-       choice = Choice.objects.create(poll=poll)
     else:
        poll = Poll.objects.last()
-    return HttpResponseRedirect(reverse('results', args=(poll.id,)))
+    return HttpResponseRedirect(reverse('index'))
