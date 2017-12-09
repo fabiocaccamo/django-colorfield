@@ -2,6 +2,7 @@ MANIFEST
 dist
 __pycache__
 *.pyc
+example/static
 
 # Intellij
 .idea/
