@@ -11,4 +11,7 @@ WORKDIR /tmp/colorfield
 RUN python3 setup.py sdist
 RUN python3 setup.py install
 RUN pip install $(ls /tmp/colorfield/dist/*.tar.gz)
+RUN python3 -m pip install $(ls /tmp/colorfield/dist/*.tar.gz)
 WORKDIR /code
+EXPOSE 8000
+CMD ["/bin/bash", "/code/start.sh"]
