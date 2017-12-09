@@ -1,0 +1,17 @@
+{% load staticfiles %}
+<html>
+
+<head>
+    <script src="{% static 'js/jquery-3.2.1.slim.min.js' %}"></script>
+    <script src="{% static 'js/popper.min.js' %}"></script>
+
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+</head>
+
+<body>
+  <div class="container" style="padding:30px">
+   {% block polls_content %}
+   {% endblock %}
+</body>
+</html>

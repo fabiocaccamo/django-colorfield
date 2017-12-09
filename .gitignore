@@ -1,5 +1,6 @@
 MANIFEST
 dist
+__pycache__
 *.pyc
 
 # Intellij

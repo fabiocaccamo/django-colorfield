@@ -1,0 +1,32 @@
+{% extends 'polls/base.html' %}
+{% load staticfiles %}
+{% block polls_content %}
+{% if latest_poll_list %}
+<div class="row" style="padding-top:50px">
+    <div class="col-md-12">
+    <div class="list-group">
+    <ul>
+    {% for poll in latest_poll_list %}
+        <a href="{% url 'detail' poll.id %}" class="list-group-item list-group-item-action {% if forloop.first %}active{% endif %}">{{ poll.question }}</a>
+    {% endfor %}
+    </ul>
+</div>
+</div>
+</div>
+{% else %}
+
+<div class="row" style="padding-top:50px">
+    <div class="col-md-12">
+        <div class="card" style="width: 30rem; margin:auto">
+            <img class="card-img-top" src="{% static 'img/field.jpeg' %}" alt="Card image cap">
+            <div class="card-body">
+                <h4 class="card-title">Welcome!</h4>
+                <p class="card-text">Welcome to the <strong>django-colorfield</strong> 
+                   example app! Click below to create your examples.</p>
+                <a href="{% url 'create_polls' %}" class="btn btn-primary">Create Examples</a>
+            </div>
+        </div> 
+    </div>
+</div>
+{% endif %}
+{% endblock %}
