@@ -34,12 +34,12 @@ class ResultsView(generic.DetailView):
 def vote(request, poll_id):
     p = get_object_or_404(Poll, pk=poll_id)
     try:
-        selected_choice = p.choice_set.get(pk=request.POST['choice'])
+        selected_choice = p.choice_set.get(pk=request.POST['color'])
     except (KeyError, Choice.DoesNotExist):
         # Redisplay the poll voting form.
         return render(request, 'polls/detail.html', {
             'poll': p,
-            'error_message': "You didn't select a choice.",
+            'error_message': "You didn't select a color!",
         })
     else:
         selected_choice.votes += 1
