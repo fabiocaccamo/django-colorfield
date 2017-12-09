@@ -1,4 +1,3 @@
-{% load staticfiles %}
-<script src="{% static 'colorfield/jscolor/jscolor.min.js' %}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jscolor/2.0.4/jscolor.min.js"></script>
 <input type="text" name="{{ name }}" {% if value %}value="{{ value }}"{% endif %} id="{{ attrs.id }}"
 class="colorfield_field jscolor {% if not is_required %}{required:false}{% endif %}"/>
