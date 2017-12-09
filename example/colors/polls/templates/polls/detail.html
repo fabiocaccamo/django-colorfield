@@ -1,6 +1,9 @@
 {% extends 'polls/base.html' %}
 
 {% block polls_content %}
+<div class="row" style="padding-top:50px">
+    <div class="col-md-12">
+
 <h1>{{ poll.question }}</h1>
 
 {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
@@ -9,10 +12,11 @@
 {% csrf_token %}
 {{ form }}
 {% for choice in poll.choice_set.all %}
-    {{ choice.color }}
     <input type="text" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}" />
-    <label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label><br />
+    <label for="choice{{ forloop.counter }}">{{ choice.color }}</label><br />
 {% endfor %}
 <input type="submit" value="Vote" />
 </form>
+    </div>
+</div>
 {% endblock %}
