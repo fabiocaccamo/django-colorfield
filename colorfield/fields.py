@@ -14,11 +14,6 @@ validate_color = RegexValidator(color_re, _('Enter a valid color.'), 'invalid')
 
 
 class ColorWidget(forms.Widget):
-    class Media:
-        if settings.DEBUG:
-            js = ['colorfield/jscolor/jscolor.js']
-        else:
-            js = ['colorfield/jscolor/jscolor.min.js']
 
     def render(self, name, value, attrs=None):
         is_required = self.is_required
