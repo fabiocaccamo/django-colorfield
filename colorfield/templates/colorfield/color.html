@@ -1,26 +1,22 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/spectrum/1.8.0/spectrum.min.js"></script>
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/spectrum/1.8.0/spectrum.min.css">
-<style>
-.label {
-    background: #444;
-    padding:8px;    
-    border-radius: 4px;
-    color: #eee;
-    margin-top: 10px;
-    display:inline-block;
-}
-</style>
-<script>
-$("#{{ attrs.id }}").spectrum({
-    showPaletteOnly: true,
-    showPalette:true,
-    color: 'blanchedalmond',
-    palette: [
-        ['black', 'white', 'blanchedalmond',
-        'rgb(255, 128, 0);', 'hsv 100 70 50'],
-        ['red', 'yellow', 'green', 'blue', 'violet']
-    ]
-});
-</script>
+<input name="{{ name }}" type='text' {% if value %}value="{{ value }}"{% endif %} id="{{ attrs.id }}" class="{% if class %}{{ class }}{% endif %}"/>
 
-<input name="{{ name }}" type='text' {% if value %}value="{{ value }}"{% endif %} id="{{ attrs.id }}" class="colorfield_field jscolor {% if class %}{{ class }}{% endif %} "/>
+<script>
+$(document).ready(function(){
+
+
+    $("#{{ attrs.id }}").spectrum({
+        showPaletteOnly: true,
+        showPalette:true,
+        color: 'blanchedalmond',
+        palette: [
+            ['black', 'white', 'blanchedalmond',
+            'rgb(255, 128, 0);', 'hsv 100 70 50'],
+            ['red', 'yellow', 'green', 'blue', 'violet']
+        ]
+    });
+
+
+})
+</script>
