@@ -10,7 +10,7 @@ $(document).ready(function(){
         showPaletteOnly: true,
         showPalette:true,
         palette: [
-            [{% for color in palette %}"{{ color }}"{% if forloop.last %}{% else %},{% endif %}]
+            [{% for color in palette %}"{{ color }}"{% if forloop.last %}{% else %},{% endif %}{% endfor %}]
         ]
         {% endif %}        
         {% if COLORFIELD_DEFAULT %}color: '{{ COLORFIELD_DEFAULT }}'{% else %}color: "darkmagenta"{% endif %},
