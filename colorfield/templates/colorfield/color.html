@@ -1,19 +1,19 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/spectrum/1.8.0/spectrum.min.js"></script>
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/spectrum/1.8.0/spectrum.min.css">
-<input name="{{ name }}" type='text' {% if value %}value="{{ value }}"{% endif %} id="{{ attrs.id }}" class="{% if class %}{{ class }}{% endif %}"/>
+<input name="{{ name }}" type='text' id="{{ attrs.id }}" class="{% if class %}{{ class }}{% endif %}"/>
 
 <script>
 $(document).ready(function(){
 
     $("#{{ attrs.id }}").spectrum({
-        preferredFormat: "hex",
+        preferredFormat: "name",
         {% if COLORFIELD_PALETTE %}
         showPaletteOnly: true,
         showPalette:true,
         palette: [
             [{% for color in palette %}"{{ color }}"{% if forloop.last %}{% else %},{% endif %}{% endfor %}]
-        ]
-        {% endif %}        
+        ],
+        {% endif %}   
         {% if COLORFIELD_DEFAULT %}color: '{{ COLORFIELD_DEFAULT }}'{% else %}color: "darkmagenta"{% endif %},
     });
 

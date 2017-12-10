@@ -1,6 +1,19 @@
 # django-colorfield-example
 
-This is the example Django polls app with fields that demonstrate the colorfield.
+This is the example Django polls app with fields that demonstrate the colorfield. You can run the two examples from the images on Docker Hub:
+
+**with a limited palette**
+
+```
+docker run -d -p 8000:8000 vanessa/django-colorfield:palette
+```
+
+and **without a palette**
+
+```
+docker run -d -p 8000:8000 vanessa/django-colorfield:all
+```
+
 Open to your browser at [127.0.0.1:8000](http://127.0.0.1:8000), and click the
 button to create the example poll. To build the image:
 
