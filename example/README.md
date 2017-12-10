@@ -9,7 +9,6 @@ A full palette means that a color picker is presented that spans any color that 
 docker run -d -p 8000:8000 vanessa/django-colorfield:palette
 ```
 
-![img/example-palette.png](img/example-palette.png)
 
 **and with a limited selection**
 A limited selection means that the user is presented with a specific list of colors defined in the [settings.py](colors/settings.py).
@@ -18,7 +17,6 @@ A limited selection means that the user is presented with a specific list of col
 docker run -d -p 8000:8000 vanessa/django-colorfield:selection
 ```
 
-![img/example-selection.png](img/example-selection.png)
 
 For both of the above, open to your browser at [127.0.0.1:8000](http://127.0.0.1:8000), and click the
 button to create the example poll. 
@@ -39,6 +37,13 @@ Voting in the poll shows the basic colorfield.
 
 ![img/example3.png](img/example3.png)
 
+the default (not specifying a `COLORFIELD_PALETTE` in the `settings.py` shows a full color picker:
+
+![img/example-palette.png](img/example-palette.png)
+
+and setting `COLORFIELD_PALETTE` to be a list of pre-selected colors only shows those colors:
+
+![img/example-selection.png](img/example-selection.png)
 
 And finally, after voting the user can see the counts for previous colors selected.
 
