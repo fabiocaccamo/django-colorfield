@@ -7,7 +7,7 @@ django models and forms.
 
 ![django-colorfield](https://cloud.githubusercontent.com/assets/1035294/11273806/a015270a-8ed5-11e5-8546-1fd4cc241266.png)
 
-Makes use of [jscolor](http://jscolor.com/).
+Makes use of [spectrum](https://bgrins.github.io/spectrum/), and previous versions used [jscolor](http://jscolor.com/).
 
 ## Installation
 - Run ``pip install django-colorfield``
@@ -25,9 +25,21 @@ class MyModel(model.Model):
     
     color = ColorField(default='#FF0000')
 ```
+
+In your `settings.py`, you can optionally set a pre-determined list of colors, or change the default:
+
+```
+COLORFIELD_DEFAULT = "darkturquoise"
+COLORFIELD_PALETTE = ["blue", "green", "yellow","orange", "magenta", "red"]
+```
+
+To see an example application with and without these settings, [follow the instructions here](example/README.md).
+
+
 ## Maintainers
 - [@gtnx](https://github.com/gtnx)
 - [@fabiocaccamo](https://github.com/fabiocaccamo)
+- See the [CONTRIBUTORS.md](CONTRIBUTORS.md) for additional contributors
 
 
 ## License

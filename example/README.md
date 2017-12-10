@@ -8,41 +8,20 @@ This is the example Django polls app with fields that demonstrate the colorfield
 docker run -d -p 8000:8000 vanessa/django-colorfield:palette
 ```
 
+![img/example-palette.png](img/example-palette.png)
+
 **and with a limited selection**
 
 ```
-docker run -d -p 8000:8000 vanessa/django-colorfield:palette
+docker run -d -p 8000:8000 vanessa/django-colorfield:selection
 ```
 
-Open to your browser at [127.0.0.1:8000](http://127.0.0.1:8000), and click the
+![img/example-selection.png](img/example-selection.png)
+
+For both of the above, open to your browser at [127.0.0.1:8000](http://127.0.0.1:8000), and click the
 button to create the example poll. 
 
-If you instead want to build the image:
-
-```
-docker build vanessa/django-colorfield .
-```
-
-and to run it:
-
-```
-docker run -d -p 8000:8000 vanessa/django-colorfield
-```
-
-and how it was pushed
-
-```
-docker tag vanessa/django-colorfield vanessa/django-colorfield:palette
-docker push vanessa/django-colorfield:palette
-```
-
-If you want to run the container in a development mode so that changes to your host update the container, then mount the present working directory (`$PWD`) to `/code` in the container:
-
-```
-docker run -d -v $PWD:/code -p 8000:8000 vanessa/django-colorfield
-```
-
-## Preview
+## Walkthrough
 
 The opening screen asks the user to generate the example poll.
 
@@ -65,3 +44,32 @@ And finally, after voting the user can see the counts for previous colors select
 
 
 **note** I can't seem to get colorfield to install cleanly, meaning having all templates and static files found by Django. If Django needs custom configuration, this needs to be documented. It's also not clear how to interact with the field in the form, or how to grab the color after getting it.
+
+## Development
+
+If you instead want to build the image:
+
+```
+docker build vanessa/django-colorfield .
+```
+
+and to run it:
+
+```
+docker run -d -p 8000:8000 vanessa/django-colorfield
+```
+
+and how it was pushed (after separate builds were done)
+
+```
+docker tag vanessa/django-colorfield vanessa/django-colorfield:palette
+docker tag vanessa/django-colorfield vanessa/django-colorfield:selection
+docker push vanessa/django-colorfield:palette
+docker push vanessa/django-colorfield:selection
+```
+
+If you want to run the container in a development mode so that changes to your host update the container, then mount the present working directory (`$PWD`) to `/code` in the container:
+
+```
+docker run -d -v $PWD:/code -p 8000:8000 vanessa/django-colorfield
+```
