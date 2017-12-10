@@ -10,6 +10,9 @@ $(document).ready(function(){
         {% if COLORFIELD_PALETTE %}
         showPaletteOnly: true,
         showPalette:true,
+        change: function(color) {
+            $("#{{ attrs.id }}").val(color);
+        },
         palette: [
             [{% for color in palette %}"{{ color }}"{% if forloop.last %}{% else %},{% endif %}{% endfor %}]
         ],
