@@ -14,7 +14,7 @@ $(document).ready(function(){
             $("#{{ attrs.id }}").val(color);
         },
         palette: [
-            [{% for color in palette %}"{{ color }}"{% if forloop.last %}{% else %},{% endif %}{% endfor %}]
+            [{% for color in COLORFIELD_PALETTE %}"{{ color }}"{% if forloop.last %}{% else %},{% endif %}{% endfor %}]
         ],
         {% endif %}   
         {% if COLORFIELD_DEFAULT %}color: '{{ COLORFIELD_DEFAULT }}'{% else %}color: "darkmagenta"{% endif %},
