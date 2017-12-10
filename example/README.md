@@ -3,6 +3,7 @@
 This is the example Django polls app with fields that demonstrate the colorfield. You can run the two examples from the images on Docker Hub:
 
 **with a full palette**
+A full palette means that a color picker is presented that spans any color that the user might desire.
 
 ```
 docker run -d -p 8000:8000 vanessa/django-colorfield:palette
@@ -11,6 +12,7 @@ docker run -d -p 8000:8000 vanessa/django-colorfield:palette
 ![img/example-palette.png](img/example-palette.png)
 
 **and with a limited selection**
+A limited selection means that the user is presented with a specific list of colors defined in the [settings.py](colors/settings.py).
 
 ```
 docker run -d -p 8000:8000 vanessa/django-colorfield:selection
@@ -42,8 +44,6 @@ And finally, after voting the user can see the counts for previous colors select
 
 ![img/example4.png](img/example4.png)
 
-
-**note** I can't seem to get colorfield to install cleanly, meaning having all templates and static files found by Django. If Django needs custom configuration, this needs to be documented. It's also not clear how to interact with the field in the form, or how to grab the color after getting it.
 
 ## Development
 
