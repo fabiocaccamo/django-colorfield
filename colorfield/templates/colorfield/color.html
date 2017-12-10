@@ -5,18 +5,16 @@
 <script>
 $(document).ready(function(){
 
-
     $("#{{ attrs.id }}").spectrum({
+        {% if COLORFIELD_PALETTE %}
         showPaletteOnly: true,
         showPalette:true,
-        color: 'blanchedalmond',
         palette: [
-            ['black', 'white', 'blanchedalmond',
-            'rgb(255, 128, 0);', 'hsv 100 70 50'],
-            ['red', 'yellow', 'green', 'blue', 'violet']
+            [{% for color in palette %}"{{ color }}"{% if forloop.last %}{% else %},{% endif %}]
         ]
+        {% endif %}        
+        {% if COLORFIELD_DEFAULT %}color: '{{ COLORFIELD_DEFAULT }}'{% else %}color: "darkmagenta"{% endif %},
     });
-
 
 })
 </script>

@@ -17,6 +17,13 @@ class ColorWidget(forms.Widget):
 
     def render(self, name, value, attrs=None):
         is_required = self.is_required
+
+        # If the settings module has a palette, and default color
+        if hasattr(settings, 'COLORFIELD_PALETTE'):
+            COLORFIELD_PALETTE = settings.COLORFIELD_PALETTE
+
+        if hasattr(settings, 'COLORFIELD_DEFAULT'):
+            COLORFIELD_DEFAULT = settings.COLORFIELD_DEFAULT
         return render_to_string('colorfield/color.html', locals())
 
     def value_from_datadict(self, data, files, name):
