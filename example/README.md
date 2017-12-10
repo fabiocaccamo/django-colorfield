@@ -2,20 +2,22 @@
 
 This is the example Django polls app with fields that demonstrate the colorfield. You can run the two examples from the images on Docker Hub:
 
-**with a limited palette**
+**with a full palette**
 
 ```
 docker run -d -p 8000:8000 vanessa/django-colorfield:palette
 ```
 
-and **without a palette**
+**and with a limited selection**
 
 ```
-docker run -d -p 8000:8000 vanessa/django-colorfield:all
+docker run -d -p 8000:8000 vanessa/django-colorfield:palette
 ```
 
 Open to your browser at [127.0.0.1:8000](http://127.0.0.1:8000), and click the
-button to create the example poll. To build the image:
+button to create the example poll. 
+
+If you instead want to build the image:
 
 ```
 docker build vanessa/django-colorfield .
@@ -25,6 +27,13 @@ and to run it:
 
 ```
 docker run -d -p 8000:8000 vanessa/django-colorfield
+```
+
+and how it was pushed
+
+```
+docker tag vanessa/django-colorfield vanessa/django-colorfield:palette
+docker push vanessa/django-colorfield:palette
 ```
 
 If you want to run the container in a development mode so that changes to your host update the container, then mount the present working directory (`$PWD`) to `/code` in the container:
