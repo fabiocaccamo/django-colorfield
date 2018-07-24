@@ -20,7 +20,7 @@ class ColorWidget(forms.Widget):
         else:
             js = ['colorfield/jscolor/jscolor.min.js']
 
-    def render(self, name, value, attrs=None):
+    def render(self, name, value, attrs=None, renderer=None, **_kwargs):
         is_required = self.is_required
         return render_to_string('colorfield/color.html', locals())
 
