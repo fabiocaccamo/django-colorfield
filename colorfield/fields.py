@@ -20,7 +20,12 @@ class ColorWidget(forms.Widget):
         else:
             js = ['colorfield/jscolor/jscolor.min.js']
 
+    def __init__(self, attrs=None):
+        self.attrs = attrs
+        super(ColorWidget, self).__init__(attrs=attrs)
+
     def render(self, name, value, attrs=None, renderer=None, **_kwargs):
+        attrs.update(self.attrs)
         is_required = self.is_required
         return render_to_string('colorfield/color.html', locals())
 
@@ -40,6 +45,7 @@ class ColorField(models.CharField):
     def formfield(self, **kwargs):
         kwargs['widget'] = ColorWidget
         return super(ColorField, self).formfield(**kwargs)
+
 
 try:
     from south.modelsinspector import add_introspection_rules

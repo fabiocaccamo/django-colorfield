@@ -1,2 +1,2 @@
-<input type="text" name="{{ name }}" {% if value %}value="{{ value }}"{% endif %} id="{{ attrs.id }}"
-class="colorfield_field jscolor {% if not is_required %}{required:false}{% endif %}"/>
+<input type="text" name="{{ name }}" {% if value %}value="{{ value }}"{% endif %} {% if attrs.id %}id="{{ attrs.id }}"{% endif %} 
+{% if is_required %}required {% endif %}class="{{ attrs.class }} colorfield_field jscolor" style="{{ attrs.style }}"/>
