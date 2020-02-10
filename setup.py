@@ -1,6 +1,12 @@
 from setuptools import find_packages, setup
 
-version = '0.1.16'
+with open("README.md") as readme_file:
+    readme = readme_file.read()
+
+with open("HISTORY.md") as history_file:
+    history = history_file.read()
+
+version = '0.1.17'
 
 setup(
     name='django-colorfield',
@@ -9,7 +15,8 @@ setup(
     license='MIT License',
     version=version,
     description='A small app providing a colorpicker field for django',
-    long_description='A small app providing a colorpicker field for django',
+    long_description=readme + "\n\n" + history,
+    long_description_content_type="text/markdown",
     author='Jared Forsyth',
     author_email='jared@jaredforsyth.com',
     url='https://github.com/jaredly/django-colorfield',

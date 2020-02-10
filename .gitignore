@@ -8,3 +8,4 @@ dist
 *.iws
 *.egg-info/
 
+build/
