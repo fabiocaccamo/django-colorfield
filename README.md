@@ -42,11 +42,6 @@ class MyModel(model.Model):
 ### Admin
 The admin will kindly provide a simple [color picker](http://jscolor.com/) for all color fields. :)
 
-
-## Credits:
--   Originally developed by [Jared Forsyth](https://github.com/jaredly)
-
-
 ## Testing
 ```bash
 # create python 3.8 virtual environment
@@ -68,6 +63,9 @@ python setup.py test
 # or
 python manage.py test --settings "tests.settings"
 ```
+
+## Credits:
+Originally developed by [Jared Forsyth](https://github.com/jaredly)
 
 ---
 
