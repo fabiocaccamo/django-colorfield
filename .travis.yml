@@ -1,0 +1,63 @@
+sudo: required
+language: python
+python: 3.5
+cache: pip
+env:
+  - TOX_ENV=py27-dj17-sqlite
+  - TOX_ENV=py27-dj18-sqlite
+  - TOX_ENV=py27-dj19-sqlite
+  - TOX_ENV=py27-dj110-sqlite
+  - TOX_ENV=py27-dj111-sqlite
+  - TOX_ENV=py35-dj18-sqlite
+  - TOX_ENV=py35-dj19-sqlite
+  - TOX_ENV=py35-dj110-sqlite
+  - TOX_ENV=py35-dj111-sqlite
+  - TOX_ENV=py35-dj20-sqlite
+  - TOX_ENV=py35-dj21-sqlite
+  # - TOX_ENV=py35-dj22-sqlite
+matrix:
+  include:
+    - python: "3.6"
+      env: TOX_ENV=py36-dj111-sqlite
+    - python: "3.6"
+      env: TOX_ENV=py36-dj20-sqlite
+    - python: "3.6"
+      env: TOX_ENV=py36-dj21-sqlite
+    - python: "3.6"
+      env: TOX_ENV=py36-dj22-sqlite
+    - python: "3.6"
+      env: TOX_ENV=py36-dj30-sqlite
+    - python: "3.6"
+      env: TOX_ENV=py36-djmaster-sqlite
+    - python: "3.7"
+      dist: xenial
+      env: TOX_ENV=py37-dj20-sqlite
+    - python: "3.7"
+      dist: xenial
+      env: TOX_ENV=py37-dj21-sqlite
+    - python: "3.7"
+      dist: xenial
+      env: TOX_ENV=py37-dj22-sqlite
+    - python: "3.7"
+      dist: xenial
+      env: TOX_ENV=py37-dj30-sqlite
+    - python: "3.7"
+      dist: xenial
+      env: TOX_ENV=py37-djmaster-sqlite
+    - python: "3.8"
+      dist: xenial
+      env: TOX_ENV=py38-dj22-sqlite
+    - python: "3.8"
+      dist: xenial
+      env: TOX_ENV=py38-dj30-sqlite
+    - python: "3.8"
+      dist: xenial
+      env: TOX_ENV=py38-djmaster-sqlite
+  allow_failures:
+    - env: TOX_ENV=py36-djmaster-sqlite
+    - env: TOX_ENV=py37-djmaster-sqlite
+    - env: TOX_ENV=py38-djmaster-sqlite
+install:
+  - pip install tox
+script:
+  - tox -e $TOX_ENV
