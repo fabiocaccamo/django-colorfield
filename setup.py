@@ -12,6 +12,7 @@ package_name = 'django-colorfield'
 package_url = '{}/{}'.format(github_url, package_name)
 package_path = os.path.abspath(os.path.dirname(__file__))
 long_description_file_path = os.path.join(package_path, 'README.md')
+long_description_content_type = 'text/markdown'
 long_description = ''
 try:
     with open(long_description_file_path) as f:
@@ -26,6 +27,7 @@ setup(
     version=__version__,
     description='',
     long_description=long_description,
+    long_description_content_type=long_description_content_type,
     author='Jared Forsyth, Fabio Caccamo',
     author_email='jared@jaredforsyth.com, fabio.caccamo@gmail.com',
     url=package_url,
