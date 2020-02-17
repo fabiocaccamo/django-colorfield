@@ -1,40 +1,23 @@
-import re
+# -*- coding: utf-8 -*-
+
+from colorfield.widgets import ColorWidget
 
 import django
-from django import forms
-from django.db import models
-from django.conf import settings
 from django.core.validators import RegexValidator
-from django.template.loader import render_to_string
-
+from django.db import models
 if django.VERSION >= (2, 0):
     from django.utils.translation import gettext_lazy as _
 else:
     from django.utils.translation import ugettext_lazy as _
 
-color_re = re.compile('^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$')
-validate_color = RegexValidator(color_re, _('Enter a valid color.'), 'invalid')
+import re
 
-
-class ColorWidget(forms.Widget):
-    class Media:
-        if settings.DEBUG:
-            js = ['colorfield/jscolor/jscolor.js']
-        else:
-            js = ['colorfield/jscolor/jscolor.min.js']
-
-    def render(self, name, value, attrs=None, renderer=None, **_kwargs):
-        is_required = self.is_required
-        return render_to_string('colorfield/color.html', locals())
-
-    def value_from_datadict(self, data, files, name):
-        ret = super(ColorWidget, self).value_from_datadict(data, files, name)
-        ret = '#%s' % ret if ret else ret
-        return ret
+COLOR_RE = re.compile('^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$')
+color_validator = RegexValidator(COLOR_RE, _('Enter a valid color.'), 'invalid')
 
 
 class ColorField(models.CharField):
-    default_validators = [validate_color]
+    default_validators = [color_validator]
 
     def __init__(self, *args, **kwargs):
         kwargs['max_length'] = 18
