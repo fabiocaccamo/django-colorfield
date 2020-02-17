@@ -1,3 +1,8 @@
-<input
- id="{{ attrs.id }}" class="colorfield_field jscolor {% if not is_required %}{required:false}{% endif %}"
- type="text" name="{{ name }}" value="{% if value %}{{ value }}{% endif %}" />
+<input type="text"
+ id="{{ widget.attrs.id }}"
+ class="form-control colorfield_field jscolor {{ widget.attrs.class }}"
+ name="{{ widget.name }}"
+ value="{% firstof widget.value widget.attrs.default '' %}"
+ placeholder="{% firstof widget.value widget.attrs.default '' %}"
+ data-jscolor="{hash:true,width:225,height:150,required:{% if widget.attrs.required %}true{% else %}false{% endif %}}"
+ {% if widget.attrs.required %}required{% endif %} />
