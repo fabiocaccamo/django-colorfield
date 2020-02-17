@@ -12,15 +12,18 @@ else:
 
 import re
 
+
 COLOR_RE = re.compile('^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$')
 color_validator = RegexValidator(COLOR_RE, _('Enter a valid color.'), 'invalid')
 
 
 class ColorField(models.CharField):
+
     default_validators = [color_validator]
 
     def __init__(self, *args, **kwargs):
-        kwargs['max_length'] = 18
+        kwargs.setdefault('max_length', 18)
+        kwargs.setdefault('default', '#FFFFFF')
         super(ColorField, self).__init__(*args, **kwargs)
 
     def formfield(self, **kwargs):
