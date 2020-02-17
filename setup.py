@@ -1,27 +1,57 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 from setuptools import find_packages, setup
 
-with open("README.md") as readme_file:
-    readme = readme_file.read()
+import os
 
-with open("HISTORY.md") as history_file:
-    history = history_file.read()
+exec(open('colorfield/version.py').read())
 
-version = '0.1.17'
+github_url = 'https://github.com/fabiocaccamo'
+package_name = 'django-colorfield'
+package_url = '{}/{}'.format(github_url, package_name)
+package_path = os.path.abspath(os.path.dirname(__file__))
+long_description_file_path = os.path.join(package_path, 'README.md')
+long_description = ''
+try:
+    with open(long_description_file_path) as f:
+        long_description = f.read()
+except IOError:
+    pass
 
 setup(
-    name='django-colorfield',
-    packages=find_packages(),
+    name=package_name,
+    packages=find_packages(exclude=['contrib', 'docs', 'tests*']),
     include_package_data=True,
-    license='MIT License',
-    version=version,
-    description='A small app providing a colorpicker field for django',
-    long_description=readme + "\n\n" + history,
-    long_description_content_type="text/markdown",
-    author='Jared Forsyth',
-    author_email='jared@jaredforsyth.com',
-    url='https://github.com/jaredly/django-colorfield',
-    download_url='https://github.com/jaredly/django-colorfield/archive/%s.tar.gz' % version,
-    keywords=['django', 'color', 'field', 'admin'],
-    classifiers=['License :: OSI Approved :: MIT License']
+    version=__version__,
+    description='',
+    long_description=long_description,
+    author='Jared Forsyth, Fabio Caccamo',
+    author_email='jared@jaredforsyth.com, fabio.caccamo@gmail.com',
+    url=package_url,
+    download_url='{}/archive/{}.tar.gz'.format(package_url, __version__),
+    keywords=['django', 'colorfield', 'colorpicker', 'color',
+              'field', 'picker', 'chooser', 'admin', 'python'],
     requires=['django (>=1.7)'],
+    install_requires=[
+    ],
+    classifiers=[
+        'Development Status :: 5 - Production/Stable',
+        'Environment :: Web Environment',
+        'Intended Audience :: Developers',
+        'License :: OSI Approved :: MIT License',
+        'Natural Language :: English',
+        'Operating System :: OS Independent',
+        'Programming Language :: Python :: 2',
+        'Programming Language :: Python :: 2.7',
+        'Programming Language :: Python :: 3',
+        'Programming Language :: Python :: 3.4',
+        'Programming Language :: Python :: 3.5',
+        'Programming Language :: Python :: 3.6',
+        'Programming Language :: Python :: 3.7',
+        'Programming Language :: Python :: 3.8',
+        'Topic :: Software Development :: Build Tools',
+    ],
+    license='MIT',
+    test_suite='runtests.runtests',
 )
