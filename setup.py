@@ -22,6 +22,6 @@ setup(
     url='https://github.com/jaredly/django-colorfield',
     download_url='https://github.com/jaredly/django-colorfield/archive/%s.tar.gz' % version,
     keywords=['django', 'color', 'field', 'admin'],
-    requires=['django (>=1.2)'],
     classifiers=['License :: OSI Approved :: MIT License']
+    requires=['django (>=1.7)'],
 )
