@@ -13,9 +13,9 @@
 [![](https://requires.io/github/fabiocaccamo/django-colorfield/requirements.svg?branch=master)](https://requires.io/github/fabiocaccamo/django-colorfield/requirements/?branch=master)
 
 # django-colorfield
-This module fills the need of having a **colorfield** that's usable in both django models and forms.
+This module fills the need of having a **ColorField** that's usable in both django models and forms.
 
-![django-colorfield](https://cloud.githubusercontent.com/assets/1035294/11273806/a015270a-8ed5-11e5-8546-1fd4cc241266.png)
+![django-colorfield](https://user-images.githubusercontent.com/1035294/74674565-f33ace00-51b1-11ea-8669-4b952f2b8e56.png)
 
 ## Installation
 -   Run `pip install django-colorfield`
@@ -58,7 +58,12 @@ cd testing_django_colorfield && . bin/activate
 # clone repo
 git clone https://github.com/fabiocaccamo/django-colorfield.git src && cd src
 
+# install dev requirements
+pip install tox
+
 # run tests
+tox
+# or
 python setup.py test
 # or
 python manage.py test --settings "tests.settings"
