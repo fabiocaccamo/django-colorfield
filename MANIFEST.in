@@ -1,5 +1,4 @@
-include LICENSE
+include LICENSE.txt
 include README.md
-include HISTORY.md
 recursive-include colorfield *
 recursive-exclude * *.pyc __pycache__ .DS_Store
