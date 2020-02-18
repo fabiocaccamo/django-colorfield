@@ -13,7 +13,7 @@
 [![](https://requires.io/github/fabiocaccamo/django-colorfield/requirements.svg?branch=master)](https://requires.io/github/fabiocaccamo/django-colorfield/requirements/?branch=master)
 
 # django-colorfield
-This module fills the need of having a **ColorField** that's usable in both django models and forms.
+simple color field for your models with a nice color-picker in the admin-interface.
 
 ![django-colorfield](https://user-images.githubusercontent.com/1035294/74674565-f33ace00-51b1-11ea-8669-4b952f2b8e56.png)
 
@@ -64,7 +64,7 @@ python setup.py test
 python manage.py test --settings "tests.settings"
 ```
 
-## Credits:
+## Credits
 Originally developed by [Jared Forsyth](https://github.com/jaredly)
 
 ---

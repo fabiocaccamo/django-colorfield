@@ -25,7 +25,7 @@ setup(
     packages=find_packages(exclude=['contrib', 'docs', 'tests*']),
     include_package_data=True,
     version=__version__,
-    description='',
+    description='simple color field for your models with a nice color-picker in the admin-interface.',
     long_description=long_description,
     long_description_content_type=long_description_content_type,
     author='Jared Forsyth, Fabio Caccamo',
