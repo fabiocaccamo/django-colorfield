@@ -10,6 +10,12 @@ class ColorWidget(forms.Widget):
 
     class Media:
         if settings.DEBUG:
-            js = ['colorfield/jscolor/jscolor.js']
+            js = [
+                'colorfield/jscolor/jscolor.js',
+                'colorfield/colorfield.js',
+            ]
         else:
-            js = ['colorfield/jscolor/jscolor.min.js']
+            js = [
+                'colorfield/jscolor/jscolor.min.js',
+                'colorfield/colorfield.js',
+            ]
