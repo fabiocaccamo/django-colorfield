@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.2.1](https://github.com/fabiocaccamo/django-colorfield/releases/tag/0.2.1) - 2020-02-21
+-   Fixed colopicker not working on inlines added dynamically.
+-   Fixed failed lookup for key [class]. #7
+
 ## [0.2.0](https://github.com/fabiocaccamo/django-colorfield/releases/tag/0.2.0) - 2020-02-17
 -   Fixed whole inline model required. #7
 -   Fixed `README.md` missing in package. #46
