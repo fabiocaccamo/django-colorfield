@@ -23,7 +23,7 @@ class ColorField(models.CharField):
 
     def __init__(self, *args, **kwargs):
         kwargs.setdefault('max_length', 18)
-        kwargs.setdefault('default', '#FFFFFF')
+        kwargs.setdefault('default', None)
         super(ColorField, self).__init__(*args, **kwargs)
 
     def formfield(self, **kwargs):

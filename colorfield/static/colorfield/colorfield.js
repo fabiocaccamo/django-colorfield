@@ -2,12 +2,10 @@
 
 window.onload = function() {
     if (typeof(django) !== 'undefined' && typeof(django.jQuery) !== 'undefined') {
-        (function($) {
+        (function($) { 
             // add colopicker to inlines added dynamically
             $(document).on('formset:added', function onFormsetAdded(event, row) {
-                $(row['0']).find('.colorfield_field.jscolor').not('.jscolor-active').each(function(index, el) {
-                    var picker = new jscolor($(el).get(0));
-                });
+                jscolor.installByClassName("jscolor");
             });
         }(django.jQuery));
     }
