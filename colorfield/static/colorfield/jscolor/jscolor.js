@@ -5,7 +5,7 @@
  * @license For open source use: GPLv3
  *          For commercial use: JSColor Commercial License
  * @author  Jan Odvarko
- * @version 2.0.5
+ * @version 2.1.1
  *
  * See usage examples at http://jscolor.com/examples/
  */
@@ -14,24 +14,19 @@
 "use strict";
 
 
-if (!window.jscolor) { window.jscolor = (function () {
+if (!window.jscolor) {
 
+window.jscolor = (function () { // BEGIN window.jscolor
 
 var jsc = {
 
 
     register : function () {
-        jsc.attachDOMReadyEvent(jsc.init);
+        jsc.attachDOMReadyEvent(jsc.jscolor.init);
         jsc.attachEvent(document, 'mousedown', jsc.onDocumentMouseDown);
         jsc.attachEvent(document, 'touchstart', jsc.onDocumentTouchStart);
+        jsc.attachEvent(document, 'keyup', jsc.onDocumentKeyUp);
         jsc.attachEvent(window, 'resize', jsc.onWindowResize);
-    },
-
-
-    init : function () {
-        if (jsc.jscolor.lookupClass) {
-            jsc.jscolor.installByClassName(jsc.jscolor.lookupClass);
-        }
     },
 
 
@@ -45,15 +40,24 @@ var jsc = {
                     continue;
                 }
             }
-            var m;
-            if (!elms[i].jscolor && elms[i].className && (m = elms[i].className.match(matchClass))) {
+
+            if (elms[i].jscolor) {
+                // jscolor is already installed on this element
+                continue;
+            }
+
+            var m, dataOpts;
+
+            if (
+                (dataOpts = jsc.getDataAttr(elms[i], 'jscolor')) !== null ||
+                (elms[i].className && (m = elms[i].className.match(matchClass)))
+            ) {
                 var targetElm = elms[i];
                 var optsStr = null;
 
-                var dataOptions = jsc.getDataAttr(targetElm, 'jscolor');
-                if (dataOptions !== null) {
-                    optsStr = dataOptions;
-                } else if (m[4]) {
+                if (dataOpts !== null) {
+                    optsStr = dataOpts;
+                } else if (m && m[4]) {
                     optsStr = m[4];
                 }
 
@@ -407,6 +411,15 @@ var jsc = {
     },
 
 
+    setOption : function (option, value) {
+        if (typeof this[option] === 'undefined') {
+            jsc.warn('Unrecognized option \'' + option + '\'');
+            return false;
+        }
+        this[option] = value;
+    },
+
+
     redrawPosition : function () {
 
         if (jsc.picker && jsc.picker.owner) {
@@ -555,6 +568,20 @@ var jsc = {
         } else if (target._jscControlName) {
             jsc.onControlPointerStart(e, target, target._jscControlName, 'touch');
         } else {
+            if (jsc.picker && jsc.picker.owner) {
+                jsc.picker.owner.hide();
+            }
+        }
+    },
+
+
+    onDocumentKeyUp : function (e) {
+        if (!e) { e = window.event; }
+
+        if (
+            (e.code && e.code === 'Enter' || e.keyCode === 13) ||
+            (e.code && e.code === 'Escape' || e.keyCode === 27)
+        ) {
             if (jsc.picker && jsc.picker.owner) {
                 jsc.picker.owner.hide();
             }
@@ -973,8 +1000,10 @@ var jsc = {
     // Usage:
     // var myColor = new jscolor(<targetElement> [, <options>])
     //
+    // (you can use both 'new jscolor' and 'new JSColor')
+    //
 
-    jscolor : function (targetElement, options) {
+    jscolor : function (targetElement, opts) {
 
         // General options
         //
@@ -1023,16 +1052,67 @@ var jsc = {
         this.shadowBlur = 15; // px
         this.shadowColor = 'rgba(0,0,0,0.2)'; // CSS color
         this.pointerColor = '#4C4C4C'; // px
-        this.pointerBorderColor = '#FFFFFF'; // px
+        this.pointerBorderColor = '#FFFFFF'; // CSS color
         this.pointerBorderWidth = 1; // px
         this.pointerThickness = 2; // px
         this.zIndex = 1000;
         this.container = null; // where to append the color picker (BODY element by default)
 
 
-        for (var opt in options) {
-            if (options.hasOwnProperty(opt)) {
-                this[opt] = options[opt];
+        // let's process the DEPRECATED jscolor.options property (this will be later removed)
+        if (jsc.jscolor.options) {
+            // let's set custom default options, if specified
+            for (var opt in jsc.jscolor.options) {
+                if (jsc.jscolor.options.hasOwnProperty(opt)) {
+                    jsc.setOption.call(this, opt, jsc.jscolor.options[opt]);
+                }
+            }
+        }
+
+
+        // let's apply configuration presets
+        //
+        var presetsArr = [];
+
+        if (opts.preset) {
+            if (typeof opts.preset === 'string') {
+                presetsArr = opts.preset.split(/\s+/);
+            } else if (Array.isArray(opts.preset)) {
+                presetsArr = opts.preset.slice(); // to clone
+            } else {
+                jsc.warn('Unrecognized preset value');
+            }
+        }
+
+        // always use the 'default' preset as a baseline
+        presetsArr.push('default');
+
+        // let's apply the presets in reverse order, so that should there be any overlapping options,
+        // then the formerly listed preset overrides the latter
+        for (var i = presetsArr.length - 1; i >= 0; i -= 1) {
+            var pres = presetsArr[i];
+            if (!pres) {
+                continue; // preset is empty string
+            }
+            if (!jsc.jscolor.presets.hasOwnProperty(pres)) {
+                jsc.warn('Unknown preset \'' + pres + '\'');
+                continue;
+            }
+            for (var opt in jsc.jscolor.presets[pres]) {
+                if (jsc.jscolor.presets[pres].hasOwnProperty(opt)) {
+                    jsc.setOption.call(this, opt, jsc.jscolor.presets[pres][opt]);
+                }
+            }
+        }
+
+
+        // let's set specific options for this color picker
+        var nonProperties = ['preset']; // these options won't be set as instance properties
+        for (var opt in opts) {
+            if (opts.hasOwnProperty(opt)) {
+                if (nonProperties.indexOf(opt) === -1) {
+                    jsc.setOption.call(this, opt, opts[opt]);
+                }
             }
         }
 
@@ -1099,7 +1179,9 @@ var jsc = {
                 if (this.hash) { value = '#' + value; }
 
                 if (jsc.isElementType(this.valueElement, 'input')) {
-                    this.valueElement.value = value;
+                    if (this.valueElement.value !== value) {
+                        this.valueElement.value = value;
+                    }
                 } else {
                     this.valueElement.innerHTML = value;
                 }
@@ -1268,13 +1350,17 @@ var jsc = {
         };
 
 
-        this.isLight = function () {
+        this.toGrayscale = function () {
             return (
                 0.213 * this.rgb[0] +
                 0.715 * this.rgb[1] +
-                0.072 * this.rgb[2] >
-                255 / 2
+                0.072 * this.rgb[2]
             );
+        };
+
+
+        this.isLight = function () {
+            return this.toGrayscale() > 255 / 2;
         };
 
 
@@ -1445,15 +1531,19 @@ var jsc = {
             var padCursor = 'crosshair';
 
             // wrap
+            p.wrap.className = 'jscolor-picker-wrap';
             p.wrap.style.clear = 'both';
             p.wrap.style.width = (dims[0] + 2 * THIS.borderWidth) + 'px';
             p.wrap.style.height = (dims[1] + 2 * THIS.borderWidth) + 'px';
             p.wrap.style.zIndex = THIS.zIndex;
 
             // picker
+            p.box.className = 'jscolor-picker';
             p.box.style.width = dims[0] + 'px';
             p.box.style.height = dims[1] + 'px';
 
+            // picker shadow
+            p.boxS.className = 'jscolor-picker-shadow';
             p.boxS.style.position = 'absolute';
             p.boxS.style.left = '0';
             p.boxS.style.top = '0';
@@ -1462,6 +1552,7 @@ var jsc = {
             jsc.setBorderRadius(p.boxS, borderRadius + 'px');
 
             // picker border
+            p.boxB.className = 'jscolor-picker-border';
             p.boxB.style.position = 'relative';
             p.boxB.style.border = THIS.borderWidth + 'px solid';
             p.boxB.style.borderColor = THIS.borderColor;
@@ -1601,6 +1692,7 @@ var jsc = {
                 var outsetColor = insetColors.length < 2 ? insetColors[0] : insetColors[1] + ' ' + insetColors[0] + ' ' + insetColors[0] + ' ' + insetColors[1];
                 p.btn.style.borderColor = outsetColor;
             }
+            p.btn.className = 'jscolor-btn-close';
             p.btn.style.display = THIS.closable ? 'block' : 'none';
             p.btn.style.position = 'absolute';
             p.btn.style.left = THIS.padding + 'px';
@@ -1713,7 +1805,7 @@ var jsc = {
         }
 
 
-        function blurValue () {
+        function handleValueBlur () {
             THIS.importColor();
         }
 
@@ -1792,13 +1884,13 @@ var jsc = {
         // valueElement
         if (this.valueElement) {
             if (jsc.isElementType(this.valueElement, 'input')) {
-                var updateField = function () {
+                var handleValueInput = function () {
                     THIS.fromString(THIS.valueElement.value, jsc.leaveValue);
                     jsc.dispatchFineChange(THIS);
                 };
-                jsc.attachEvent(this.valueElement, 'keyup', updateField);
-                jsc.attachEvent(this.valueElement, 'input', updateField);
-                jsc.attachEvent(this.valueElement, 'blur', blurValue);
+                jsc.attachEvent(this.valueElement, 'keyup', handleValueInput);
+                jsc.attachEvent(this.valueElement, 'input', handleValueInput);
+                jsc.attachEvent(this.valueElement, 'blur', handleValueBlur);
                 this.valueElement.setAttribute('autocomplete', 'off');
             }
         }
@@ -1827,9 +1919,43 @@ var jsc = {
 //================================
 // Public properties and methods
 //================================
+//
+// These will be publicly available via jscolor.<name> and JSColor.<name>
+//
 
 
-// By default, search for all elements with class="jscolor" and install a color picker on them.
+// Initializes jscolor on current DOM tree
+jsc.jscolor.init = function () {
+    if (jsc.jscolor.lookupClass) {
+        jsc.jscolor.installByClassName(jsc.jscolor.lookupClass);
+    }
+};
+
+
+jsc.jscolor.presets = {};
+
+jsc.jscolor.presets['default'] = {}; // baseline for customization
+
+jsc.jscolor.presets['light'] = { backgroundColor:'#FFFFFF', insetColor:'#BBBBBB' }; // default color scheme
+jsc.jscolor.presets['dark'] = { backgroundColor:'#333333', insetColor:'#999999' };
+
+jsc.jscolor.presets['small'] = { width:101, height:101 };
+jsc.jscolor.presets['medium'] = { width:181, height:101 }; // default size
+jsc.jscolor.presets['large'] = { width:271, height:151 };
+
+jsc.jscolor.presets['thin'] = { borderWidth:1, insetWidth:1, pointerBorderWidth:1 }; // default thickness
+jsc.jscolor.presets['thick'] = { borderWidth:2, insetWidth:2, pointerBorderWidth:2 };
+
+
+// DEPRECATED. Use jscolor.presets.default instead.
+//
+// Custom default options for all color pickers, e.g. { hash: true, width: 300 }
+jsc.jscolor.options = {};
+
+
+// DEPRECATED. Use data-jscolor attribute instead, which installs jscolor on given element.
+//
+// By default, we'll search for all elements with class="jscolor" and install a color picker on them.
 //
 // You can change what class name will be looked for by setting the property jscolor.lookupClass
 // anywhere in your HTML document. To completely disable the automatic lookup, set it to null.
@@ -1837,6 +1963,9 @@ var jsc = {
 jsc.jscolor.lookupClass = 'jscolor';
 
 
+// DEPRECATED. Use data-jscolor attribute instead, which installs jscolor on given element.
+//
+// Install jscolor on all elements that have the specified class name
 jsc.jscolor.installByClassName = function (className) {
     var inputElms = document.getElementsByTagName('input');
     var buttonElms = document.getElementsByTagName('button');
@@ -1852,4 +1981,8 @@ jsc.register();
 return jsc.jscolor;
 
 
-})(); }
+})(); // END window.jscolor
+
+window.JSColor = window.jscolor; // 'JSColor' is an alias to 'jscolor'
+
+} // endif
