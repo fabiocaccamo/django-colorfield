@@ -7,6 +7,6 @@ window.onload = function() {
             $(document).on('formset:added', function onFormsetAdded(event, row) {
                 jscolor.installByClassName('jscolor');
             });
-        }(django.jQuery));
+        })(django.jQuery);
     }
 };
