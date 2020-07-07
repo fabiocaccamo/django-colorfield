@@ -1,6 +1,6 @@
 /** global: django */
 
-window.addEventListener('load', (event) => {
+window.addEventListener('load', function(event) {
     if (typeof(django) !== 'undefined' && typeof(django.jQuery) !== 'undefined') {
         (function($) {
             // add colopicker to inlines added dynamically
