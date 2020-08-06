@@ -4,6 +4,7 @@
 [![](https://img.shields.io/pypi/v/django-colorfield.svg?color=blue&logo=pypi&logoColor=white)](https://pypi.org/project/django-colorfield/)
 [![](https://pepy.tech/badge/django-colorfield)](https://pepy.tech/project/django-colorfield)
 [![](https://img.shields.io/github/stars/fabiocaccamo/django-colorfield?logo=github)](https://github.com/fabiocaccamo/django-colorfield/)
+[![](https://badges.pufler.dev/visits/fabiocaccamo/django-colorfield?label=visitors&color=blue)](https://badges.pufler.dev)
 [![](https://img.shields.io/pypi/l/django-colorfield.svg?color=blue)](https://github.com/fabiocaccamo/django-colorfield/blob/master/LICENSE.txt)
 
 [![](https://img.shields.io/travis/fabiocaccamo/django-colorfield?logo=travis&label=build)](https://travis-ci.org/fabiocaccamo/django-colorfield)
