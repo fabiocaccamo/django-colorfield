@@ -45,8 +45,8 @@ The admin will kindly provide a simple [color picker](http://jscolor.com/) for a
 
 ## Testing
 ```bash
-# create python 3.8 virtual environment
-virtualenv testing_django_colorfield -p "python3.8" --no-site-packages
+# create python virtual environment
+virtualenv testing_django_colorfield
 
 # activate virtualenv
 cd testing_django_colorfield && . bin/activate
@@ -55,14 +55,14 @@ cd testing_django_colorfield && . bin/activate
 git clone https://github.com/fabiocaccamo/django-colorfield.git src && cd src
 
 # install dev requirements
-pip install tox
+pip install -r requirements.txt
 
 # run tests
 tox
 # or
 python setup.py test
 # or
-python manage.py test --settings "tests.settings"
+python -m django test --settings "tests.settings"
 ```
 
 ## Credits
