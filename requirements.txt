@@ -1,0 +1,4 @@
+codecov
+coverage
+django
+tox
