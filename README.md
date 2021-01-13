@@ -16,10 +16,8 @@
 # django-colorfield
 simple color field for your models with a nice color-picker in the admin-interface.
 
-![django-colorfield-hex](https://user-images.githubusercontent.com/7900305/104481539-3241f100-55c6-11eb-8fae-c4f1b4f30ca5.png)
-![django-colorfield-hexa](https://user-images.githubusercontent.com/7900305/104481799-7e8d3100-55c6-11eb-8ab1-7d9a1ceb3040.png)
-
-
+![django-colorfield-hex](https://user-images.githubusercontent.com/7900305/104512324-51ed0f80-55ee-11eb-9144-de03d922c2ce.png)
+![django-colorfield-hexa](https://user-images.githubusercontent.com/7900305/104512063-ec991e80-55ed-11eb-95b6-9174ac3f4f38.png)
 
 ## Installation
 -   Run `pip install django-colorfield`
@@ -56,7 +54,7 @@ class MyModel(model.Model):
 
 ### Color Palette
 
-![django-colorfield-palette](https://user-images.githubusercontent.com/7900305/104482636-72ee3a00-55c7-11eb-942b-067f325fac1d.png)
+![django-colorfield-palette](https://user-images.githubusercontent.com/7900305/104512178-194d3600-55ee-11eb-8cba-91cca156da06.png)
 
 You can provide a palette to choose from to the widget by using the field `choices`
 
