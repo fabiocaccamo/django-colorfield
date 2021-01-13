@@ -36,7 +36,6 @@ class ColorField(models.CharField):
     default_validators = []
 
     def __init__(self, *args, **kwargs):
-        self.palette = kwargs.pop('palette', [])
         self.format = kwargs.pop('format', 'hex').lower()
         if self.format not in ['hex', 'hexa']:
             raise ValueError('Unsupported color format: {}'.format(self.format))
@@ -53,9 +52,13 @@ class ColorField(models.CharField):
         super(ColorField, self).__init__(*args, **kwargs)
 
     def formfield(self, **kwargs):
+        palette = []
+        if self.choices is not None:
+            choices = self.get_choices(include_blank=False)
+            palette = [choice[0] for choice in choices]
         kwargs['widget'] = ColorWidget(attrs={
             'default': self.get_default(),
             'format': self.format,
-            'palette': self.palette,
+            'palette': palette,
         })
         return super(ColorField, self).formfield(**kwargs)

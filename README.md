@@ -58,14 +58,20 @@ class MyModel(model.Model):
 
 ![django-colorfield-palette](https://user-images.githubusercontent.com/7900305/104482636-72ee3a00-55c7-11eb-942b-067f325fac1d.png)
 
-You can pass a color palette to add quick access to specific colors to the widget:
+You can provide a palette to choose from to the widget by using the field `choices`
 
 ```python
 from colorfield.fields import ColorField
 from django.db import models
 
 class MyModel(model.Model):
-    color = ColorField(palette=["#FFFFFF", "#000000", "#424242"])
+
+    COLOR_CHOICES = [
+        ("#FFFFFF", "white"),
+        ("#000000", "black")
+    ]
+
+    color = ColorField(choices=COLOR_CHOICES)
 ```
 
 ### Admin
