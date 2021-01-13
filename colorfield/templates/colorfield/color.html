@@ -4,5 +4,5 @@
  name="{{ widget.name }}"
  value="{% firstof widget.value widget.attrs.default '' %}"
  placeholder="{% firstof widget.value widget.attrs.default '' %}"
- data-jscolor="{hash:true,width:225,height:150,required:{% if widget.attrs.required %}true{% else %}false{% endif %}}"
+ data-jscolor="{hash:true,width:225,height:150,format:'{{widget.attrs.color_format}}',required:{% if widget.attrs.required %}true{% else %}false{% endif %}}"
  {% if widget.attrs.required %}required{% endif %} />

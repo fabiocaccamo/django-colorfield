@@ -40,6 +40,17 @@ class MyModel(model.Model):
     color = ColorField(default='#FF0000')
 ```
 
+### Color Format
+ColorField defaults to HEX format but also support HEXA. To set the format:
+
+```python
+from colorfield.fields import ColorField
+from django.db import models
+
+class MyModel(model.Model):
+    color = ColorField(default='#FF0000', color_format='hexa')
+```
+
 ### Admin
 The admin will kindly provide a simple [color picker](http://jscolor.com/) for all color fields. :)
 
