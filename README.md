@@ -48,7 +48,18 @@ from colorfield.fields import ColorField
 from django.db import models
 
 class MyModel(model.Model):
-    color = ColorField(default='#FF0000', color_format='hexa')
+    color = ColorField(color_format='hexa')
+```
+
+### Color Palette
+You can pass a color palette to add quick access to specific colors to the widget:
+
+```python
+from colorfield.fields import ColorField
+from django.db import models
+
+class MyModel(model.Model):
+    color = ColorField(palette=["#FFFFFF", "#000000", "#424242"])
 ```
 
 ### Admin

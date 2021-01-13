@@ -37,6 +37,7 @@ class ColorField(models.CharField):
 
     def __init__(self, *args, **kwargs):
         color_format = kwargs.pop('color_format', 'hex')
+        self.palette = kwargs.pop('palette', [])
         if color_format not in ['hex', 'hexa']:
             raise ValueError('Unsupported color format: {}'.format(color_format))
         self.color_format = color_format
@@ -56,6 +57,6 @@ class ColorField(models.CharField):
         kwargs['widget'] = ColorWidget(attrs={
             'default': self.get_default(),
             'color_format': self.color_format,
-
+            'palette': self.palette,
         })
         return super(ColorField, self).formfield(**kwargs)
