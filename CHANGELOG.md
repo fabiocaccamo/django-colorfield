@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.4.0](https://github.com/fabiocaccamo/django-colorfield/releases/tag/0.4.0) - 2021-01-14
+-   Added `hex` (default) and `hexa` color format support. #58 #59
+-   Added palette support using field `choices`. #19
+-   Updated `jscolor` library version to `2.4.5`.
+
 ## [0.3.2](https://github.com/fabiocaccamo/django-colorfield/releases/tag/0.3.2) - 2020-07-07
 -   Used `load` event instead of `window.onload` callback.
 
