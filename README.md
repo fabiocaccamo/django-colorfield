@@ -16,7 +16,8 @@
 # django-colorfield
 simple color field for your models with a nice color-picker in the admin-interface.
 
-![django-colorfield](https://user-images.githubusercontent.com/1035294/74674565-f33ace00-51b1-11ea-8669-4b952f2b8e56.png)
+![django-colorfield-hex](https://user-images.githubusercontent.com/7900305/104512324-51ed0f80-55ee-11eb-9144-de03d922c2ce.png)
+![django-colorfield-hexa](https://user-images.githubusercontent.com/7900305/104512063-ec991e80-55ed-11eb-95b6-9174ac3f4f38.png)
 
 ## Installation
 -   Run `pip install django-colorfield`
@@ -38,6 +39,37 @@ from django.db import models
 
 class MyModel(model.Model):
     color = ColorField(default='#FF0000')
+```
+
+### Color Format
+ColorField defaults to HEX format but also support HEXA. To set the format:
+
+```python
+from colorfield.fields import ColorField
+from django.db import models
+
+class MyModel(model.Model):
+    color = ColorField(format='hexa')
+```
+
+### Color Palette
+
+![django-colorfield-palette](https://user-images.githubusercontent.com/7900305/104512178-194d3600-55ee-11eb-8cba-91cca156da06.png)
+
+You can provide a palette to choose from to the widget by using the field `choices`
+
+```python
+from colorfield.fields import ColorField
+from django.db import models
+
+class MyModel(model.Model):
+
+    COLOR_CHOICES = [
+        ("#FFFFFF", "white"),
+        ("#000000", "black")
+    ]
+
+    color = ColorField(choices=COLOR_CHOICES)
 ```
 
 ### Admin
