@@ -53,7 +53,8 @@ class ColorField(models.CharField):
 
     def formfield(self, **kwargs):
         palette = []
-        if self.choices is not None:
+        if (self.choices is not None
+                and len(self.choices) > 0):
             choices = self.get_choices(include_blank=False)
             palette = [choice[0] for choice in choices]
         kwargs['widget'] = ColorWidget(attrs={
