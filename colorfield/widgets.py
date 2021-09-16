@@ -4,7 +4,7 @@ from django import forms
 from django.conf import settings
 
 
-class ColorWidget(forms.Widget):
+class ColorWidget(forms.TextInput):
 
     template_name = 'colorfield/color.html'
 
