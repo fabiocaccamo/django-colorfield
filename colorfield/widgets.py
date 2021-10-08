@@ -2,6 +2,7 @@
 
 from django import forms
 from django.conf import settings
+from django.template.loader import render_to_string
 
 
 class ColorWidget(forms.TextInput):
@@ -19,3 +20,6 @@ class ColorWidget(forms.TextInput):
                 'colorfield/jscolor/jscolor.min.js',
                 'colorfield/colorfield.js',
             ]
+
+    def render(self, name, value, attrs=None, renderer=None):
+        return render_to_string(self.template_name, { 'widget': self })
