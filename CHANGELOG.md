@@ -4,6 +4,9 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.4.4](https://github.com/fabiocaccamo/django-colorfield/releases/tag/0.4.4) - 2021-10-08
+-   Fixed widget backward-compatibility with older django versions.
+
 ## [0.4.3](https://github.com/fabiocaccamo/django-colorfield/releases/tag/0.4.3) - 2021-09-16
 -   Fixed subclasses of `forms.Widget` must provide a `render()` method. #70
 
