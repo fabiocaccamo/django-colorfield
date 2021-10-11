@@ -22,4 +22,4 @@ class ColorWidget(forms.TextInput):
             ]
 
     def render(self, name, value, attrs=None, renderer=None):
-        return render_to_string(self.template_name, { 'widget': self })
+        return render_to_string(self.template_name, { 'widget': self, 'name': name })

@@ -1,7 +1,7 @@
 <input type="text"
  id="{{ widget.attrs.id }}"
  class="form-control colorfield_field jscolor"
- name="{{ widget.name }}"
+ name="{{ name }}"
  value="{% firstof widget.value widget.attrs.default '' %}"
  placeholder="{% firstof widget.value widget.attrs.default '' %}"
  data-jscolor="{hash:true,width:225,height:150,format:'{{widget.attrs.format}}',required:{% if widget.attrs.required %}true{% else %}false{% endif %},paletteCols:4,paletteHeight:28,palette:{{widget.attrs.palette|safe}}}"
