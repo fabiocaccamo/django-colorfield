@@ -21,5 +21,18 @@ class ColorWidget(forms.TextInput):
                 'colorfield/colorfield.js',
             ]
 
+    def get_context(self, name, value, attrs=None):
+        context = {}
+        context.update(self.attrs.copy() or {})
+        context.update(attrs or {})
+        context.update({
+            'widget': self,
+            'name': name,
+            'value': value,
+        })
+        return context
+
     def render(self, name, value, attrs=None, renderer=None):
-        return render_to_string(self.template_name, { 'widget': self, 'name': name })
+        return render_to_string(
+            self.template_name,
+            self.get_context(name, value, attrs))
