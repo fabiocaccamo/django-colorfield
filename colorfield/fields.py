@@ -4,6 +4,7 @@ import re
 from colorfield.widgets import ColorWidget
 
 import django
+from django.core.exceptions import ImproperlyConfigured
 from django.core.validators import RegexValidator
 from django.db import models
 if django.VERSION >= (2, 0):
@@ -36,6 +37,7 @@ class ColorField(models.CharField):
     default_validators = []
 
     def __init__(self, *args, **kwargs):
+        self.samples = kwargs.pop('samples', None) # works like Django choices, but does not restrict input to the given choices
         self.format = kwargs.pop('format', 'hex').lower()
         if self.format not in ['hex', 'hexa']:
             raise ValueError('Unsupported color format: {}'.format(self.format))
@@ -50,15 +52,28 @@ class ColorField(models.CharField):
         else:
             kwargs.setdefault('default', DEFAULT_PER_FORMAT[self.format])
         super(ColorField, self).__init__(*args, **kwargs)
+        
+        if self.choices and self.samples:
+            raise ImproperlyConfigured("You can only set one of 'choices' and 'samples' for ColorFields.")
 
     def formfield(self, **kwargs):
         palette = []
         if self.choices:
             choices = self.get_choices(include_blank=False)
             palette = [choice[0] for choice in choices]
+        elif self.samples:
+            palette = [choice[0] for choice in self.samples]
         kwargs['widget'] = ColorWidget(attrs={
             'default': self.get_default(),
             'format': self.format,
             'palette': palette,
+            'disable_picker': bool(self.choices),
         })
         return super(ColorField, self).formfield(**kwargs)
+    
+    def deconstruct(self):
+        name, path, args, kwargs = super(ColorField, self).deconstruct()
+
+        kwargs['samples'] = self.samples
+
+        return name, path, args, kwargs
