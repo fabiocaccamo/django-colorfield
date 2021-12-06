@@ -57,7 +57,8 @@ class MyModel(model.Model):
 ![django-colorfield-palette](https://user-images.githubusercontent.com/7900305/104512178-194d3600-55ee-11eb-8cba-91cca156da06.png)
 
 It is possible to provide a palette to choose from to the widget.
-It can be done by using the field `choices` *(force to choose from choices)* or `samples` *(just like choices, but allows also custom color selection)*.
+
+It can be done by using the field option `choices` *(force to choose from choices)* or `samples` *(just like choices, but allows also custom color selection)*.
 
 ```python
 from colorfield.fields import ColorField
