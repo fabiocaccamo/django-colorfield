@@ -56,7 +56,8 @@ class MyModel(model.Model):
 
 ![django-colorfield-palette](https://user-images.githubusercontent.com/7900305/104512178-194d3600-55ee-11eb-8cba-91cca156da06.png)
 
-You can provide a palette to choose from to the widget by using the field `choices`
+It is possible to provide a palette to choose from to the widget.
+It can be done by using the field `choices` *(force to choose from choices)* or `samples` *(just like choices, but allows also custom color selection)*.
 
 ```python
 from colorfield.fields import ColorField
@@ -69,7 +70,11 @@ class MyModel(model.Model):
         ("#000000", "black")
     ]
 
+    # restrictive
     color = ColorField(choices=COLOR_CHOICES)
+
+    # not restrictive
+    color = ColorField(samples=COLOR_CHOICES)
 ```
 
 ### Admin
@@ -120,5 +125,7 @@ Released under [MIT License](LICENSE.txt).
 - [`python-benedict`](https://github.com/fabiocaccamo/python-benedict) - dict subclass with keylist/keypath support, I/O shortcuts (base64, csv, json, pickle, plist, query-string, toml, xml, yaml) and many utilities. 📘
 
 - [`python-codicefiscale`](https://github.com/fabiocaccamo/python-codicefiscale) - encode/decode Italian fiscal codes - codifica/decodifica del Codice Fiscale. 🇮🇹 💳
+
+- [`python-fontbro`](https://github.com/fabiocaccamo/python-fontbro) - friendly font operations. 🧢
 
 - [`python-fsutil`](https://github.com/fabiocaccamo/python-fsutil) - file-system utilities for lazy devs. 🧟‍♂️
