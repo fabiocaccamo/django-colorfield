@@ -37,10 +37,12 @@ class ColorField(models.CharField):
     default_validators = []
 
     def __init__(self, *args, **kwargs):
-        self.samples = kwargs.pop('samples', None) # works like Django choices, but does not restrict input to the given choices
+        # works like Django choices, but does not restrict input to the given choices
+        self.samples = kwargs.pop('samples', None)
         self.format = kwargs.pop('format', 'hex').lower()
         if self.format not in ['hex', 'hexa']:
-            raise ValueError('Unsupported color format: {}'.format(self.format))
+            raise ValueError(
+                'Unsupported color format: {}'.format(self.format))
         self.default_validators = [VALIDATORS_PER_FORMAT[self.format]]
 
         kwargs.setdefault('max_length', 18)
@@ -52,9 +54,12 @@ class ColorField(models.CharField):
         else:
             kwargs.setdefault('default', DEFAULT_PER_FORMAT[self.format])
         super(ColorField, self).__init__(*args, **kwargs)
-        
+
         if self.choices and self.samples:
-            raise ImproperlyConfigured("You can only set one of 'choices' and 'samples' for ColorFields.")
+            raise ImproperlyConfigured(
+                'Invalid options: \'choices\' and \'samples\' are mutually exclusive, '
+                'you can set only one of the two for a ColorField instance.'
+            )
 
     def formfield(self, **kwargs):
         palette = []
@@ -67,13 +72,12 @@ class ColorField(models.CharField):
             'default': self.get_default(),
             'format': self.format,
             'palette': palette,
-            'disable_picker': bool(self.choices),
+            # # this will be used to hide the widget color spectrum if choices is defined:
+            # 'palette_choices_only': bool(self.choices),
         })
         return super(ColorField, self).formfield(**kwargs)
-    
+
     def deconstruct(self):
         name, path, args, kwargs = super(ColorField, self).deconstruct()
-
         kwargs['samples'] = self.samples
-
         return name, path, args, kwargs
