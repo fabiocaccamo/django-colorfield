@@ -94,6 +94,7 @@ git clone https://github.com/fabiocaccamo/django-colorfield.git src && cd src
 
 # install dev requirements
 pip install -r requirements.txt
+pip install -r requirements-test.txt
 
 # run tests
 tox

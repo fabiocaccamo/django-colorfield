@@ -1,4 +1,1 @@
-codecov
-coverage
 django
-tox
