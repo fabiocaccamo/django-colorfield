@@ -43,6 +43,7 @@ TEMPLATES = [{
     'APP_DIRS': True,
     'OPTIONS': {
         'context_processors': [
+            'django.template.context_processors.request',
             'django.contrib.auth.context_processors.auth',
             'django.contrib.messages.context_processors.messages',
         ]
@@ -60,6 +61,8 @@ database_config = {
 DATABASES = {
     'default': database_config.get(database_engine),
 }
+
+DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'colorfield/public/media/')
 MEDIA_URL = '/media/'
