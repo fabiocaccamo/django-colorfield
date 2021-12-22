@@ -1,1 +1,2 @@
-django
+django >=1.7
+Pillow >= 5.0

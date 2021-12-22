@@ -1,62 +1,151 @@
 # -*- coding: utf-8 -*-
 
+from colorfield.fields import ColorField
+
+from django.conf import settings
 from django.core.exceptions import ImproperlyConfigured, ValidationError
-from django.db import models
+from django.core.files import File
 from django.forms import fields_for_model
 from django.test import TestCase
 
-from colorfield.fields import ColorField
+from .models import *
 
-class ColoredModel(models.Model):
-    COLOR_CHOICES = [
-        ("#FFFFFF", "white"),
-        ("#000000", "black")
-    ]
-
-    colors = ColorField(blank=True, samples=COLOR_CHOICES)
-
-    class Meta:
-        app_label = 'colorfield'
+import os, shutil
 
 
 class ColorFieldTestCase(TestCase):
 
     def setUp(self):
-        self.instance = ColoredModel()
+        self.delete_media()
 
     def tearDown(self):
-        pass
+        self.delete_media()
+
+    @classmethod
+    def delete_media(cls):
+        path = settings.MEDIA_ROOT
+        if os.path.exists(path):
+            shutil.rmtree(path)
+
+    @classmethod
+    def get_images_input_dir(cls):
+        return os.path.join(os.path.dirname(os.path.realpath(__file__)), 'images')
+
+    @classmethod
+    def save_image_to_field_from_path(cls, field, path, save=True):
+        path = os.path.join(cls.get_images_input_dir(), path)
+        with open(path, 'rb') as image:
+            name = os.path.basename(path)
+            field.save(name, content=File(image), save=save)
 
     def test_model_formfield_doesnt_raise(self):
-        """Adding a ColoredField to a model should not fail in 2.2LTS
+        """
+        Adding a ColorField to a model should not fail in 2.2LTS.
         """
         try:
-            fields_for_model(ColoredModel())
+            fields_for_model(ColorModel())
         except AttributeError:
             self.fail('Raised Attribute Error')
-    
+
     def test_model_formfield_with_samples_and_choices_fails(self):
         """
-        Checks that supplying a ColorField with both samples and choices options fails (mutually exclusive)
+        Checks that supplying a ColorField with both samples
+        and choices options fails (mutually exclusive).
         """
         with self.assertRaises(ImproperlyConfigured):
-            ColorField(choices=ColoredModel.COLOR_CHOICES, samples=ColoredModel.COLOR_CHOICES)
+            ColorField(choices=COLOR_PALETTE, samples=COLOR_PALETTE)
+
+    def test_clean_field_choices(self):
+        """
+        Checks that supplying a ColorField with the samples kwarg works,
+        and that it accepts valid values outside the predefined choices.
+        """
+        # 1. Test with predefined choice
+        obj = ColorModelWithChoices()
+        obj.color = ColorModelWithChoices.COLOR_CHOICES[0][0]
+        try:
+            obj.full_clean()
+        except ValidationError as e:
+            self.fail('Failed to assign predefined palette choice to ColorField model instance. Message: {}'.format(e))
+
+        # 2. Test with value outside of the choices
+        other_value = '#35B6A3'
+        obj.color = other_value
+        with self.assertRaises(ValidationError):
+            obj.full_clean()
 
     def test_clean_field_samples(self):
         """
-        Checks that supplying a ColorField with the samples kwarg works, and that it accepts valid values outside the predefined choices
+        Checks that supplying a ColorField with the samples kwarg works,
+        and that it accepts valid values outside the predefined choices.
         """
         # 1. Test with predefined choice
-        self.instance.colors = self.instance.COLOR_CHOICES[0][0]
+        obj = ColorModelWithSamples()
+        obj.color = ColorModelWithSamples.COLOR_SAMPLES[0][0]
         try:
-            self.instance.full_clean()
+            obj.full_clean()
         except ValidationError as e:
             self.fail('Failed to assign predefined palette choice to ColorField model instance. Message: {}'.format(e))
-        
+
         # 2. Test with value outside of the choices
         other_value = '#35B6A3'
-        self.instance.colors = other_value
+        obj.color = other_value
         try:
-            self.instance.full_clean()
+            obj.full_clean()
         except ValidationError as e:
             self.fail('Failed to assign value outside palette choices to ColorField model instance. Message: {}'.format(e))
+
+    def test_model_with_null(self):
+        obj = ColorModelWithNull()
+        obj.save()
+        self.assertEqual(obj.color, None)
+
+    def test_model_with_invalid_image_field_type(self):
+        obj = ColorModelWithInvalidImageFieldType()
+        with self.assertRaises(ImproperlyConfigured):
+            obj.save()
+
+    def test_model_with_not_existing_image_field(self):
+        obj = ColorModelWithNotExistingImageField()
+        with self.assertRaises(ImproperlyConfigured):
+            obj.save()
+
+    def test_model_with_image_field_empty(self):
+        obj = ColorModelWithImageField()
+        obj.save()
+        self.assertEqual(obj.color, '')
+
+    def test_model_with_image_field_empty_and_default(self):
+        obj = ColorModelWithImageFieldAndDefault()
+        obj.save()
+        self.assertEqual(obj.color, '#FF0000')
+
+    def test_model_with_image(self):
+        model_class = ColorModelWithImageField
+        obj = model_class()
+        filename = 'django.png'
+        self.save_image_to_field_from_path(obj.image, filename)
+        obj.save()
+        # ensure the image has been saved correctly
+        self.assertTrue(obj.image.path.endswith(filename))
+        expected_color = '#082D20'
+        # check in-memory value
+        self.assertEqual(obj.color, expected_color)
+        # check stored value
+        obj_saved = model_class.objects.get(pk=obj.pk)
+        self.assertEqual(obj_saved.color, expected_color)
+
+    def test_model_with_image_and_format(self):
+        model_class = ColorModelWithImageFieldAndFormat
+        obj = model_class()
+        filename = 'django.png'
+        self.save_image_to_field_from_path(obj.image, filename)
+        obj.save()
+        # ensure the image has been saved correctly
+        self.assertTrue(obj.image.path.endswith(filename))
+        expected_color = '#082D20FF'
+        # check in-memory value
+        self.assertEqual(obj.color, expected_color)
+        # check stored value
+        obj_saved = model_class.objects.get(pk=obj.pk)
+        self.assertEqual(obj_saved.color, expected_color)

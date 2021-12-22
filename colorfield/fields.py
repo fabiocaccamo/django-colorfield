@@ -1,16 +1,25 @@
 # -*- coding: utf-8 -*-
 
-import re
+from colorfield.utils import get_image_background_color
 from colorfield.widgets import ColorWidget
 
 import django
+if django.VERSION >= (1, 8):
+    from django.core.exceptions import FieldDoesNotExist
+else:
+    FieldDoesNotExist = Exception
 from django.core.exceptions import ImproperlyConfigured
 from django.core.validators import RegexValidator
-from django.db import models
+from django.db.models import CharField, signals
+from django.db.models.fields.files import ImageField
 if django.VERSION >= (2, 0):
     from django.utils.translation import gettext_lazy as _
 else:
     from django.utils.translation import ugettext_lazy as _
+
+from PIL import Image
+
+import re
 
 
 COLOR_HEX_RE = re.compile('^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$')
@@ -32,7 +41,7 @@ DEFAULT_PER_FORMAT = {
 }
 
 
-class ColorField(models.CharField):
+class ColorField(CharField):
 
     default_validators = []
 
@@ -44,6 +53,10 @@ class ColorField(models.CharField):
             raise ValueError(
                 'Unsupported color format: {}'.format(self.format))
         self.default_validators = [VALIDATORS_PER_FORMAT[self.format]]
+
+        self.image_field = kwargs.pop('image_field', None)
+        if self.image_field:
+            kwargs.setdefault('blank', True)
 
         kwargs.setdefault('max_length', 18)
         if kwargs.get('null'):
@@ -77,7 +90,51 @@ class ColorField(models.CharField):
         })
         return super(ColorField, self).formfield(**kwargs)
 
+    def contribute_to_class(self, cls, name, **kwargs):
+        super(ColorField, self).contribute_to_class(cls, name, **kwargs)
+        if cls._meta.abstract:
+            return
+        if self.image_field:
+            signals.post_save.connect(self._update_from_image_field, sender=cls)
+
     def deconstruct(self):
         name, path, args, kwargs = super(ColorField, self).deconstruct()
         kwargs['samples'] = self.samples
+        kwargs['image_field'] = self.image_field
         return name, path, args, kwargs
+
+    def _update_from_image_field(self, instance, created, *args, **kwargs):
+        if not instance or not instance.pk:
+            return
+        if self.image_field:
+            # check if the field is a valid ImageField
+            try:
+                field_cls = instance._meta.get_field(self.image_field)
+                if not isinstance(field_cls, ImageField):
+                    raise ImproperlyConfigured(
+                        'Invalid "image_field" field type, '
+                        'expected an instance of "models.ImageField".'
+                    )
+            except FieldDoesNotExist as _:
+                raise ImproperlyConfigured(
+                    'Invalid "image_field" field name, '
+                    '"{}" field not found.'.format(self.image_field)
+                )
+            # update value from picking color from image field
+            color = ''
+            image_path = getattr(instance, self.image_field)
+            if image_path:
+                with Image.open(image_path) as image:
+                    alpha = self.format == 'hexa'
+                    color = get_image_background_color(image, alpha)
+            color_field_name = self.attname
+            color_field_value = getattr(instance, color_field_name, None)
+            if color_field_value != color:
+                color_field_value = color or self.default
+                # update in-memory value
+                setattr(instance, color_field_name, color_field_value)
+                # update stored value
+                manager = instance.__class__.objects
+                manager.filter(pk=instance.pk).update(
+                    **{ color_field_name: color_field_value }
+                )

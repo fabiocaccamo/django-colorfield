@@ -11,7 +11,6 @@
 [![](https://img.shields.io/codecov/c/gh/fabiocaccamo/django-colorfield?logo=codecov)](https://codecov.io/gh/fabiocaccamo/django-colorfield)
 [![](https://img.shields.io/codacy/grade/194566618f424a819ce43450ea0af081?logo=codacy)](https://www.codacy.com/app/fabiocaccamo/django-colorfield)
 [![](https://img.shields.io/codeclimate/maintainability/fabiocaccamo/django-colorfield?logo=code-climate)](https://codeclimate.com/github/fabiocaccamo/django-colorfield/)
-[![](https://requires.io/github/fabiocaccamo/django-colorfield/requirements.svg?branch=master)](https://requires.io/github/fabiocaccamo/django-colorfield/requirements/?branch=master)
 
 # django-colorfield
 simple color field for your models with a nice color-picker in the admin-interface.
@@ -19,11 +18,15 @@ simple color field for your models with a nice color-picker in the admin-interfa
 ![django-colorfield-hex](https://user-images.githubusercontent.com/7900305/104512324-51ed0f80-55ee-11eb-9144-de03d922c2ce.png)
 ![django-colorfield-hexa](https://user-images.githubusercontent.com/7900305/104512063-ec991e80-55ed-11eb-95b6-9174ac3f4f38.png)
 
+---
+
 ## Installation
 -   Run `pip install django-colorfield`
 -   Add `colorfield` to `settings.INSTALLED_APPS`
 -   Run `python manage.py collectstatic`
 -   Restart your application server
+
+---
 
 ## Usage
 
@@ -41,8 +44,12 @@ class MyModel(model.Model):
     color = ColorField(default='#FF0000')
 ```
 
-### Color Format
-ColorField defaults to HEX format but also support HEXA. To set the format:
+### Field Options
+These are the supported custom options: [`format`](#format), [`image_field`](#image_field), [`samples`](#samples)
+
+#### format
+
+The following formats are supported: `hex` *(default)*, `hexa`.
 
 ```python
 from colorfield.fields import ColorField
@@ -52,13 +59,28 @@ class MyModel(model.Model):
     color = ColorField(format='hexa')
 ```
 
-### Color Palette
+#### image_field
 
-![django-colorfield-palette](https://user-images.githubusercontent.com/7900305/104512178-194d3600-55ee-11eb-8cba-91cca156da06.png)
+It is possible to auto-populate the field value getting the color from an image using the `image_field` option.
 
-It is possible to provide a palette to choose from to the widget.
+The color will be calculated from the **top-left pixel** color of the image each time the model instance is saved.
 
-It can be done by using the field option `choices` *(force to choose from choices)* or `samples` *(just like choices, but allows also custom color selection)*.
+```python
+from colorfield.fields import ColorField
+from django.db import models
+
+class MyModel(model.Model):
+    image = models.ImageField(upload_to='images')
+    color = ColorField(image_field='image')
+```
+
+#### samples
+
+It is possible to provide a palette of colors to choose from to the widget using the `samples` option.
+
+This option **is not restrictive** (on the contrary of `choices` option), it is also possible to choose another color from the spectrum.
+
+![django-colorfield-samples](https://user-images.githubusercontent.com/7900305/104512178-194d3600-55ee-11eb-8cba-91cca156da06.png)
 
 ```python
 from colorfield.fields import ColorField
@@ -66,20 +88,22 @@ from django.db import models
 
 class MyModel(model.Model):
 
-    COLOR_CHOICES = [
-        ("#FFFFFF", "white"),
-        ("#000000", "black")
+    COLOR_PALETTE = [
+        ('#FFFFFF', 'white', ),
+        ('#000000', 'black', ),
     ]
 
-    # restrictive
-    color = ColorField(choices=COLOR_CHOICES)
+    # not restrictive, allows the selection of another color from the spectrum.
+    color = ColorField(samples=COLOR_PALETTE)
 
-    # not restrictive
-    color = ColorField(samples=COLOR_CHOICES)
+    # restrictive, it is mandatory to choose a color from the palette
+    color = ColorField(choices=COLOR_PALETTE)
 ```
 
 ### Admin
 The admin will kindly provide a simple [color picker](http://jscolor.com/) for all color fields. :)
+
+---
 
 ## Testing
 ```bash
@@ -103,9 +127,12 @@ python setup.py test
 # or
 python -m django test --settings "tests.settings"
 ```
+---
 
 ## Credits
 Originally developed by [Jared Forsyth](https://github.com/jaredly)
+
+---
 
 ## License
 Released under [MIT License](LICENSE.txt).

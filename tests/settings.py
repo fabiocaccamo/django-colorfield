@@ -11,6 +11,7 @@ ALLOWED_HOSTS = ['*']
 
 # Application definition
 INSTALLED_APPS = [
+    'tests',
     'colorfield',
 ]
 
@@ -64,8 +65,8 @@ DATABASES = {
 
 DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
 
-MEDIA_ROOT = os.path.join(BASE_DIR, 'colorfield/public/media/')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'tests/media/')
 MEDIA_URL = '/media/'
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'colorfield/public/static/')
+STATIC_ROOT = os.path.join(BASE_DIR, 'tests/static/')
 STATIC_URL = '/static/'

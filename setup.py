@@ -36,8 +36,7 @@ setup(
     keywords=['django', 'colorfield', 'colorpicker', 'color',
               'field', 'picker', 'chooser', 'admin', 'python'],
     requires=['django (>=1.7)'],
-    install_requires=[
-    ],
+    install_requires=['Pillow (>=5.0)'],
     classifiers=[
         'Development Status :: 5 - Production/Stable',
         'Environment :: Web Environment',
