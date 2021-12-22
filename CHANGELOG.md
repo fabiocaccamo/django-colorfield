@@ -4,8 +4,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.6.0](https://github.com/fabiocaccamo/django-colorfield/releases/tag/0.6.0) - 2021-12-22
+-   Added `image_field` option.
+-   Added `python 3.10` / `django 4.0` support.
+-   Added more tests and increased coverage.
+-   Fixed tests warnings.
+-   Replaced Travis CI with GitHub actions workflow.
+
 ## [0.5.0](https://github.com/fabiocaccamo/django-colorfield/releases/tag/0.5.0) - 2021-12-06
--   Added `samples` options support.
+-   Added `samples` option support.
 
 ## [0.4.5](https://github.com/fabiocaccamo/django-colorfield/releases/tag/0.4.5) - 2021-10-12
 -   Fixed widget backward-compatibility with older django versions.
