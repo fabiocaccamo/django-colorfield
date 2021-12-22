@@ -1,0 +1,19 @@
+name: Publish package
+
+on:
+  push:
+    tags:
+      - '*.*.*'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Publish package
+        uses: mariamrf/py-package-publish-action@v1.0.0
+        with:
+          python_version: '3.9.0'
+        env:
+          TWINE_PASSWORD: ${{ secrets.TWINE_PASSWORD }}
+          TWINE_USERNAME: ${{ secrets.TWINE_USERNAME }}
