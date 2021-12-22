@@ -43,7 +43,7 @@ class ColorFieldTestCase(TestCase):
         Adding a ColorField to a model should not fail in 2.2LTS.
         """
         try:
-            fields_for_model(ColorModel())
+            fields_for_model(Color())
         except AttributeError:
             self.fail('Raised Attribute Error')
 
@@ -61,8 +61,8 @@ class ColorFieldTestCase(TestCase):
         and that it accepts valid values outside the predefined choices.
         """
         # 1. Test with predefined choice
-        obj = ColorModelWithChoices()
-        obj.color = ColorModelWithChoices.COLOR_CHOICES[0][0]
+        obj = ColorChoices()
+        obj.color = ColorChoices.COLOR_CHOICES[0][0]
         try:
             obj.full_clean()
         except ValidationError as e:
@@ -80,8 +80,8 @@ class ColorFieldTestCase(TestCase):
         and that it accepts valid values outside the predefined choices.
         """
         # 1. Test with predefined choice
-        obj = ColorModelWithSamples()
-        obj.color = ColorModelWithSamples.COLOR_SAMPLES[0][0]
+        obj = ColorSamples()
+        obj.color = ColorSamples.COLOR_SAMPLES[0][0]
         try:
             obj.full_clean()
         except ValidationError as e:
@@ -96,32 +96,32 @@ class ColorFieldTestCase(TestCase):
             self.fail('Failed to assign value outside palette choices to ColorField model instance. Message: {}'.format(e))
 
     def test_model_with_null(self):
-        obj = ColorModelWithNull()
+        obj = ColorNull()
         obj.save()
         self.assertEqual(obj.color, None)
 
     def test_model_with_invalid_image_field_type(self):
-        obj = ColorModelWithInvalidImageFieldType()
+        obj = ColorInvalidImageField()
         with self.assertRaises(ImproperlyConfigured):
             obj.save()
 
     def test_model_with_not_existing_image_field(self):
-        obj = ColorModelWithNotExistingImageField()
+        obj = ColorNoImageField()
         with self.assertRaises(ImproperlyConfigured):
             obj.save()
 
     def test_model_with_image_field_empty(self):
-        obj = ColorModelWithImageField()
+        obj = ColorImageField()
         obj.save()
         self.assertEqual(obj.color, '')
 
     def test_model_with_image_field_empty_and_default(self):
-        obj = ColorModelWithImageFieldAndDefault()
+        obj = ColorImageFieldAndDefault()
         obj.save()
         self.assertEqual(obj.color, '#FF0000')
 
     def test_model_with_image(self):
-        model_class = ColorModelWithImageField
+        model_class = ColorImageField
         obj = model_class()
         filename = 'django.png'
         self.save_image_to_field_from_path(obj.image, filename)
@@ -136,7 +136,7 @@ class ColorFieldTestCase(TestCase):
         self.assertEqual(obj_saved.color, expected_color)
 
     def test_model_with_image_and_format(self):
-        model_class = ColorModelWithImageFieldAndFormat
+        model_class = ColorImageFieldAndFormat
         obj = model_class()
         filename = 'django.png'
         self.save_image_to_field_from_path(obj.image, filename)

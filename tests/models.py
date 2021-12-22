@@ -11,7 +11,7 @@ COLOR_PALETTE = [
 ]
 
 
-class ColorModel(models.Model):
+class Color(models.Model):
 
     color = ColorField(blank=True)
 
@@ -19,7 +19,7 @@ class ColorModel(models.Model):
         app_label = 'tests'
 
 
-class ColorModelWithNull(models.Model):
+class ColorNull(models.Model):
 
     color = ColorField(null=True)
 
@@ -27,7 +27,7 @@ class ColorModelWithNull(models.Model):
         app_label = 'tests'
 
 
-class ColorModelWithChoices(models.Model):
+class ColorChoices(models.Model):
 
     COLOR_CHOICES = COLOR_PALETTE
 
@@ -37,7 +37,7 @@ class ColorModelWithChoices(models.Model):
         app_label = 'tests'
 
 
-class ColorModelWithSamples(models.Model):
+class ColorSamples(models.Model):
 
     COLOR_SAMPLES = COLOR_PALETTE
 
@@ -47,7 +47,7 @@ class ColorModelWithSamples(models.Model):
         app_label = 'tests'
 
 
-class ColorModelWithNotExistingImageField(models.Model):
+class ColorNoImageField(models.Model):
 
     color = ColorField(image_field='image')
 
@@ -55,7 +55,7 @@ class ColorModelWithNotExistingImageField(models.Model):
         app_label = 'tests'
 
 
-class ColorModelWithInvalidImageFieldType(models.Model):
+class ColorInvalidImageField(models.Model):
 
     image = models.CharField(blank=True, max_length=10)
     color = ColorField(image_field='image')
@@ -64,7 +64,7 @@ class ColorModelWithInvalidImageFieldType(models.Model):
         app_label = 'tests'
 
 
-class ColorModelWithImageField(models.Model):
+class ColorImageField(models.Model):
 
     image = models.ImageField(blank=True, upload_to='temp')
     color = ColorField(image_field='image')
@@ -73,7 +73,7 @@ class ColorModelWithImageField(models.Model):
         app_label = 'tests'
 
 
-class ColorModelWithImageFieldAndDefault(models.Model):
+class ColorImageFieldAndDefault(models.Model):
 
     image = models.ImageField(blank=True, upload_to='temp')
     color = ColorField(image_field='image', default='#FF0000')
@@ -82,7 +82,7 @@ class ColorModelWithImageFieldAndDefault(models.Model):
         app_label = 'tests'
 
 
-class ColorModelWithImageFieldAndFormat(models.Model):
+class ColorImageFieldAndFormat(models.Model):
 
     image = models.ImageField(blank=True, upload_to='temp')
     color = ColorField(image_field='image', format='hexa')
