@@ -122,9 +122,11 @@ class ColorField(CharField):
                 )
             # update value from picking color from image field
             color = ''
-            image_path = getattr(instance, self.image_field)
-            if image_path:
-                with Image.open(image_path) as image:
+            image_file = getattr(instance, self.image_field)
+            if image_file:
+                # https://stackoverflow.com/a/3033986/2096218
+                image_file.open()
+                with Image.open(image_file) as image:
                     alpha = self.format == 'hexa'
                     color = get_image_background_color(image, alpha)
             color_field_name = self.attname
