@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from colorfield.utils import get_image_background_color
+from colorfield.utils import get_image_file_background_color
 from colorfield.widgets import ColorWidget
 
 import django
@@ -16,8 +16,6 @@ if django.VERSION >= (2, 0):
     from django.utils.translation import gettext_lazy as _
 else:
     from django.utils.translation import ugettext_lazy as _
-
-from PIL import Image
 
 import re
 
@@ -103,40 +101,48 @@ class ColorField(CharField):
         kwargs['image_field'] = self.image_field
         return name, path, args, kwargs
 
-    def _update_from_image_field(self, instance, created, *args, **kwargs):
-        if not instance or not instance.pk:
-            return
-        if self.image_field:
-            # check if the field is a valid ImageField
-            try:
-                field_cls = instance._meta.get_field(self.image_field)
-                if not isinstance(field_cls, ImageField):
-                    raise ImproperlyConfigured(
-                        'Invalid "image_field" field type, '
-                        'expected an instance of "models.ImageField".'
-                    )
-            except FieldDoesNotExist as _:
-                raise ImproperlyConfigured(
-                    'Invalid "image_field" field name, '
-                    '"{}" field not found.'.format(self.image_field)
-                )
-            # update value from picking color from image field
-            color = ''
-            image_file = getattr(instance, self.image_field)
-            if image_file:
+    def _get_image_field_color(self, instance):
+        color = ''
+        image_file = getattr(instance, self.image_field)
+        if image_file:
+            alpha = self.format == 'hexa'
+            if django.VERSION >= (2, 0):
                 # https://stackoverflow.com/a/3033986/2096218
                 with image_file.open() as _:
-                    with Image.open(image_file) as image:
-                        alpha = self.format == 'hexa'
-                        color = get_image_background_color(image, alpha)
-            color_field_name = self.attname
-            color_field_value = getattr(instance, color_field_name, None)
-            if color_field_value != color:
-                color_field_value = color or self.default
-                # update in-memory value
-                setattr(instance, color_field_name, color_field_value)
-                # update stored value
-                manager = instance.__class__.objects
-                manager.filter(pk=instance.pk).update(
-                    **{ color_field_name: color_field_value }
+                    color = get_image_file_background_color(image_file, alpha)
+            else:
+                # https://stackoverflow.com/a/3033986/2096218
+                image_file.open()
+                color = get_image_file_background_color(image_file, alpha)
+                image_file.close()
+        return color
+
+    def _update_from_image_field(self, instance, created, *args, **kwargs):
+        if not instance or not instance.pk or not self.image_field:
+            return
+        # check if the field is a valid ImageField
+        try:
+            field_cls = instance._meta.get_field(self.image_field)
+            if not isinstance(field_cls, ImageField):
+                raise ImproperlyConfigured(
+                    'Invalid "image_field" field type, '
+                    'expected an instance of "models.ImageField".'
                 )
+        except FieldDoesNotExist as _:
+            raise ImproperlyConfigured(
+                'Invalid "image_field" field name, '
+                '"{}" field not found.'.format(self.image_field)
+            )
+        # update value from picking color from image field
+        color = self._get_image_field_color(instance)
+        color_field_name = self.attname
+        color_field_value = getattr(instance, color_field_name, None)
+        if color_field_value != color:
+            color_field_value = color or self.default
+            # update in-memory value
+            setattr(instance, color_field_name, color_field_value)
+            # update stored value
+            manager = instance.__class__.objects
+            manager.filter(pk=instance.pk).update(
+                **{ color_field_name: color_field_value }
+            )
