@@ -125,10 +125,10 @@ class ColorField(CharField):
             image_file = getattr(instance, self.image_field)
             if image_file:
                 # https://stackoverflow.com/a/3033986/2096218
-                image_file.open()
-                with Image.open(image_file) as image:
-                    alpha = self.format == 'hexa'
-                    color = get_image_background_color(image, alpha)
+                with image_file.open() as _:
+                    with Image.open(image_file) as image:
+                        alpha = self.format == 'hexa'
+                        color = get_image_background_color(image, alpha)
             color_field_name = self.attname
             color_field_value = getattr(instance, color_field_name, None)
             if color_field_value != color:
