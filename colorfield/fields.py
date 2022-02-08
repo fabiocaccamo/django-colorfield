@@ -4,6 +4,7 @@ from colorfield.utils import get_image_file_background_color
 from colorfield.widgets import ColorWidget
 
 import django
+
 if django.VERSION >= (1, 8):
     from django.core.exceptions import FieldDoesNotExist
 else:
@@ -12,6 +13,7 @@ from django.core.exceptions import ImproperlyConfigured
 from django.core.validators import RegexValidator
 from django.db.models import CharField, signals
 from django.db.models.fields.files import ImageField
+
 if django.VERSION >= (2, 0):
     from django.utils.translation import gettext_lazy as _
 else:
@@ -20,23 +22,19 @@ else:
 import re
 
 
-COLOR_HEX_RE = re.compile('^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$')
+COLOR_HEX_RE = re.compile("^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$")
 color_hex_validator = RegexValidator(
-    COLOR_HEX_RE, _('Enter a valid hex color, eg. #000000'), 'invalid')
+    COLOR_HEX_RE, _("Enter a valid hex color, eg. #000000"), "invalid"
+)
 
-COLOR_HEXA_RE = re.compile('#([A-Fa-f0-9]{8}|[A-Fa-f0-9]{4})$')
+COLOR_HEXA_RE = re.compile("#([A-Fa-f0-9]{8}|[A-Fa-f0-9]{4})$")
 color_hexa_validator = RegexValidator(
-    COLOR_HEXA_RE, _('Enter a valid hexa color, eg. #00000000'), 'invalid')
+    COLOR_HEXA_RE, _("Enter a valid hexa color, eg. #00000000"), "invalid"
+)
 
-VALIDATORS_PER_FORMAT = {
-    'hex': color_hex_validator,
-    'hexa': color_hexa_validator
-}
+VALIDATORS_PER_FORMAT = {"hex": color_hex_validator, "hexa": color_hexa_validator}
 
-DEFAULT_PER_FORMAT = {
-    'hex': '#FFFFFF',
-    'hexa': '#FFFFFFFF'
-}
+DEFAULT_PER_FORMAT = {"hex": "#FFFFFF", "hexa": "#FFFFFFFF"}
 
 
 class ColorField(CharField):
@@ -45,31 +43,30 @@ class ColorField(CharField):
 
     def __init__(self, *args, **kwargs):
         # works like Django choices, but does not restrict input to the given choices
-        self.samples = kwargs.pop('samples', None)
-        self.format = kwargs.pop('format', 'hex').lower()
-        if self.format not in ['hex', 'hexa']:
-            raise ValueError(
-                'Unsupported color format: {}'.format(self.format))
+        self.samples = kwargs.pop("samples", None)
+        self.format = kwargs.pop("format", "hex").lower()
+        if self.format not in ["hex", "hexa"]:
+            raise ValueError("Unsupported color format: {}".format(self.format))
         self.default_validators = [VALIDATORS_PER_FORMAT[self.format]]
 
-        self.image_field = kwargs.pop('image_field', None)
+        self.image_field = kwargs.pop("image_field", None)
         if self.image_field:
-            kwargs.setdefault('blank', True)
+            kwargs.setdefault("blank", True)
 
-        kwargs.setdefault('max_length', 18)
-        if kwargs.get('null'):
-            kwargs.setdefault('blank', True)
-            kwargs.setdefault('default', None)
-        elif kwargs.get('blank'):
-            kwargs.setdefault('default', '')
+        kwargs.setdefault("max_length", 18)
+        if kwargs.get("null"):
+            kwargs.setdefault("blank", True)
+            kwargs.setdefault("default", None)
+        elif kwargs.get("blank"):
+            kwargs.setdefault("default", "")
         else:
-            kwargs.setdefault('default', DEFAULT_PER_FORMAT[self.format])
+            kwargs.setdefault("default", DEFAULT_PER_FORMAT[self.format])
         super(ColorField, self).__init__(*args, **kwargs)
 
         if self.choices and self.samples:
             raise ImproperlyConfigured(
-                'Invalid options: \'choices\' and \'samples\' are mutually exclusive, '
-                'you can set only one of the two for a ColorField instance.'
+                "Invalid options: 'choices' and 'samples' are mutually exclusive, "
+                "you can set only one of the two for a ColorField instance."
             )
 
     def formfield(self, **kwargs):
@@ -79,13 +76,15 @@ class ColorField(CharField):
             palette = [choice[0] for choice in choices]
         elif self.samples:
             palette = [choice[0] for choice in self.samples]
-        kwargs['widget'] = ColorWidget(attrs={
-            'default': self.get_default(),
-            'format': self.format,
-            'palette': palette,
-            # # this will be used to hide the widget color spectrum if choices is defined:
-            # 'palette_choices_only': bool(self.choices),
-        })
+        kwargs["widget"] = ColorWidget(
+            attrs={
+                "default": self.get_default(),
+                "format": self.format,
+                "palette": palette,
+                # # this will be used to hide the widget color spectrum if choices is defined:
+                # 'palette_choices_only': bool(self.choices),
+            }
+        )
         return super(ColorField, self).formfield(**kwargs)
 
     def contribute_to_class(self, cls, name, **kwargs):
@@ -97,15 +96,15 @@ class ColorField(CharField):
 
     def deconstruct(self):
         name, path, args, kwargs = super(ColorField, self).deconstruct()
-        kwargs['samples'] = self.samples
-        kwargs['image_field'] = self.image_field
+        kwargs["samples"] = self.samples
+        kwargs["image_field"] = self.image_field
         return name, path, args, kwargs
 
     def _get_image_field_color(self, instance):
-        color = ''
+        color = ""
         image_file = getattr(instance, self.image_field)
         if image_file:
-            alpha = self.format == 'hexa'
+            alpha = self.format == "hexa"
             if django.VERSION >= (2, 0):
                 # https://stackoverflow.com/a/3033986/2096218
                 with image_file.open() as _:
@@ -144,5 +143,5 @@ class ColorField(CharField):
             # update stored value
             manager = instance.__class__.objects
             manager.filter(pk=instance.pk).update(
-                **{ color_field_name: color_field_value }
+                **{color_field_name: color_field_value}
             )

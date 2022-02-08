@@ -6,7 +6,6 @@ from colorfield.widgets import ColorWidget
 
 
 class ColorWidgetTestCase(TestCase):
-
     def setUp(self):
         pass
 

@@ -14,7 +14,6 @@ import os, shutil
 
 
 class ColorFieldTestCase(TestCase):
-
     def setUp(self):
         self.delete_media()
 
@@ -29,12 +28,12 @@ class ColorFieldTestCase(TestCase):
 
     @classmethod
     def get_images_input_dir(cls):
-        return os.path.join(os.path.dirname(os.path.realpath(__file__)), 'images')
+        return os.path.join(os.path.dirname(os.path.realpath(__file__)), "images")
 
     @classmethod
     def save_image_to_field_from_path(cls, field, path, save=True):
         path = os.path.join(cls.get_images_input_dir(), path)
-        with open(path, 'rb') as image:
+        with open(path, "rb") as image:
             name = os.path.basename(path)
             field.save(name, content=File(image), save=save)
 
@@ -45,7 +44,7 @@ class ColorFieldTestCase(TestCase):
         try:
             fields_for_model(Color())
         except AttributeError:
-            self.fail('Raised Attribute Error')
+            self.fail("Raised Attribute Error")
 
     def test_model_formfield_with_samples_and_choices_fails(self):
         """
@@ -66,10 +65,14 @@ class ColorFieldTestCase(TestCase):
         try:
             obj.full_clean()
         except ValidationError as e:
-            self.fail('Failed to assign predefined palette choice to ColorField model instance. Message: {}'.format(e))
+            self.fail(
+                "Failed to assign predefined palette choice to ColorField model instance. Message: {}".format(
+                    e
+                )
+            )
 
         # 2. Test with value outside of the choices
-        other_value = '#35B6A3'
+        other_value = "#35B6A3"
         obj.color = other_value
         with self.assertRaises(ValidationError):
             obj.full_clean()
@@ -85,15 +88,23 @@ class ColorFieldTestCase(TestCase):
         try:
             obj.full_clean()
         except ValidationError as e:
-            self.fail('Failed to assign predefined palette choice to ColorField model instance. Message: {}'.format(e))
+            self.fail(
+                "Failed to assign predefined palette choice to ColorField model instance. Message: {}".format(
+                    e
+                )
+            )
 
         # 2. Test with value outside of the choices
-        other_value = '#35B6A3'
+        other_value = "#35B6A3"
         obj.color = other_value
         try:
             obj.full_clean()
         except ValidationError as e:
-            self.fail('Failed to assign value outside palette choices to ColorField model instance. Message: {}'.format(e))
+            self.fail(
+                "Failed to assign value outside palette choices to ColorField model instance. Message: {}".format(
+                    e
+                )
+            )
 
     def test_model_with_null(self):
         obj = ColorNull()
@@ -113,22 +124,22 @@ class ColorFieldTestCase(TestCase):
     def test_model_with_image_field_empty(self):
         obj = ColorImageField()
         obj.save()
-        self.assertEqual(obj.color, '')
+        self.assertEqual(obj.color, "")
 
     def test_model_with_image_field_empty_and_default(self):
         obj = ColorImageFieldAndDefault()
         obj.save()
-        self.assertEqual(obj.color, '#FF0000')
+        self.assertEqual(obj.color, "#FF0000")
 
     def test_model_with_image(self):
         model_class = ColorImageField
         obj = model_class()
-        filename = 'django.png'
+        filename = "django.png"
         self.save_image_to_field_from_path(obj.image, filename)
         obj.save()
         # ensure the image has been saved correctly
         self.assertTrue(obj.image.path.endswith(filename))
-        expected_color = '#082D20'
+        expected_color = "#082D20"
         # check in-memory value
         self.assertEqual(obj.color, expected_color)
         # check stored value
@@ -138,12 +149,12 @@ class ColorFieldTestCase(TestCase):
     def test_model_with_image_and_format(self):
         model_class = ColorImageFieldAndFormat
         obj = model_class()
-        filename = 'django.png'
+        filename = "django.png"
         self.save_image_to_field_from_path(obj.image, filename)
         obj.save()
         # ensure the image has been saved correctly
         self.assertTrue(obj.image.path.endswith(filename))
-        expected_color = '#082D20FF'
+        expected_color = "#082D20FF"
         # check in-memory value
         self.assertEqual(obj.color, expected_color)
         # check stored value

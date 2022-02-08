@@ -11,6 +11,7 @@
 [![](https://img.shields.io/codecov/c/gh/fabiocaccamo/django-colorfield?logo=codecov)](https://codecov.io/gh/fabiocaccamo/django-colorfield)
 [![](https://img.shields.io/codacy/grade/194566618f424a819ce43450ea0af081?logo=codacy)](https://www.codacy.com/app/fabiocaccamo/django-colorfield)
 [![](https://img.shields.io/codeclimate/maintainability/fabiocaccamo/django-colorfield?logo=code-climate)](https://codeclimate.com/github/fabiocaccamo/django-colorfield/)
+[![](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 
 # django-colorfield
 simple color field for your models with a nice color-picker in the admin-interface.
@@ -56,7 +57,7 @@ from colorfield.fields import ColorField
 from django.db import models
 
 class MyModel(model.Model):
-    color = ColorField(format='hexa')
+    color = ColorField(format="hexa")
 ```
 
 #### image_field
@@ -70,8 +71,8 @@ from colorfield.fields import ColorField
 from django.db import models
 
 class MyModel(model.Model):
-    image = models.ImageField(upload_to='images')
-    color = ColorField(image_field='image')
+    image = models.ImageField(upload_to="images")
+    color = ColorField(image_field="image")
 ```
 
 #### samples
@@ -89,8 +90,8 @@ from django.db import models
 class MyModel(model.Model):
 
     COLOR_PALETTE = [
-        ('#FFFFFF', 'white', ),
-        ('#000000', 'black', ),
+        ("#FFFFFF", "white", ),
+        ("#000000", "black", ),
     ]
 
     # not restrictive, allows the selection of another color from the spectrum.
