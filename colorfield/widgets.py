@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 
-from django import forms
 from django.conf import settings
+from django.forms import TextInput
 from django.template.loader import render_to_string
 
 
-class ColorWidget(forms.TextInput):
+class ColorWidget(TextInput):
 
     template_name = "colorfield/color.html"
 

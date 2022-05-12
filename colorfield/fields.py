@@ -1,36 +1,20 @@
 # -*- coding: utf-8 -*-
 
+from django import VERSION as DJANGO_VERSION
+
 from colorfield.utils import get_image_file_background_color
+from colorfield.validators import color_hex_validator, color_hexa_validator
 from colorfield.widgets import ColorWidget
 
-import django
-
-if django.VERSION >= (1, 8):
+if DJANGO_VERSION >= (1, 8):
     from django.core.exceptions import FieldDoesNotExist
 else:
     FieldDoesNotExist = Exception
 from django.core.exceptions import ImproperlyConfigured
-from django.core.validators import RegexValidator
+
 from django.db.models import CharField, signals
 from django.db.models.fields.files import ImageField
 
-if django.VERSION >= (2, 0):
-    from django.utils.translation import gettext_lazy as _
-else:
-    from django.utils.translation import ugettext_lazy as _
-
-import re
-
-
-COLOR_HEX_RE = re.compile("^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$")
-color_hex_validator = RegexValidator(
-    COLOR_HEX_RE, _("Enter a valid hex color, eg. #000000"), "invalid"
-)
-
-COLOR_HEXA_RE = re.compile("#([A-Fa-f0-9]{8}|[A-Fa-f0-9]{4})$")
-color_hexa_validator = RegexValidator(
-    COLOR_HEXA_RE, _("Enter a valid hexa color, eg. #00000000"), "invalid"
-)
 
 VALIDATORS_PER_FORMAT = {"hex": color_hex_validator, "hexa": color_hexa_validator}
 
@@ -105,7 +89,7 @@ class ColorField(CharField):
         image_file = getattr(instance, self.image_field)
         if image_file:
             alpha = self.format == "hexa"
-            if django.VERSION >= (2, 0):
+            if DJANGO_VERSION >= (2, 0):
                 # https://stackoverflow.com/a/3033986/2096218
                 with image_file.open() as _:
                     color = get_image_file_background_color(image_file, alpha)
