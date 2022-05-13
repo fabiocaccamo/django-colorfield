@@ -1,9 +1,11 @@
+# -*- coding: utf-8 -*-
+
 from django.core.exceptions import ValidationError as DjangoValidationError
 
 try:
     from rest_framework.serializers import (
         CharField,
-        ValidationError as DRFValidationError
+        ValidationError as DRFValidationError,
     )
 except ImportError:
     ModuleNotFoundError("Django REST Framework is not installed.")
@@ -14,8 +16,10 @@ from colorfield.validators import color_hex_validator, color_hexa_validator
 class ColorField(CharField):
 
     default_error_messages = {
-        "invalid": [color_hex_validator.message,
-                    color_hexa_validator.message]
+        "invalid": [
+            color_hex_validator.message,
+            color_hexa_validator.message,
+        ]
     }
 
     def to_internal_value(self, data):
@@ -32,8 +36,6 @@ class ColorField(CharField):
             has_hexa_error = True
 
         if has_hex_error and has_hexa_error:
-            raise DRFValidationError(
-                self.default_error_messages.get("invalid")
-            )
+            raise DRFValidationError(self.default_error_messages.get("invalid"))
 
         return data
