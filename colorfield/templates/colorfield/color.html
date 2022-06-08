@@ -1,6 +1,6 @@
 <input type="text"
  id="{{ id }}"
- class="form-control colorfield_field jscolor"
+ class="colorfield_field jscolor {% if class %}{{ class }}{% else %}form-control{% endif %}"
  name="{{ name }}"
  value="{% firstof value default '' %}"
  placeholder="{% firstof value default '' %}"
