@@ -4,6 +4,9 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.7.1](https://github.com/fabiocaccamo/django-colorfield/releases/tag/0.7.1) - 2022-06-08
+-   Fixed `ColorField` widget classes. #43 #78 (thanks to [@N1K1TAS95](https://github.com/N1K1TAS95))
+
 ## [0.7.0](https://github.com/fabiocaccamo/django-colorfield/releases/tag/0.7.0) - 2022-05-13
 -   Added `ColorField` serializer. #77 (thanks to [@hugofer93](https://github.com/hugofer93))
 
