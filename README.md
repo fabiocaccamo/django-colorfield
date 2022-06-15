@@ -108,18 +108,17 @@ The admin will kindly provide a simple [color picker](http://jscolor.com/) for a
 
 ## Testing
 ```bash
-# create python virtual environment
-virtualenv testing_django_colorfield
+# clone repository
+git clone https://github.com/fabiocaccamo/django-colorfield.git && cd django-colorfield
 
-# activate virtualenv
-cd testing_django_colorfield && . bin/activate
+# create virtualenv and activate it
+python -m venv venv && . venv/bin/activate
 
-# clone repo
-git clone https://github.com/fabiocaccamo/django-colorfield.git src && cd src
+# upgrade pip
+python -m pip install --upgrade pip
 
-# install dev requirements
-pip install -r requirements.txt
-pip install -r requirements-test.txt
+# install requirements
+pip install -r requirements.txt -r requirements-test.txt
 
 # run tests
 tox
@@ -139,6 +138,13 @@ Originally developed by [Jared Forsyth](https://github.com/jaredly)
 Released under [MIT License](LICENSE.txt).
 
 ---
+
+## Supporting
+
+- :star: Star this project on [GitHub](https://github.com/fabiocaccamo/django-colorfield)
+- :octocat: Follow me on [GitHub](https://github.com/fabiocaccamo)
+- :blue_heart: Follow me on [Twitter](https://twitter.com/fabiocaccamo)
+- :moneybag: Sponsor me on [Github](https://github.com/sponsors/fabiocaccamo)
 
 ## See also
 
