@@ -4,6 +4,9 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.7.2](https://github.com/fabiocaccamo/django-colorfield/releases/tag/0.7.2) - 2022-07-19
+-   Fixed options not working when not using `palette` (choices/samples). #80 (by [@jan-szejko-steelseries](https://github.com/jan-szejko-steelseries) in #81)
+
 ## [0.7.1](https://github.com/fabiocaccamo/django-colorfield/releases/tag/0.7.1) - 2022-06-08
 -   Fixed `ColorField` widget classes. #43 #78 (thanks to [@N1K1TAS95](https://github.com/N1K1TAS95))
 
