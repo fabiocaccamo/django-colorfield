@@ -50,7 +50,7 @@ These are the supported custom options: [`format`](#format), [`image_field`](#im
 
 #### format
 
-The following formats are supported: `hex` *(default)*, `hexa`.
+The following formats are supported: `hex` *(default)*, `hexa`, `rgb`.
 
 ```python
 from colorfield.fields import ColorField

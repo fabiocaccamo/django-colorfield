@@ -19,3 +19,9 @@ COLOR_HEXA_RE = re_compile("#([A-Fa-f0-9]{8}|[A-Fa-f0-9]{4})$")
 color_hexa_validator = RegexValidator(
     COLOR_HEXA_RE, _("Enter a valid hexa color, eg. #00000000"), "invalid"
 )
+
+
+COLOR_RGB_RE = re_compile("(#([\da-f]{3}){1,2}|(rgb|hsl)a\((\d{1,3}%?,\s?){3}(1|0?\.\d+)\)|(rgb|hsl)\(\d{1,3}%?(,\s?\d{1,3}%?){2}\))")
+color_rgb_validator = RegexValidator(
+    COLOR_RGB_RE, _("Enter a valid rgb color, eg. rgb(255, 255, 255)"), "invalid"
+)

@@ -3,7 +3,7 @@
 from django import VERSION as DJANGO_VERSION
 
 from colorfield.utils import get_image_file_background_color
-from colorfield.validators import color_hex_validator, color_hexa_validator
+from colorfield.validators import color_hex_validator, color_hexa_validator, color_rgb_validator
 from colorfield.widgets import ColorWidget
 
 if DJANGO_VERSION >= (1, 8):
@@ -16,9 +16,9 @@ from django.db.models import CharField, signals
 from django.db.models.fields.files import ImageField
 
 
-VALIDATORS_PER_FORMAT = {"hex": color_hex_validator, "hexa": color_hexa_validator}
+VALIDATORS_PER_FORMAT = {"hex": color_hex_validator, "hexa": color_hexa_validator, "rgb": color_rgb_validator}
 
-DEFAULT_PER_FORMAT = {"hex": "#FFFFFF", "hexa": "#FFFFFFFF"}
+DEFAULT_PER_FORMAT = {"hex": "#FFFFFF", "hexa": "#FFFFFFFF", "rgb": "rgb(255, 255, 255)"}
 
 
 class ColorField(CharField):
@@ -29,7 +29,7 @@ class ColorField(CharField):
         # works like Django choices, but does not restrict input to the given choices
         self.samples = kwargs.pop("samples", None)
         self.format = kwargs.pop("format", "hex").lower()
-        if self.format not in ["hex", "hexa"]:
+        if self.format not in ["hex", "hexa", "rgb"]:
             raise ValueError("Unsupported color format: {}".format(self.format))
         self.default_validators = [VALIDATORS_PER_FORMAT[self.format]]
 
