@@ -7,6 +7,7 @@
 [![](https://badges.pufler.dev/visits/fabiocaccamo/django-colorfield?label=visitors&color=blue)](https://badges.pufler.dev)
 [![](https://img.shields.io/pypi/l/django-colorfield.svg?color=blue)](https://github.com/fabiocaccamo/django-colorfield/blob/master/LICENSE.txt)
 
+[![](https://results.pre-commit.ci/badge/github/fabiocaccamo/django-colorfield/master.svg)](https://results.pre-commit.ci/latest/github/fabiocaccamo/django-colorfield/master)
 [![](https://img.shields.io/github/workflow/status/fabiocaccamo/django-colorfield/Test%20package?label=build&logo=github)](https://github.com/fabiocaccamo/django-colorfield)
 [![](https://img.shields.io/codecov/c/gh/fabiocaccamo/django-colorfield?logo=codecov)](https://codecov.io/gh/fabiocaccamo/django-colorfield)
 [![](https://img.shields.io/codacy/grade/194566618f424a819ce43450ea0af081?logo=codacy)](https://www.codacy.com/app/fabiocaccamo/django-colorfield)

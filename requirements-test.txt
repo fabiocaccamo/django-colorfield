@@ -1,4 +1,5 @@
 djangorestframework
 codecov
 coverage
+pre-commit
 tox

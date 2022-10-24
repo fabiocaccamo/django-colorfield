@@ -3,10 +3,8 @@
 from django.core.exceptions import ValidationError as DjangoValidationError
 
 try:
-    from rest_framework.serializers import (
-        CharField,
-        ValidationError as DRFValidationError,
-    )
+    from rest_framework.serializers import CharField
+    from rest_framework.serializers import ValidationError as DRFValidationError
 except ImportError:
     ModuleNotFoundError("Django REST Framework is not installed.")
 

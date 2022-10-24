@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
-from colorfield.fields import ColorField
+import os
+import shutil
 
 from django.conf import settings
 from django.core.exceptions import ImproperlyConfigured, ValidationError
@@ -8,9 +9,9 @@ from django.core.files import File
 from django.forms import fields_for_model
 from django.test import TestCase
 
-from .models import *
+from colorfield.fields import ColorField
 
-import os, shutil
+from .models import *
 
 
 class ColorFieldTestCase(TestCase):

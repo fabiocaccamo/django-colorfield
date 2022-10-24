@@ -11,10 +11,8 @@ if DJANGO_VERSION >= (1, 8):
 else:
     FieldDoesNotExist = Exception
 from django.core.exceptions import ImproperlyConfigured
-
 from django.db.models import CharField, signals
 from django.db.models.fields.files import ImageField
-
 
 VALIDATORS_PER_FORMAT = {"hex": color_hex_validator, "hexa": color_hexa_validator}
 
@@ -111,7 +109,7 @@ class ColorField(CharField):
                     'Invalid "image_field" field type, '
                     'expected an instance of "models.ImageField".'
                 )
-        except FieldDoesNotExist as _:
+        except FieldDoesNotExist:
             raise ImproperlyConfigured(
                 'Invalid "image_field" field name, '
                 '"{}" field not found.'.format(self.image_field)

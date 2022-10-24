@@ -1,9 +1,8 @@
 # -*- coding: utf-8 -*-
 
-from colorfield.fields import ColorField
-
 from django.db import models
 
+from colorfield.fields import ColorField
 
 COLOR_PALETTE = [
     ("#FFFFFF", "white"),
