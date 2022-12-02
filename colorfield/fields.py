@@ -118,7 +118,7 @@ class ColorField(CharField):
         color = self._get_image_field_color(instance)
         color_field_name = self.attname
         color_field_value = getattr(instance, color_field_name, None)
-        if color_field_value != color:
+        if color_field_value != color and color:
             color_field_value = color or self.default
             # update in-memory value
             setattr(instance, color_field_name, color_field_value)
