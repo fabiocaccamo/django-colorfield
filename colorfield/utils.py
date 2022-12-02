@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from PIL import Image
+from PIL import Image, UnidentifiedImageError
 
 
 def get_image_background_color(img, alpha=False):
@@ -14,6 +14,9 @@ def get_image_background_color(img, alpha=False):
 
 def get_image_file_background_color(img_file, alpha=False):
     color = ""
-    with Image.open(img_file) as image:
-        color = get_image_background_color(image, alpha)
+    try:
+        with Image.open(img_file) as image:
+            color = get_image_background_color(image, alpha)
+    except UnidentifiedImageError:
+        pass
     return color
