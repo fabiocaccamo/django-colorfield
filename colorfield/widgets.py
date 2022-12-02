@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 from django.conf import settings
 from django.forms import TextInput
 from django.template.loader import render_to_string

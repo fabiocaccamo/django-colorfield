@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 from django.test import TestCase
 from rest_framework.serializers import Serializer
 from rest_framework.serializers import ValidationError as DRFValidationError

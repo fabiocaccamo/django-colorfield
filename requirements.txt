@@ -1,2 +1,2 @@
-django >=1.7
-Pillow >= 5.0
+django >= 2.2
+Pillow >= 9.0.0
