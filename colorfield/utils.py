@@ -1,6 +1,12 @@
 # -*- coding: utf-8 -*-
 
-from PIL import Image, UnidentifiedImageError
+from PIL import Image
+
+try:
+    from PIL import UnidentifiedImageError
+except ImportError:
+    # python 2.7
+    UnidentifiedImageError = Exception
 
 
 def get_image_background_color(img, alpha=False):
