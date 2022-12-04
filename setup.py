@@ -51,8 +51,12 @@ setup(
         "admin",
         "python",
     ],
-    requires=["django (>=2.2)"],
-    install_requires=["Pillow (>=9.0.0)"],
+    requires=[
+        "django (>= 2.2)",
+    ],
+    install_requires=[
+        "Pillow (>= 9.0.0)",
+    ],
     classifiers=[
         "Development Status :: 5 - Production/Stable",
         "Environment :: Web Environment",
