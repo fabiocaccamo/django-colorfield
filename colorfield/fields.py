@@ -20,7 +20,7 @@ class ColorField(CharField):
         self.samples = kwargs.pop("samples", None)
         self.format = kwargs.pop("format", "hex").lower()
         if self.format not in ["hex", "hexa"]:
-            raise ValueError("Unsupported color format: {}".format(self.format))
+            raise ValueError(f"Unsupported color format: {self.format}")
         self.default_validators = [VALIDATORS_PER_FORMAT[self.format]]
 
         self.image_field = kwargs.pop("image_field", None)
@@ -91,13 +91,13 @@ class ColorField(CharField):
             field_cls = instance._meta.get_field(self.image_field)
             if not isinstance(field_cls, ImageField):
                 raise ImproperlyConfigured(
-                    'Invalid "image_field" field type, '
-                    'expected an instance of "models.ImageField".'
+                    "Invalid 'image_field' field type, "
+                    "expected an instance of 'models.ImageField'."
                 )
         except FieldDoesNotExist:
             raise ImproperlyConfigured(
-                'Invalid "image_field" field name, '
-                '"{}" field not found.'.format(self.image_field)
+                "Invalid 'image_field' field name, "
+                f"'{self.image_field}' field not found."
             )
         # update value from picking color from image field
         color = self._get_image_field_color(instance)

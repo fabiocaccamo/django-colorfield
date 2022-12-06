@@ -65,9 +65,7 @@ class ColorFieldTestCase(TestCase):
             obj.full_clean()
         except ValidationError as e:
             self.fail(
-                "Failed to assign predefined palette choice to ColorField model instance. Message: {}".format(
-                    e
-                )
+                f"Failed to assign predefined palette choice to ColorField model instance. Message: {e}"
             )
 
         # 2. Test with value outside of the choices
@@ -88,9 +86,7 @@ class ColorFieldTestCase(TestCase):
             obj.full_clean()
         except ValidationError as e:
             self.fail(
-                "Failed to assign predefined palette choice to ColorField model instance. Message: {}".format(
-                    e
-                )
+                f"Failed to assign predefined palette choice to ColorField model instance. Message: {e}"
             )
 
         # 2. Test with value outside of the choices
@@ -100,9 +96,7 @@ class ColorFieldTestCase(TestCase):
             obj.full_clean()
         except ValidationError as e:
             self.fail(
-                "Failed to assign value outside palette choices to ColorField model instance. Message: {}".format(
-                    e
-                )
+                f"Failed to assign value outside palette choices to ColorField model instance. Message: {e}"
             )
 
     def test_model_with_null(self):
