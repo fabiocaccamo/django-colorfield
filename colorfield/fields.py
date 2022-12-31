@@ -35,7 +35,7 @@ class ColorField(CharField):
             kwargs.setdefault("default", "")
         else:
             kwargs.setdefault("default", DEFAULT_PER_FORMAT[self.format])
-        super(ColorField, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
 
         if self.choices and self.samples:
             raise ImproperlyConfigured(
@@ -59,17 +59,17 @@ class ColorField(CharField):
                 # 'palette_choices_only': bool(self.choices),
             }
         )
-        return super(ColorField, self).formfield(**kwargs)
+        return super().formfield(**kwargs)
 
     def contribute_to_class(self, cls, name, **kwargs):
-        super(ColorField, self).contribute_to_class(cls, name, **kwargs)
+        super().contribute_to_class(cls, name, **kwargs)
         if cls._meta.abstract:
             return
         if self.image_field:
             signals.post_save.connect(self._update_from_image_field, sender=cls)
 
     def deconstruct(self):
-        name, path, args, kwargs = super(ColorField, self).deconstruct()
+        name, path, args, kwargs = super().deconstruct()
         kwargs["samples"] = self.samples
         kwargs["image_field"] = self.image_field
         return name, path, args, kwargs
