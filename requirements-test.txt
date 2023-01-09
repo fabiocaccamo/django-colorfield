@@ -1,5 +1,5 @@
 djangorestframework == 3.14.0
 codecov == 2.1.12
-coverage == 7.0.3
+coverage == 7.0.4
 pre-commit == 2.21.0
 tox == 4.2.4
