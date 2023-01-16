@@ -1,4 +1,4 @@
 djangorestframework
-coverage == 7.0.5
-pre-commit == 2.21.0
-tox == 4.3.1
+coverage == 7.0.*
+pre-commit == 2.21.*
+tox == 4.3.*
