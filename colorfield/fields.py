@@ -55,7 +55,8 @@ class ColorField(CharField):
                 "default": self.get_default(),
                 "format": self.format,
                 "palette": palette,
-                # # this will be used to hide the widget color spectrum if choices is defined:
+                # # TODO: in case choices is defined,
+                # # this will be used to hide the widget color spectrum
                 # 'palette_choices_only': bool(self.choices),
             }
         )
