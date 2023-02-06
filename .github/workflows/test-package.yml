@@ -48,7 +48,7 @@ jobs:
 
     - name: Upgrade pip version
       run: |
-        pip install pip --upgrade
+        python -m pip install --upgrade pip
 
     - name: Install django
       run: |
@@ -62,6 +62,7 @@ jobs:
     - name: Run tests
       run: |
         coverage run --append --source=colorfield runtests.py
+        coverage report --show-missing
         coverage xml -o ./coverage.xml
 
     - name: Upload coverage to Codecov
