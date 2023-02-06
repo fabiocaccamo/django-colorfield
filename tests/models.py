@@ -9,7 +9,6 @@ COLOR_PALETTE = [
 
 
 class Color(models.Model):
-
     color = ColorField(blank=True)
 
     class Meta:
@@ -17,7 +16,6 @@ class Color(models.Model):
 
 
 class ColorNull(models.Model):
-
     color = ColorField(null=True)
 
     class Meta:
@@ -25,7 +23,6 @@ class ColorNull(models.Model):
 
 
 class ColorChoices(models.Model):
-
     COLOR_CHOICES = COLOR_PALETTE
 
     color = ColorField(blank=True, choices=COLOR_CHOICES)
@@ -35,7 +32,6 @@ class ColorChoices(models.Model):
 
 
 class ColorSamples(models.Model):
-
     COLOR_SAMPLES = COLOR_PALETTE
 
     color = ColorField(blank=True, samples=COLOR_SAMPLES)
@@ -45,7 +41,6 @@ class ColorSamples(models.Model):
 
 
 class ColorNoImageField(models.Model):
-
     color = ColorField(image_field="image")
 
     class Meta:
@@ -53,7 +48,6 @@ class ColorNoImageField(models.Model):
 
 
 class ColorInvalidImageField(models.Model):
-
     image = models.CharField(blank=True, max_length=10)
     color = ColorField(image_field="image")
 
@@ -62,7 +56,6 @@ class ColorInvalidImageField(models.Model):
 
 
 class ColorImageField(models.Model):
-
     image = models.ImageField(blank=True, upload_to="temp")
     color = ColorField(image_field="image")
 
@@ -71,7 +64,6 @@ class ColorImageField(models.Model):
 
 
 class ColorImageFieldAndDefault(models.Model):
-
     image = models.ImageField(blank=True, upload_to="temp")
     color = ColorField(image_field="image", default="#FF0000")
 
@@ -80,7 +72,6 @@ class ColorImageFieldAndDefault(models.Model):
 
 
 class ColorImageFieldAndFormat(models.Model):
-
     image = models.ImageField(blank=True, upload_to="temp")
     color = ColorField(image_field="image", format="hexa")
 

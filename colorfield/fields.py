@@ -12,7 +12,6 @@ DEFAULT_PER_FORMAT = {"hex": "#FFFFFF", "hexa": "#FFFFFFFF"}
 
 
 class ColorField(CharField):
-
     default_validators = []
 
     def __init__(self, *args, **kwargs):

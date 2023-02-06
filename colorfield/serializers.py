@@ -10,7 +10,6 @@ from colorfield.validators import color_hex_validator, color_hexa_validator
 
 
 class ColorField(CharField):
-
     default_error_messages = {
         "invalid": [
             color_hex_validator.message,
