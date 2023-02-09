@@ -8,8 +8,18 @@ from django.forms import fields_for_model
 from django.test import TestCase
 
 from colorfield.fields import ColorField
-
-from .models import *
+from tests.models import (
+    COLOR_PALETTE,
+    Color,
+    ColorChoices,
+    ColorImageField,
+    ColorImageFieldAndDefault,
+    ColorImageFieldAndFormat,
+    ColorInvalidImageField,
+    ColorNoImageField,
+    ColorNull,
+    ColorSamples,
+)
 
 
 class ColorFieldTestCase(TestCase):
@@ -65,7 +75,8 @@ class ColorFieldTestCase(TestCase):
             obj.full_clean()
         except ValidationError as e:
             self.fail(
-                f"Failed to assign predefined palette choice to ColorField model instance. Message: {e}"
+                "Failed to assign predefined palette choice "
+                f"to ColorField model instance. Message: {e}"
             )
 
         # 2. Test with value outside of the choices
@@ -86,7 +97,8 @@ class ColorFieldTestCase(TestCase):
             obj.full_clean()
         except ValidationError as e:
             self.fail(
-                f"Failed to assign predefined palette choice to ColorField model instance. Message: {e}"
+                "Failed to assign predefined palette choice "
+                f"to ColorField model instance. Message: {e}"
             )
 
         # 2. Test with value outside of the choices
@@ -96,7 +108,8 @@ class ColorFieldTestCase(TestCase):
             obj.full_clean()
         except ValidationError as e:
             self.fail(
-                f"Failed to assign value outside palette choices to ColorField model instance. Message: {e}"
+                "Failed to assign value outside palette choices "
+                f"to ColorField model instance. Message: {e}"
             )
 
     def test_model_with_null(self):

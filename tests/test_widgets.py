@@ -1,6 +1,6 @@
 from django.test import TestCase
 
-from colorfield.widgets import ColorWidget
+# from colorfield.widgets import ColorWidget
 
 
 class ColorWidgetTestCase(TestCase):

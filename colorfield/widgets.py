@@ -32,6 +32,4 @@ class ColorWidget(TextInput):
         return context
 
     def render(self, name, value, attrs=None, renderer=None):
-        return render_to_string(
-            self.template_name, self.get_context(name, value, attrs)
-        )
+        return render_to_string(self.template_name, self.get_context(name, value, attrs))
