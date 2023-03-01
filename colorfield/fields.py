@@ -94,11 +94,11 @@ class ColorField(CharField):
                     "Invalid 'image_field' field type, "
                     "expected an instance of 'models.ImageField'."
                 )
-        except FieldDoesNotExist:
+        except FieldDoesNotExist as error:
             raise ImproperlyConfigured(
                 "Invalid 'image_field' field name, "
-                f"'{self.image_field}' field not found."
-            )
+                f"{self.image_field!r} field not found."
+            ) from error
         # update value from picking color from image field
         color = self._get_image_field_color(instance)
         color_field_name = self.attname
