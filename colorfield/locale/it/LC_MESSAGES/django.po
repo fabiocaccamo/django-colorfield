@@ -19,8 +19,8 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 #: colorfield/validators.py:9
 msgid "Enter a valid hex color, eg. #000000"
-msgstr ""
+msgstr "Inserisci un colore esadecimale valido, ad es. #000000"
 
 #: colorfield/validators.py:17
-msgid "Inserisci un colore valido in formato hexa, es. #00000000"
-msgstr ""
+msgid "Enter a valid hexa color, eg. #00000000"
+msgstr "Inserisci un colore esadecimale valido, ad es. #00000000"
