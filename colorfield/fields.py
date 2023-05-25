@@ -2,7 +2,7 @@ from django.core.exceptions import FieldDoesNotExist, ImproperlyConfigured
 from django.db.models import CharField, signals
 from django.db.models.fields.files import ImageField
 
-from colorfield.utils import get_image_file_background_color
+from colorfield.utils import get_image_file_background_color, is_pil_installed
 from colorfield.validators import color_hex_validator, color_hexa_validator
 from colorfield.widgets import ColorWidget
 
@@ -23,8 +23,12 @@ class ColorField(CharField):
         self.default_validators = [VALIDATORS_PER_FORMAT[self.format]]
 
         self.image_field = kwargs.pop("image_field", None)
-        if self.image_field:
-            kwargs.setdefault("blank", True)
+        if is_pil_installed():
+            if self.image_field:
+                kwargs.setdefault("blank", True)
+        else:
+            if self.image_field is not None:
+                raise ImproperlyConfigured("PIL package is required to use image as color source")
 
         kwargs.setdefault("max_length", 18)
         if kwargs.get("null"):
