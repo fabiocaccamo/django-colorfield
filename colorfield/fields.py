@@ -28,7 +28,9 @@ class ColorField(CharField):
                 kwargs.setdefault("blank", True)
         else:
             if self.image_field is not None:
-                raise ImproperlyConfigured("PIL package is required to use image as color source")
+                raise ImproperlyConfigured(
+                    "PIL package is required to use image as color source"
+                )
 
         kwargs.setdefault("max_length", 18)
         if kwargs.get("null"):

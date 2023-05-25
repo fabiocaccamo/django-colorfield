@@ -1,14 +1,17 @@
 import sys
+
 try:
     from PIL import Image, UnidentifiedImageError
 except ImportError:
     pass
 
+
 def is_pil_installed() -> bool:
     """
-        Check for pil / pillow package in system modules
+    Check for pil / pillow package in system modules
     """
     return "PIL" in sys.modules
+
 
 def get_image_background_color(img, alpha=False):
     img = img.convert("RGBA" if alpha else "RGB")
