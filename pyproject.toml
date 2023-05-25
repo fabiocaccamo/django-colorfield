@@ -42,14 +42,14 @@ classifiers = [
     "Topic :: Software Development :: Build Tools",
 ]
 dynamic = ["version"]
-[project.optional-dependencies]
-image = [
-    "Pillow (>= 9.0.0)",
-]
 maintainers = [
     { name = "Fabio Caccamo", email = "fabio.caccamo@gmail.com" },
 ]
 
+[project.optional-dependencies]
+image = [
+    "Pillow (>= 9.0.0)"
+]
 [project.readme]
 file = "README.md"
 content-type = "text/markdown"
