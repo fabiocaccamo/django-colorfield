@@ -41,11 +41,11 @@ classifiers = [
     "Programming Language :: Python :: 3.11",
     "Topic :: Software Development :: Build Tools",
 ]
+dynamic = ["version"]
 [project.optional-dependencies]
 image = [
     "Pillow (>= 9.0.0)",
 ]
-dynamic = ["version"]
 maintainers = [
     { name = "Fabio Caccamo", email = "fabio.caccamo@gmail.com" },
 ]
