@@ -29,6 +29,8 @@ class ColorWidget(TextInput):
                 "value": value,
             }
         )
+        if "format" not in context:
+            context.update({"format": "hex"})
         return context
 
     def render(self, name, value, attrs=None, renderer=None):
