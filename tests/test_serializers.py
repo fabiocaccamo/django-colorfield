@@ -61,6 +61,7 @@ class ColorFieldTestCase(TestCase):
             "rgba(128,255,127)",
             "rgba(128,255,127,A)",
             "rgba(128, 255, 127, A)",
+            "rgba(128, 255, 127, 1.5)",
             "rgba(128, 12, 35, 1, 1)",
             "rgba(128, 12, 35, 1, 1, 2)",
         ]
