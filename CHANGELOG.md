@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.10.0](https://github.com/fabiocaccamo/django-colorfield/releases/tag/0.10.0) - 2023-09-04
+-   Add support for `RGB` and `RGBA` formats. (by [@browniebroke](https://github.com/browniebroke) in #151)
+-   Fix typos in code snippets from `README`. (by [@browniebroke](https://github.com/browniebroke) in #152)
+-   Fix warnings in browser console when using `ColorWidget` without specifying format. (by [@fallen](https://github.com/fallen) in #145)
+-   Bump requirements.
+
 ## [0.9.0](https://github.com/fabiocaccamo/django-colorfield/releases/tag/0.9.0) - 2023-06-13
 -   Add `Django 4.2` support.
 -   Drop `Django 2.2` support.
