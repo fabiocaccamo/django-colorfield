@@ -17,3 +17,50 @@ color_hexa_validator = RegexValidator(
     _("Enter a valid hexa color, eg. #00000000"),
     "invalid",
 )
+
+COLOR_RGB_RE = re.compile(
+    # prefix and opening parenthesis
+    r"^rgb\("
+    # first number
+    r"(\d{1,3})"
+    # comma and optional space
+    r",\s?"
+    # second number
+    r"(\d{1,3})"
+    # comma and optional space
+    r",\s?"
+    # third number
+    r"(\d{1,3})"
+    # closing parenthesis
+    r"\)$"
+)
+color_rgb_validator = RegexValidator(
+    COLOR_RGB_RE,
+    _("Enter a valid rgb color, eg. rgb(128, 128, 128)"),
+    "invalid",
+)
+COLOR_RGBA_RE = re.compile(
+    # prefix and opening parenthesis
+    r"^rgba\("
+    # first number
+    r"(\d{1,3})"
+    # comma and optional space
+    r",\s?"
+    # second number
+    r"(\d{1,3})"
+    # comma and optional space
+    r",\s?"
+    # third number§
+    r"(\d{1,3})"
+    # comma and optional space
+    r",\s?"
+    # alpha channel: decimal number between 0 and 1
+    r"([0-1](\.\d+)?)"
+    # closing parenthesis
+    r"\)$"
+)
+color_rgba_validator = RegexValidator(
+    COLOR_RGBA_RE,
+    _("Enter a valid rgba color, eg. rgba(128, 128, 128, 0.5)"),
+    "invalid",
+)
