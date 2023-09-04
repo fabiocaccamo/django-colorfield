@@ -51,6 +51,7 @@ class ColorFieldTestCase(TestCase):
             "rgba(50, 30, 128, 0.5)",
             "rgba(45,10, 99, 0.6)",
             "rgba(128, 128, 128, 0.3)",
+            "rgba(128, 128, 128, 0.34)",
             "rgba(156,200,250,0)",
         ]
         self.invalid_rgba_colors = [
@@ -62,6 +63,7 @@ class ColorFieldTestCase(TestCase):
             "rgba(128,255,127,A)",
             "rgba(128, 255, 127, A)",
             "rgba(128, 255, 127, 1.5)",
+            "rgba(128, 255, 127, 0.6777777)",
             "rgba(128, 12, 35, 1, 1)",
             "rgba(128, 12, 35, 1, 1, 2)",
         ]
