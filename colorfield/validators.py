@@ -21,15 +21,15 @@ color_hexa_validator = RegexValidator(
 COLOR_RGB_RE = re.compile(
     # prefix and opening parenthesis
     r"^rgb\("
-    # first number
+    # first number: red channel
     r"(\d{1,3})"
     # comma and optional space
     r",\s?"
-    # second number
+    # second number: green channel
     r"(\d{1,3})"
     # comma and optional space
     r",\s?"
-    # third number
+    # third number: blue channel
     r"(\d{1,3})"
     # closing parenthesis
     r"\)$"
@@ -42,15 +42,15 @@ color_rgb_validator = RegexValidator(
 COLOR_RGBA_RE = re.compile(
     # prefix and opening parenthesis
     r"^rgba\("
-    # first number
+    # first number: red channel
     r"(\d{1,3})"
     # comma and optional space
     r",\s?"
-    # second number
+    # second number: green channel
     r"(\d{1,3})"
     # comma and optional space
     r",\s?"
-    # third number§
+    # third number: blue channel
     r"(\d{1,3})"
     # comma and optional space
     r",\s?"
