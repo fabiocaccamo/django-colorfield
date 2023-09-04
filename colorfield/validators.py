@@ -55,7 +55,7 @@ COLOR_RGBA_RE = re.compile(
     # comma and optional space
     r",\s?"
     # alpha channel: decimal number between 0 and 1
-    r"(0(\.\d{1,2})?|1)"
+    r"(0(\.\d{1,2})?|1(\.0)?)"
     # closing parenthesis
     r"\)$"
 )
