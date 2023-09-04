@@ -77,3 +77,11 @@ class ColorImageFieldAndFormat(models.Model):
 
     class Meta:
         app_label = "tests"
+
+
+class ColorFieldRGBFormat(models.Model):
+    color_rgb = ColorField(format="rgb")
+    color_rgba = ColorField(format="rgba")
+
+    class Meta:
+        app_label = "tests"
