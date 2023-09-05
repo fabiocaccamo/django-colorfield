@@ -18,8 +18,8 @@ def get_image_background_color(img, img_format: str):
             )
         # Should look like `rgb(1, 2, 3) or rgba(1, 2, 3, 1.0)
         color = f"{img_format}{pixel_color}"
-    else:
-        raise ValueError(f"Unsupported color format: {img_format}")
+    else:  # pragma: no cover
+        raise NotImplementedError(f"Unsupported color format: {img_format}")
     return color
 
 
