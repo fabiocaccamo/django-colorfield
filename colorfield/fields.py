@@ -41,7 +41,7 @@ class ColorField(CharField):
         if self.image_field:
             kwargs.setdefault("blank", True)
 
-        kwargs.setdefault("max_length", 18)
+        kwargs.setdefault("max_length", 25)
         if kwargs.get("null"):
             kwargs.setdefault("blank", True)
             kwargs.setdefault("default", None)
