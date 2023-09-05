@@ -41,7 +41,7 @@ class ColorField(CharField):
         if self.image_field:
             kwargs.setdefault("blank", True)
 
-        kwargs.setdefault("max_length", 18)
+        kwargs.setdefault("max_length", 25)
         if kwargs.get("null"):
             kwargs.setdefault("blank", True)
             kwargs.setdefault("default", None)
@@ -93,9 +93,8 @@ class ColorField(CharField):
         color = ""
         image_file = getattr(instance, self.image_field)
         if image_file:
-            alpha = self.format in {"hexa", "rgba"}
             with image_file.open() as _:
-                color = get_image_file_background_color(image_file, alpha)
+                color = get_image_file_background_color(image_file, self.format)
         return color
 
     def _update_from_image_field(self, instance, created, *args, **kwargs):
