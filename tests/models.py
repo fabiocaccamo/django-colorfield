@@ -85,3 +85,12 @@ class ColorFieldRGBFormat(models.Model):
 
     class Meta:
         app_label = "tests"
+
+
+class ColorImageFieldRGBFormat(models.Model):
+    image = models.ImageField(blank=True, upload_to="temp")
+    color_rgb = ColorField(image_field="image", format="rgb")
+    color_rgba = ColorField(image_field="image", format="rgba")
+
+    class Meta:
+        app_label = "tests"

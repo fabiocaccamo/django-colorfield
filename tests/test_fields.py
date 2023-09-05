@@ -16,6 +16,7 @@ from tests.models import (
     ColorImageField,
     ColorImageFieldAndDefault,
     ColorImageFieldAndFormat,
+    ColorImageFieldRGBFormat,
     ColorInvalidImageField,
     ColorNoImageField,
     ColorNull,
@@ -181,3 +182,18 @@ class ColorFieldTestCase(TestCase):
         obj_saved = ColorFieldRGBFormat.objects.get(pk=obj.pk)
         self.assertEqual(obj_saved.color_rgb, "rgb(123, 123, 123)")
         self.assertEqual(obj_saved.color_rgba, "rgba(5, 10, 128, 0.5)")
+
+    def test_model_with_image_rgb_format(self):
+        obj = ColorImageFieldRGBFormat()
+        filename = "django.png"
+        self.save_image_to_field_from_path(obj.image, filename)
+        obj.save()
+        # ensure the image has been saved correctly
+        self.assertTrue(obj.image.path.endswith(filename))
+        # check in-memory value
+        self.assertEqual(obj.color_rgb, "rgb(8, 45, 32)")
+        self.assertEqual(obj.color_rgba, "rgba(8, 45, 32, 1.0)")
+        # check stored value
+        obj_saved = ColorImageFieldRGBFormat.objects.get(pk=obj.pk)
+        self.assertEqual(obj_saved.color_rgb, "rgb(8, 45, 32)")
+        self.assertEqual(obj_saved.color_rgba, "rgba(8, 45, 32, 1.0)")
