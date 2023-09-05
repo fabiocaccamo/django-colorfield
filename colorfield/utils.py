@@ -14,7 +14,7 @@ def get_image_background_color(img, img_format: str):
             # Normalize alpha channel to be between 0 and 1
             pixel_color = (
                 *pixel_color[:3],
-                pixel_color[3] / 255,
+                round(pixel_color[3] / 255, 2),
             )
         # Should look like `rgb(1, 2, 3) or rgba(1, 2, 3, 1.0)
         color = f"{img_format}{pixel_color}"

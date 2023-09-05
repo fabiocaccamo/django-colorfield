@@ -172,16 +172,16 @@ class ColorFieldTestCase(TestCase):
     def test_model_rgb_formats(self):
         obj = ColorFieldRGBFormat(
             color_rgb="rgb(123, 123, 123)",
-            color_rgba="rgba(5, 10, 128, 0.5)",
+            color_rgba="rgba(128, 199, 255, 0.55)",
         )
         obj.save()
         # check in-memory values
         self.assertEqual(obj.color_rgb, "rgb(123, 123, 123)")
-        self.assertEqual(obj.color_rgba, "rgba(5, 10, 128, 0.5)")
+        self.assertEqual(obj.color_rgba, "rgba(128, 199, 255, 0.55)")
         # check stored value
         obj_saved = ColorFieldRGBFormat.objects.get(pk=obj.pk)
         self.assertEqual(obj_saved.color_rgb, "rgb(123, 123, 123)")
-        self.assertEqual(obj_saved.color_rgba, "rgba(5, 10, 128, 0.5)")
+        self.assertEqual(obj_saved.color_rgba, "rgba(128, 199, 255, 0.55)")
 
     def test_model_with_image_rgb_format(self):
         obj = ColorImageFieldRGBFormat()
