@@ -47,7 +47,6 @@ dependencies = [
     "Pillow (>= 9.0.0)",
 ]
 dynamic = ["version"]
-license = "MIT"
 maintainers = [
     { name = "Fabio Caccamo", email = "fabio.caccamo@gmail.com" },
 ]
