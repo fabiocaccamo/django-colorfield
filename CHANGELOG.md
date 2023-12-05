@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.11.0](https://github.com/fabiocaccamo/django-colorfield/releases/tag/0.11.0) - 2023-12-05
+-   Add `Python 3.12` support.
+-   Add `Django 5.0` support.
+-   Speed-up test workflow.
+-   Bump requirements.
+-   Bump `pre-commit` hooks.
+
 ## [0.10.1](https://github.com/fabiocaccamo/django-colorfield/releases/tag/0.10.1) - 2023-09-05
 -   Fix crash when using `image_field` option with `RGB`/`RGBA` formats. #153 (by [@browniebroke](https://github.com/browniebroke) in #154)
 -   Fix field `max_length` (increased from `18` to `25`).
