@@ -102,6 +102,35 @@ class MyModel(models.Model):
     color = ColorField(choices=COLOR_PALETTE)
 ```
 
+### Forms
+
+#### Model forms
+
+The `colorfield.fields.ColorField` can be used in Django model forms (`django.forms.ModelForm`) to provide a color picker widget.
+When used in a model form, the field automatically validates the color format based on the specified `format` (e.g., `hex`, `rgb`, `rgba`).
+
+```python
+from django import forms
+
+class MyModelForm(forms.ModelForm):
+    class Meta:
+        model = MyModel
+        fields = ["color"]
+```
+
+#### Plain forms
+
+The `colorfield.forms.ColorField` can be used in plain Django forms (`django.forms.Form`) to provide a color-picker widget.
+This is useful when you need a color input outside of a model context.
+
+```python
+from django import forms
+from colorfield.forms import ColorField
+
+class MyForm(forms.Form):
+    color = ColorField(initial="#FF0000", format="hex")
+```
+
 ### Admin
 The admin will kindly provide a simple [color picker](http://jscolor.com/) for all color fields. :)
 
