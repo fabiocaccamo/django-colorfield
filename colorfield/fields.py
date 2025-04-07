@@ -67,11 +67,10 @@ class ColorField(CharField):
         kwargs["widget"] = ColorWidget(
             attrs={
                 "default": self.get_default(),
-                "format": self.format,
-                "palette": palette,
-                # # TODO: in case choices is defined,
-                # # this will be used to hide the widget color spectrum
-                # 'palette_choices_only': bool(self.choices),
+                "format": self.format[0:3] if self.format else "hex",
+                "alpha": self.format[-1] == "a" if self.format else False,
+                "swatches": palette,
+                "swatches_only": bool(self.choices),
             }
         )
         return super().formfield(**kwargs)

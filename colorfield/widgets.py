@@ -8,13 +8,15 @@ class ColorWidget(TextInput):
 
     class Media:
         if settings.DEBUG:
+            css = {"all": ["colorfield/coloris/coloris.css"]}
             js = [
-                "colorfield/jscolor/jscolor.js",
+                "colorfield/coloris/coloris.js",
                 "colorfield/colorfield.js",
             ]
         else:
+            css = {"all": ["colorfield/coloris/coloris.min.css"]}
             js = [
-                "colorfield/jscolor/jscolor.min.js",
+                "colorfield/coloris/coloris.min.js",
                 "colorfield/colorfield.js",
             ]
 
@@ -27,10 +29,18 @@ class ColorWidget(TextInput):
                 "widget": self,
                 "name": name,
                 "value": value,
+                "data_coloris": {
+                    "format": context.get("format", "hex"),
+                    "required": context.get("required", False),
+                    "clearButton": not bool(context.get("required")),
+                    "alpha": bool(context.get("alpha")),
+                    "forceAlpha": bool(context.get("alpha")),
+                    "swatches": context.get("swatches", []),
+                    "swatchesOnly": bool(context.get("swatches", []))
+                    and bool(context.get("swatches_only")),
+                },
             }
         )
-        if "format" not in context:
-            context.update({"format": "hex"})
         return context
 
     def render(self, name, value, attrs=None, renderer=None):
