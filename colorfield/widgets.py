@@ -3,20 +3,15 @@ from django.forms import TextInput
 from django.template.loader import render_to_string
 
 
+_minimize = "" if settings.DEBUG else ".min"
+
+
 class ColorWidget(TextInput):
     template_name = "colorfield/color.html"
 
     class Media:
-        if settings.DEBUG:
-            js = [
-                "colorfield/jscolor/jscolor.js",
-                "colorfield/colorfield.js",
-            ]
-        else:
-            js = [
-                "colorfield/jscolor/jscolor.min.js",
-                "colorfield/colorfield.js",
-            ]
+        css = {"all": [f"colorfield/coloris/coloris{_minimize}.css"]}
+        js = [f"colorfield/coloris/coloris{_minimize}.js"]
 
     def get_context(self, name, value, attrs=None):
         context = {}
@@ -31,6 +26,15 @@ class ColorWidget(TextInput):
         )
         if "format" not in context:
             context.update({"format": "hex"})
+
+        context.update(
+            {
+                "alpha": str(bool(context.get("alpha"))).lower(),
+                "clear_button": str(not bool(context.get("required"))).lower(),
+                "swatches_only": str(bool(context.get("swatches_only"))).lower(),
+            }
+        )
+
         return context
 
     def render(self, name, value, attrs=None, renderer=None):
