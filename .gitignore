@@ -63,3 +63,7 @@ screenshots
 TODO.txt
 
 .idea/
+
+# example db
+db.sqlite3
+temp
