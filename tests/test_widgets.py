@@ -9,16 +9,16 @@ CHOICES = [choice[0] for choice in COLOR_PALETTE]
 
 class ColorWidgetTestCase(TestCase):
     def test_basic(self):
-        widget = ColorWidget()
+        widget = ColorWidget(attrs={"id": "id_color"})
         text = widget.render("color", "#FFFFFF")
         self.assertIn('<input type="text"', text)
-        self.assertIn('id=""', text)
-        self.assertIn('class="colorfield_field coloris form-control"', text)
+        self.assertIn('id="id_color"', text)
+        self.assertIn('class="colorfield_field coloris id_color form-control"', text)
         self.assertIn('name="color"', text)
         self.assertIn('value="#FFFFFF"', text)
         self.assertIn('placeholder="#FFFFFF"', text)
         self.assertIn(
-            "data-coloris=\"{format:'hex',alpha:false,forceAlpha:false,required:false,clearButton:true}\"",
+            "data-coloris=\"{'format':'hex','alpha':false,'forceAlpha':false,'required':false,'clearButton':true}\"",
             text,
         )
 
@@ -28,9 +28,9 @@ class ColorWidgetTestCase(TestCase):
         self.assertIn('name="color"', text)
         self.assertIn('value=""', text)
         self.assertIn(
-            "data-coloris=\"{format:'hex',alpha:false,forceAlpha:false,"
-            "required:false,clearButton:true,"
-            "swatches:['#FFFFFF', '#000000'],swatchesOnly:false}\"",
+            "data-coloris=\"{'format':'hex','alpha':false,'forceAlpha':false,"
+            "'required':false,'clearButton':true,"
+            "'swatches':['#FFFFFF', '#000000'],'swatchesOnly':false}\"",
             text,
         )
 
@@ -43,7 +43,7 @@ class ColorWidgetTestCase(TestCase):
         )
         # swatches_only is ignored if there are no swatches
         self.assertIn(
-            "data-coloris=\"{format:'rgb',alpha:false,forceAlpha:false,"
-            'required:false,clearButton:true}"',
+            "data-coloris=\"{'format':'rgb','alpha':false,'forceAlpha':false,"
+            "'required':false,'clearButton':true}\"",
             text,
         )

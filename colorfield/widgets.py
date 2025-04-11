@@ -11,7 +11,10 @@ class ColorWidget(TextInput):
 
     class Media:
         css = {"all": [f"colorfield/coloris/coloris{_minimize}.css"]}
-        js = [f"colorfield/coloris/coloris{_minimize}.js"]
+        js = [
+            f"colorfield/coloris/coloris{_minimize}.js",
+            "colorfield/colorfield.js",
+        ]
 
     def get_context(self, name, value, attrs=None):
         context = {}
