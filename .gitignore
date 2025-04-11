@@ -8,6 +8,7 @@ __pycache__/
 ## Local setup
 .vscode/
 .venv/
+venv/
 
 # Distribution / packaging
 .Python
@@ -62,3 +63,7 @@ screenshots
 TODO.txt
 
 .idea/
+
+# example db
+db.sqlite3
+temp

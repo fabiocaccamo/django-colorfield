@@ -1,9 +1,11 @@
 <input type="text"
  id="{{ id }}"
- class="colorfield_field jscolor {% if class %}{{ class }}{% else %}form-control{% endif %}"
+ class="colorfield_field coloris {{ id }} {% if class %}{{ class }}{% else %}form-control{% endif %}"
  name="{{ name }}"
  value="{% firstof value default '' %}"
  placeholder="{% firstof value default '' %}"
- data-jscolor="{hash:true,width:225,height:150,format:'{{ format }}',required:{% if required %}true{% else %}false{% endif %},paletteCols:4,paletteHeight:28{% if palette %},palette:{{ palette|safe }}{% endif %}}"
+ {# pseudo JSON object #}
+ data-coloris="{'format':'{{ format }}','alpha':{{ alpha }},'forceAlpha':{{ alpha }},'required':{% if required %}true{% else %}false{% endif %},'clearButton':{{ clear_button }}{% if swatches %},'swatches':{{ swatches|safe }},'swatchesOnly':{{ swatches_only }}{% endif %}}"
  {% if disabled %}disabled{% endif %}
- {% if required %}required{% endif %} />
+ {% if required %}required{% endif %}
+/>

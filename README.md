@@ -132,7 +132,7 @@ class MyForm(forms.Form):
 ```
 
 ### Admin
-The admin will kindly provide a simple [color picker](http://jscolor.com/) for all color fields. :)
+The admin will kindly provide a simple [color picker](https://coloris.js.org/) for all color fields. :)
 
 ---
 
