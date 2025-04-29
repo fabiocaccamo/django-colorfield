@@ -87,6 +87,16 @@ class ColorFieldTestCase(TestCase):
         with self.assertRaises(ValidationError):
             obj.full_clean()
 
+        # 3. Test with predefined choice with different case
+        obj.color = "#fFfFfF"
+        try:
+            obj.full_clean()
+        except ValidationError as e:
+            self.fail(
+                "Failed to assign predefined palette choice "
+                f"to ColorField model instance. Message: {e}"
+            )
+
     def test_clean_field_samples(self):
         """
         Checks that supplying a ColorField with the samples kwarg works,

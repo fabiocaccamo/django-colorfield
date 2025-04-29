@@ -57,6 +57,10 @@ class ColorField(CharField):
                 "you can set only one of the two for a ColorField instance."
             )
 
+        # change choices to lower case (case-insensitive workaround)
+        if self.choices:
+            self.choices = [(k.lower(), *v) for (k, *v) in self.choices]
+
     def formfield(self, **kwargs):
         palette = []
         if self.choices:
@@ -87,6 +91,12 @@ class ColorField(CharField):
         kwargs["samples"] = self.samples
         kwargs["image_field"] = self.image_field
         return name, path, args, kwargs
+
+    def validate(self, value, *args, **kwargs):
+        """
+        Override validation logic to make it case-insensitive.
+        """
+        super().validate(value.lower() if value else value, *args, **kwargs)
 
     def _get_image_field_color(self, instance):
         color = ""
