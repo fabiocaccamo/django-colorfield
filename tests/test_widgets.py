@@ -1,7 +1,6 @@
 import json
 
 from django.test import TestCase
-from django.utils.html import escape
 
 from colorfield.widgets import ColorWidget
 from tests.models import COLOR_PALETTE
@@ -13,15 +12,8 @@ CHOICES = [choice[0] for choice in COLOR_PALETTE]
 class ColorWidgetTestCase(TestCase):
     def test_basic(self):
         widget = ColorWidget(attrs={"id": "id_color"})
-        text = widget.render("color", "#FFFFFF")
-        self.assertIn('<input type="text"', text)
-        self.assertIn('id="id_color"', text)
-        self.assertIn('class="colorfield_field coloris id_color form-control"', text)
-        self.assertIn('name="color"', text)
-        self.assertIn('value="#FFFFFF"', text)
-        self.assertIn('placeholder="#FFFFFF"', text)
 
-        data_coloris = {
+        expected = {
             "format": "hex",
             "required": False,
             "clearButton": True,
@@ -30,15 +22,26 @@ class ColorWidgetTestCase(TestCase):
             "swatches": [],
             "swatchesOnly": False,
         }
-        self.assertIn(f'data-coloris="{escape(json.dumps(data_coloris))}"', text)
+
+        context = widget.get_context("color", "#FFFFFF")
+        self.assertIn("data_coloris_id", context)
+        self.assertIsNotNone(context["data_coloris_id"])
+        self.assertIn("data_coloris_options", context)
+        self.assertDictEqual(context["data_coloris_options"], expected)
+
+        text = widget.render("color", "#FFFFFF")
+        self.assertIn('<input type="text"', text)
+        self.assertIn('id="id_color"', text)
+        self.assertIn('class="colorfield_field coloris id_color form-control"', text)
+        self.assertIn('name="color"', text)
+        self.assertIn('value="#FFFFFF"', text)
+        self.assertIn('placeholder="#FFFFFF"', text)
+        self.assertIn(json.dumps(expected), text)
 
     def test_init_attrs(self):
         widget = ColorWidget(attrs={"swatches": CHOICES})
-        text = widget.render("color", None)
-        self.assertIn('name="color"', text)
-        self.assertIn('value=""', text)
 
-        data_coloris = {
+        expected = {
             "format": "hex",
             "required": False,
             "clearButton": True,
@@ -47,17 +50,22 @@ class ColorWidgetTestCase(TestCase):
             "swatches": ["#FFFFFF", "#000000"],
             "swatchesOnly": False,
         }
-        self.assertIn(f'data-coloris="{escape(json.dumps(data_coloris))}"', text)
+
+        context = widget.get_context("color", None)
+        self.assertIn("data_coloris_id", context)
+        self.assertIsNotNone(context["data_coloris_id"])
+        self.assertIn("data_coloris_options", context)
+        self.assertDictEqual(context["data_coloris_options"], expected)
+
+        text = widget.render("color", None)
+        self.assertIn('name="color"', text)
+        self.assertIn('value=""', text)
+        self.assertIn(json.dumps(expected), text)
 
     def test_render_attrs(self):
         widget = ColorWidget()
-        text = widget.render(
-            "color",
-            None,
-            attrs={"format": "rgb", "swatches_only": True},
-        )
 
-        data_coloris = {
+        expected = {
             "format": "rgb",
             "required": False,
             "clearButton": True,
@@ -66,4 +74,13 @@ class ColorWidgetTestCase(TestCase):
             "swatches": [],
             "swatchesOnly": False,
         }
-        self.assertIn(f'data-coloris="{escape(json.dumps(data_coloris))}"', text)
+
+        attrs = {"format": "rgb", "swatches_only": True}
+        context = widget.get_context("color", None, attrs=attrs)
+        self.assertIn("data_coloris_id", context)
+        self.assertIsNotNone(context["data_coloris_id"])
+        self.assertIn("data_coloris_options", context)
+        self.assertDictEqual(context["data_coloris_options"], expected)
+
+        text = widget.render("color", None, attrs=attrs)
+        self.assertIn(json.dumps(expected), text)

@@ -1,8 +1,7 @@
-import json
-
 from django.conf import settings
 from django.forms import TextInput
 from django.template.loader import render_to_string
+from django.utils.crypto import get_random_string
 
 
 class ColorWidget(TextInput):
@@ -31,19 +30,22 @@ class ColorWidget(TextInput):
                 "widget": self,
                 "name": name,
                 "value": value,
+                # ensure that there is an id
+                "data_coloris_id": "coloris-"
+                + context.get("id", get_random_string(length=32)),
+                # data-coloris options
+                "data_coloris_options": {
+                    "format": context.get("format", "hex"),
+                    "required": context.get("required", False),
+                    "clearButton": not bool(context.get("required")),
+                    "alpha": bool(context.get("alpha")),
+                    "forceAlpha": bool(context.get("alpha")),
+                    "swatches": context.get("swatches", []),
+                    "swatchesOnly": bool(context.get("swatches", []))
+                    and bool(context.get("swatches_only")),
+                },
             }
         )
-        coloris = {
-            "format": context.get("format", "hex"),
-            "required": context.get("required", False),
-            "clearButton": not bool(context.get("required")),
-            "alpha": bool(context.get("alpha")),
-            "forceAlpha": bool(context.get("alpha")),
-            "swatches": context.get("swatches", []),
-            "swatchesOnly": bool(context.get("swatches", []))
-            and bool(context.get("swatches_only")),
-        }
-        context.update({"data_coloris": json.dumps(coloris)})
         return context
 
     def render(self, name, value, attrs=None, renderer=None):
