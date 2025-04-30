@@ -1,4 +1,7 @@
+import json
+
 from django.test import TestCase
+from django.utils.html import escape
 
 from colorfield.widgets import ColorWidget
 from tests.models import COLOR_PALETTE
@@ -17,36 +20,34 @@ class ColorWidgetTestCase(TestCase):
         self.assertIn('name="color"', text)
         self.assertIn('value="#FFFFFF"', text)
         self.assertIn('placeholder="#FFFFFF"', text)
-        self.assertIn(
-            'data-coloris="{'
-            "&#x27;format&#x27;: &#x27;hex&#x27;, "
-            "&#x27;required&#x27;: False, "
-            "&#x27;clearButton&#x27;: True, "
-            "&#x27;alpha&#x27;: False, "
-            "&#x27;forceAlpha&#x27;: False, "
-            "&#x27;swatches&#x27;: [], "
-            "&#x27;swatchesOnly&#x27;: False"
-            '}"',
-            text,
-        )
+
+        data_coloris = {
+            "format": "hex",
+            "required": False,
+            "clearButton": True,
+            "alpha": False,
+            "forceAlpha": False,
+            "swatches": [],
+            "swatchesOnly": False,
+        }
+        self.assertIn(f'data-coloris="{escape(json.dumps(data_coloris))}"', text)
 
     def test_init_attrs(self):
         widget = ColorWidget(attrs={"swatches": CHOICES})
         text = widget.render("color", None)
         self.assertIn('name="color"', text)
         self.assertIn('value=""', text)
-        self.assertIn(
-            'data-coloris="{'
-            "&#x27;format&#x27;: &#x27;hex&#x27;, "
-            "&#x27;required&#x27;: False, "
-            "&#x27;clearButton&#x27;: True, "
-            "&#x27;alpha&#x27;: False, "
-            "&#x27;forceAlpha&#x27;: False, "
-            "&#x27;swatches&#x27;: [&#x27;#FFFFFF&#x27;, &#x27;#000000&#x27;], "
-            "&#x27;swatchesOnly&#x27;: False"
-            '}"',
-            text,
-        )
+
+        data_coloris = {
+            "format": "hex",
+            "required": False,
+            "clearButton": True,
+            "alpha": False,
+            "forceAlpha": False,
+            "swatches": ["#FFFFFF", "#000000"],
+            "swatchesOnly": False,
+        }
+        self.assertIn(f'data-coloris="{escape(json.dumps(data_coloris))}"', text)
 
     def test_render_attrs(self):
         widget = ColorWidget()
@@ -55,15 +56,14 @@ class ColorWidgetTestCase(TestCase):
             None,
             attrs={"format": "rgb", "swatches_only": True},
         )
-        self.assertIn(
-            'data-coloris="{'
-            "&#x27;format&#x27;: &#x27;rgb&#x27;, "
-            "&#x27;required&#x27;: False, "
-            "&#x27;clearButton&#x27;: True, "
-            "&#x27;alpha&#x27;: False, "
-            "&#x27;forceAlpha&#x27;: False, "
-            "&#x27;swatches&#x27;: [], "
-            "&#x27;swatchesOnly&#x27;: False"
-            '}"',
-            text,
-        )
+
+        data_coloris = {
+            "format": "rgb",
+            "required": False,
+            "clearButton": True,
+            "alpha": False,
+            "forceAlpha": False,
+            "swatches": [],
+            "swatchesOnly": False,
+        }
+        self.assertIn(f'data-coloris="{escape(json.dumps(data_coloris))}"', text)
