@@ -36,7 +36,7 @@ def get_image_file_background_color(img_file, img_format: str):
     return color
 
 
-def get_random_string(length=32):
+def get_random_string():
     return dj_get_random_string(
         length=32, allowed_chars=string.ascii_lowercase + string.digits
     )
