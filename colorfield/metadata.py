@@ -4,4 +4,4 @@ __description__ = "color field for django models with a nice color-picker in the
 __email__ = "jared@jaredforsyth.com, fabio.caccamo@gmail.com"
 __license__ = "MIT"
 __title__ = "django-colorfield"
-__version__ = "0.13.0"
+__version__ = "0.14.0"

@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.14.0](https://github.com/fabiocaccamo/django-colorfield/releases/tag/0.14.0) - 2025-04-30
+-   Replace `jscolor` with `coloris`. #168 (by [@obdulia-losantos](https://github.com/obdulia-losantos) in #223)
+-   Bump `pre-commit` hooks.
+
 ## [0.13.0](https://github.com/fabiocaccamo/django-colorfield/releases/tag/0.13.0) - 2025-04-03
 -   Add `Django 5.2` support.
 -   Bump `pre-commit` hooks.
