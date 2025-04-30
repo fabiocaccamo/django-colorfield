@@ -1,4 +1,9 @@
+import contextlib
+import string
+
 from PIL import Image, UnidentifiedImageError
+
+from django.utils.crypto import get_random_string as dj_get_random_string
 
 
 def get_image_background_color(img, img_format: str):
@@ -25,9 +30,13 @@ def get_image_background_color(img, img_format: str):
 
 def get_image_file_background_color(img_file, img_format: str):
     color = ""
-    try:
+    with contextlib.suppress(UnidentifiedImageError):
         with Image.open(img_file) as image:
             color = get_image_background_color(image, img_format)
-    except UnidentifiedImageError:
-        pass
     return color
+
+
+def get_random_string():
+    return dj_get_random_string(
+        length=32, allowed_chars=string.ascii_lowercase + string.digits
+    )
