@@ -1,7 +1,8 @@
 from django.conf import settings
 from django.forms import TextInput
 from django.template.loader import render_to_string
-from django.utils.crypto import get_random_string
+
+from colorfield.utils import get_random_string
 
 
 class ColorWidget(TextInput):
@@ -31,8 +32,7 @@ class ColorWidget(TextInput):
                 "name": name,
                 "value": value,
                 # ensure that there is an id
-                "data_coloris_id": "coloris-"
-                + context.get("id", get_random_string(length=32)),
+                "data_coloris_id": "coloris-" + context.get("id", get_random_string()),
                 # data-coloris options
                 "data_coloris_options": {
                     "format": context.get("format", "hex"),

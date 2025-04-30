@@ -36,6 +36,8 @@ class ColorWidgetTestCase(TestCase):
         self.assertIn('name="color"', text)
         self.assertIn('value="#FFFFFF"', text)
         self.assertIn('placeholder="#FFFFFF"', text)
+        self.assertIn('data-coloris=""', text)
+        self.assertIn('data-coloris-options-json-script-id="coloris-id_color"', text)
         self.assertIn(json.dumps(expected), text)
 
     def test_init_attrs(self):
@@ -47,7 +49,7 @@ class ColorWidgetTestCase(TestCase):
             "clearButton": True,
             "alpha": False,
             "forceAlpha": False,
-            "swatches": ["#FFFFFF", "#000000"],
+            "swatches": CHOICES,
             "swatchesOnly": False,
         }
 
@@ -60,6 +62,8 @@ class ColorWidgetTestCase(TestCase):
         text = widget.render("color", None)
         self.assertIn('name="color"', text)
         self.assertIn('value=""', text)
+        self.assertIn('data-coloris=""', text)
+        self.assertIn('data-coloris-options-json-script-id="coloris-', text)
         self.assertIn(json.dumps(expected), text)
 
     def test_render_attrs(self):
@@ -83,4 +87,6 @@ class ColorWidgetTestCase(TestCase):
         self.assertDictEqual(context["data_coloris_options"], expected)
 
         text = widget.render("color", None, attrs=attrs)
+        self.assertIn('data-coloris=""', text)
+        self.assertIn('data-coloris-options-json-script-id="coloris-', text)
         self.assertIn(json.dumps(expected), text)
