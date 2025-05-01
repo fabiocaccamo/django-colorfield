@@ -1,0 +1,36 @@
+# Django ColorField.
+# Copyright (c) 2013-present Jared Forsyth / Fabio Caccamo
+# This file is distributed under the same license as the PACKAGE package.
+# Obdulia Losantos <obdulia.losantos@ehealth.org.ng>, 2025.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: django-colorfield\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-05-01 11:24+0200\n"
+"PO-Revision-Date: 2025-05-01 11:24+0200\n"
+"Last-Translator: Obdulia Losantos <obdulia.losantos@ehealth.org.ng>\n"
+"Language-Team: Spanish <ES@li.org>\n"
+"Language: Spanish \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: colorfield/validators.py:9
+msgid "Enter a valid hex color, eg. #000000"
+msgstr "Introduzca un color en hexadecimal válido, ej. #000000"
+
+#: colorfield/validators.py:17
+msgid "Enter a valid hexa color, eg. #00000000"
+msgstr ""
+"Introduzca un color en hexadecimal con transparencia válido, ej. #00000000"
+
+#: colorfield/validators.py:39
+msgid "Enter a valid rgb color, eg. rgb(128, 128, 128)"
+msgstr "Introduzca un color en RGB válido, ej. rgb(128, 128, 128)"
+
+#: colorfield/validators.py:64
+msgid "Enter a valid rgba color, eg. rgba(128, 128, 128, 0.5)"
+msgstr "Introduzca un color en RGB con transparencia válido, ej. rgba(128, 128, 128, 0.5)"
