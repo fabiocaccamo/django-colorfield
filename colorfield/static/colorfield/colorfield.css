@@ -1,0 +1,24 @@
+.clr-field button {
+  right: auto;
+}
+
+.clr-field input {
+  padding-left: 36px;
+}
+
+div.readonly .clr-field-ro {
+  margin-top: -8px;
+}
+
+.clr-field-ro-box {
+  display: inline-block;
+  height: 27px;
+  width: 27px;
+  margin-right: 0.4rem;
+}
+
+.clr-field-ro-content {
+  display: inline-block;
+  margin-top: 6px;
+  vertical-align: top;
+}

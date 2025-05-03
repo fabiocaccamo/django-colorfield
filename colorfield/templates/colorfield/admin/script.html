@@ -1,0 +1,4 @@
+{% load static %}
+
+<script src="{% static 'colorfield/admin.js' %}"></script>
+{{ colorfield_list_of_fields|json_script:"colorfield-list-of-fields" }}
