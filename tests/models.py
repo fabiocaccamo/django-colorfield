@@ -94,3 +94,20 @@ class ColorImageFieldRGBFormat(models.Model):
 
     class Meta:
         app_label = "tests"
+
+
+class ColorFieldHSLFormat(models.Model):
+    color_hsl = ColorField(format="hsl")
+    color_hsla = ColorField(format="hsla")
+
+    class Meta:
+        app_label = "tests"
+
+
+class ColorImageFieldHSLFormat(models.Model):
+    image = models.ImageField(blank=True, upload_to="temp")
+    color_hsl = ColorField(image_field="image", format="hsl")
+    color_hsla = ColorField(image_field="image", format="hsla")
+
+    class Meta:
+        app_label = "tests"
