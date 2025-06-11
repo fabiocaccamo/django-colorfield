@@ -5,7 +5,7 @@ from colorfield.fields import ColorField
 
 class ColorAdminMixin:
     class Media:
-        js = ("colorfield/admin.js",)
+        js = ("colorfield/colorfield-changelist-readonly.js",)
 
     def _get_color_fields(self):
         return tuple(
