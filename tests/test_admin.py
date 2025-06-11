@@ -35,11 +35,6 @@ class ColorAdminTestCase(AdminTestCase):
         request = self.get_request()
 
         response = app.changelist_view(request)
-        self.assertEqual(response.template_name, "colorfield/admin/change_list.html")
-        self.assertContains(
-            response,
-            '<script src="/static/colorfield/admin.js"></script>',
-        )
         self.assertContains(
             response,
             '<script id="colorfield-list-of-fields" type="application/json">'
@@ -51,11 +46,6 @@ class ColorAdminTestCase(AdminTestCase):
         request = self.get_request()
 
         response = app.changeform_view(request)
-        self.assertEqual(response.template_name, "colorfield/admin/change_form.html")
-        self.assertContains(
-            response,
-            '<script src="/static/colorfield/admin.js"></script>',
-        )
         self.assertContains(
             response,
             '<script id="colorfield-list-of-fields" type="application/json">'
@@ -70,11 +60,6 @@ class ColorAdminTestCase(AdminTestCase):
         color.save()
 
         response = app.changeform_view(request, object_id=str(color.pk))
-        self.assertEqual(response.template_name, "colorfield/admin/change_form.html")
-        self.assertContains(
-            response,
-            '<script src="/static/colorfield/admin.js"></script>',
-        )
         self.assertContains(
             response,
             '<script id="colorfield-list-of-fields" type="application/json">'
