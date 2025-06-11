@@ -1,28 +1,53 @@
+from django.template import Template, Context
+from django.utils.safestring import mark_safe
 from colorfield.fields import ColorField
 
 
 class ColorAdminMixin:
-    # add_form_template = "colorfield/admin/change_form.html"
-    # change_form_template = "colorfield/admin/change_form.html"
-    change_list_template = "colorfield/admin/change_list.html"
+    class Media:
+        js = ("colorfield/admin.js",)
 
     def _get_color_fields(self):
-        return [
+        return tuple(
             (field.name, field.choices)
             for field in self.model._meta.fields
             if isinstance(field, ColorField)
-        ]
+        )
 
-    def _get_extra_context(self, extra_context):
-        fields = self._get_color_fields()
-        extra_context = extra_context or {}
-        extra_context.update({"colorfield_list_of_fields": fields})
-        return extra_context
+    def _get_color_fields_json_script(self):
+        template = Template("{{ value|json_script:'colorfield-list-of-fields' }}")
+        context = Context({"value": self._get_color_fields()})
+        script = mark_safe(template.render(context))
+        return script
+
+    def _inject_color_fields_json_script(self, response):
+        def inject_script():
+            response.render()
+            script_html = self._get_color_fields_json_script().encode("utf-8")
+            response.content = response.content.replace(
+                b"</head>", script_html + b"</head>"
+            )
+
+        if hasattr(response, "add_post_render_callback"):
+            response.add_post_render_callback(lambda r: inject_script())
+        else:
+            inject_script()
+
+        return response
+
+    # # TODO: verify if it's needed
+    # def add_view(self, request, form_url="", extra_context=None):
+    #     response = super().add_view(request, form_url, extra_context)
+    #     response = self._inject_color_fields_json_script(response)
+    #     return response
+
+    # # TODO: verify if it's needed
+    # def change_view(self, request, object_id, form_url="", extra_context=None):
+    #     response = super().change_view(request, object_id, form_url, extra_context)
+    #     response = self._inject_color_fields_json_script(response)
+    #     return response
 
     def changelist_view(self, request, extra_context=None):
-        extra_context = self._get_extra_context(extra_context)
-        return super().changelist_view(request, extra_context)
-
-    def changeform_view(self, request, object_id=None, form_url="", extra_context=None):
-        extra_context = self._get_extra_context(extra_context)
-        return super().changeform_view(request, object_id, form_url, extra_context)
+        response = super().changelist_view(request, extra_context=extra_context)
+        response = self._inject_color_fields_json_script(response)
+        return response
