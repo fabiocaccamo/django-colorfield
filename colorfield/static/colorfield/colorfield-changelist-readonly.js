@@ -1,7 +1,5 @@
 window.addEventListener('load', function () {
-
-    function getColor(initialColor, choices = [])
-    {
+    function getColor(initialColor, choices = []) {
         let color = initialColor;
         if (color?.length && choices?.length) {
             // get color value from choices [(value, label)]
@@ -11,8 +9,7 @@ window.addEventListener('load', function () {
         return color?.length > 6 ? color : null;
     }
 
-    function renderColorPreview(element, choices = [])
-    {
+    function renderColorPreview(element, choices = []) {
         // change only elements with text content only
         if (element.children.length > 0) {
             return;
@@ -41,7 +38,7 @@ window.addEventListener('load', function () {
     }
 
     const script = document.querySelector("script[id='colorfield-list-of-fields']");
-    const fields = JSON.parse(script.textContent);
+    const fields = JSON.parse(script?.textContent ?? '[]');
 
     for (const value of fields) {
         const [field, choices] = Array.isArray(value) ? value : [value];
