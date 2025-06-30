@@ -60,10 +60,16 @@ class ColorAdmin(ColorAdminMixin, admin.ModelAdmin):
                     "color_image_hexa",
                     "color_image_rgb",
                     "color_image_rgba",
-                ]
+                ],
             },
         ),
     ]
+
+    @admin.display(description="color default", ordering="color_default")
+    def color_default_ro(self, obj=None):
+        # custom field to be displayed instead of color_default field
+        # return empty value if None
+        return (obj.color_default if obj else None) or self.get_empty_value_display()
 
     def _get_color_fields(self):
         fields = list(super()._get_color_fields() or [])

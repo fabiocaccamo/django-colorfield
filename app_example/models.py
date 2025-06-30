@@ -1,16 +1,15 @@
-from django.contrib import admin
 from django.db import models
 
 from colorfield.fields import ColorField
 
 COLOR_PALETTE = [
-    ("#067BC2", "similar to blue"),
-    ("#84BCDA", "blue like gray"),
-    ("#80E377", "light green"),
-    ("#ECC30B", "yellow but no so much"),
-    ("#F37748", "almost orange"),
-    ("#D56062", "reddish"),
-    ("#FFFFFF", "white"),
+    ("#067bc2", "similar to blue"),
+    ("#84bcda", "blue like gray"),
+    ("#80e377", "light green"),
+    ("#ecc30b", "yellow but no so much"),
+    ("#f37748", "almost orange"),
+    ("#d56062", "reddish"),
+    ("#ffffff", "white"),
     ("#000000", "black"),
 ]
 
@@ -55,11 +54,6 @@ class Color(models.Model):
     def save(self, *args, **kwargs):
         self.color_ro = self.color_default
         super().save(*args, **kwargs)
-
-    @admin.display(description="color default", ordering="color_default")
-    def color_default_ro(self):
-        # custom field to be displayed in admin list instead of color_default field
-        return self.color_default
 
 
 class Palette(models.Model):
