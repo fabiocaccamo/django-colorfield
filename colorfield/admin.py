@@ -22,7 +22,8 @@ class ColorAdminMixin:
 
     def _inject_color_fields_json_script(self, response):
         def inject_script():
-            response.render()
+            if hasattr(response, "is_rendered") and not response.is_rendered:
+                response.render()
             script_html = self._get_color_fields_json_script().encode("utf-8")
             response.content = response.content.replace(
                 b"</head>", script_html + b"</head>"

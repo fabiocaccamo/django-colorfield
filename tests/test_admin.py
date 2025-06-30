@@ -46,20 +46,21 @@ class ColorAdminTestCase(AdminTestCase):
         request = self.get_request()
 
         response = app.changeform_view(request)
-        self.assertContains(
+        self.assertNotContains(
             response,
             '<script id="colorfield-list-of-fields" type="application/json">'
             '[["color", null]]</script>',
         )
         self.assertContains(response, "<h1>Add color</h1>")
 
-    def test_admin_changeform_view_edit(self):
+    def test_admin_change_view_edit(self):
         app = self.get_admin_app()
         request = self.get_request()
-        color = Color(color="#FFFFFF")
+
+        color = Color(color="#ffffff")
         color.save()
 
-        response = app.changeform_view(request, object_id=str(color.pk))
+        response = app.change_view(request, object_id=str(color.pk))
         self.assertContains(
             response,
             '<script id="colorfield-list-of-fields" type="application/json">'
@@ -92,11 +93,14 @@ class ColorChoicesAdminTestCase(AdminTestCase):
             '[["color", [["#ffffff", "white"], ["#000000", "black"]]]]</script>',
         )
 
-    def test_admin_changeform_view(self):
+    def test_admin_change_view(self):
         app = self.get_admin_app()
         request = self.get_request()
 
-        response = app.changeform_view(request)
+        color = ColorChoices(color="#ffffff")
+        color.save()
+
+        response = app.change_view(request, object_id=str(color.pk))
         self.assertContains(
             response,
             '<script id="colorfield-list-of-fields" type="application/json">'
