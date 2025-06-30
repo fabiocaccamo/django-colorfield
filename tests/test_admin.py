@@ -27,8 +27,8 @@ class ColorAdminTestCase(AdminTestCase):
 
     def test_admin_get_color_fields(self):
         app = self.get_admin_app()
-        color_fields = app.get_color_fields(None)
-        self.assertEqual(color_fields, [("color", None)])
+        color_fields = app._get_color_fields()
+        self.assertEqual(color_fields, (("color", None),))
 
     def test_admin_changelist_view(self):
         app = self.get_admin_app()
@@ -75,10 +75,10 @@ class ColorChoicesAdminTestCase(AdminTestCase):
 
     def test_admin_get_color_fields(self):
         app = self.get_admin_app()
-        color_fields = app.get_color_fields(None)
+        color_fields = app._get_color_fields()
         self.assertEqual(
             color_fields,
-            [("color", [("#ffffff", "white"), ("#000000", "black")])],
+            (("color", [("#ffffff", "white"), ("#000000", "black")]),),
         )
 
     def test_admin_changelist_view(self):
