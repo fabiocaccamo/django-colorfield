@@ -65,8 +65,8 @@ class ColorAdmin(ColorAdminMixin, admin.ModelAdmin):
         ),
     ]
 
-    def get_color_fields(self, request, object_id=None):
-        fields = super().get_color_fields(request, object_id) or []
+    def _get_color_fields(self):
+        fields = list(super()._get_color_fields() or [])
         # add custom field in list
         return fields + ["color_default_ro"]
 
