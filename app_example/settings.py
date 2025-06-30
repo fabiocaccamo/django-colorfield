@@ -80,7 +80,7 @@ DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.sqlite3",
         "NAME": BASE_DIR / APP_MODULE / "db.sqlite3",
-    }
+    },
 }
 
 
@@ -116,13 +116,13 @@ LOGGING = {
         "skip_static_requests": {
             "()": "django.utils.log.CallbackFilter",
             "callback": skip_static_requests,
-        }
+        },
     },
     "formatters": {
         "django.server": {
             "()": "django.utils.log.ServerFormatter",
             "format": "[%(server_time)s] %(message)s",
-        }
+        },
     },
     "handlers": {
         "django.server": {
