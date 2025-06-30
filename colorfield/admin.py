@@ -1,5 +1,5 @@
 from django.template import Template, Context
-from django.utils.safestring import mark_safe
+from django.utils.html import format_html
 from colorfield.fields import ColorField
 
 
@@ -17,7 +17,7 @@ class ColorAdminMixin:
     def _get_color_fields_json_script(self):
         template = Template("{{ value|json_script:'colorfield-list-of-fields' }}")
         context = Context({"value": self._get_color_fields()})
-        script = mark_safe(template.render(context))
+        script = format_html(template.render(context))
         return script
 
     def _inject_color_fields_json_script(self, response):
