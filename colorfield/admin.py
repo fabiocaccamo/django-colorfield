@@ -41,11 +41,10 @@ class ColorAdminMixin:
     #     response = self._inject_color_fields_json_script(response)
     #     return response
 
-    # # TODO: verify if it's needed
-    # def change_view(self, request, object_id, form_url="", extra_context=None):
-    #     response = super().change_view(request, object_id, form_url, extra_context)
-    #     response = self._inject_color_fields_json_script(response)
-    #     return response
+    def change_view(self, request, object_id, form_url="", extra_context=None):
+        response = super().change_view(request, object_id, form_url, extra_context)
+        response = self._inject_color_fields_json_script(response)
+        return response
 
     def changelist_view(self, request, extra_context=None):
         response = super().changelist_view(request, extra_context=extra_context)
