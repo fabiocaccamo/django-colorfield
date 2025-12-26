@@ -133,6 +133,25 @@ class MyForm(forms.Form):
 ### Admin
 The admin will kindly provide a simple [color picker](https://coloris.js.org/) for all color fields. :)
 
+The `colorfield.admin.ColorAdminMixin` can be used in the admin model to display a box with the chosen color in the change list or also in the form when the field is not editable.
+
+```python
+from colorfield.admin import ColorAdminMixin
+from colorfield.fields import ColorField
+from django.contrib import admin
+from django.db import models
+
+class MyModel(models.Model):
+    color = ColorField(format="hexa")
+
+@admin.register(MyModel)
+class MyModelAdmin(ColorAdminMixin, admin.ModelAdmin):
+    list_display = ["id", "color"]
+```
+
+![django-colorfield-admin-list](./images/admin-list.png)
+![django-colorfield-admin-form](./images/admin-form.png)
+
 ---
 
 ## Testing
