@@ -4,6 +4,9 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+-   Add `Python 3.14` and `Django 6.0` support.
+
 ## [0.14.0](https://github.com/fabiocaccamo/django-colorfield/releases/tag/0.14.0) - 2025-04-30
 -   Replace `jscolor` with `coloris`. #168 (by [@obdulia-losantos](https://github.com/obdulia-losantos) in #223)
 -   Bump `pre-commit` hooks.
