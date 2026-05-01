@@ -1,2 +1,2 @@
-django >= 2.2
+django >= 6.0.4
 Pillow >= 9.0.0
