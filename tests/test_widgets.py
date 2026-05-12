@@ -30,9 +30,10 @@ class ColorWidgetTestCase(TestCase):
         self.assertDictEqual(context["data_coloris_options"], expected)
 
         text = widget.render("color", "#FFFFFF")
-        self.assertIn('<input type="text"', text)
+        self.assertIn("<input", text)
+        self.assertIn('type="text"', text)
         self.assertIn('id="id_color"', text)
-        self.assertIn('class="colorfield_field coloris id_color form-control"', text)
+        self.assertIn('class="colorfield-field coloris id_color form-control"', text)
         self.assertIn('name="color"', text)
         self.assertIn('value="#FFFFFF"', text)
         self.assertIn('placeholder="#FFFFFF"', text)
