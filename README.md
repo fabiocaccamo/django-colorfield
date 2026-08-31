@@ -42,8 +42,9 @@ Just add color field(s) to your models like this:
 from colorfield.fields import ColorField
 from django.db import models
 
+
 class MyModel(models.Model):
-    color = ColorField(default='#FF0000')
+    color = ColorField(default="#FF0000")
 ```
 
 ### Field Options
@@ -56,6 +57,7 @@ The following formats are supported: `hex` *(default)*, `hexa`, `rgb`, `rgba`.
 ```python
 from colorfield.fields import ColorField
 from django.db import models
+
 
 class MyModel(models.Model):
     color = ColorField(format="hexa")
@@ -70,6 +72,7 @@ The color will be calculated from the **top-left pixel** color of the image each
 ```python
 from colorfield.fields import ColorField
 from django.db import models
+
 
 class MyModel(models.Model):
     image = models.ImageField(upload_to="images")
@@ -88,11 +91,17 @@ This option **is not restrictive** (on the contrary of `choices` option), it is 
 from colorfield.fields import ColorField
 from django.db import models
 
-class MyModel(models.Model):
 
+class MyModel(models.Model):
     COLOR_PALETTE = [
-        ("#FFFFFF", "white", ),
-        ("#000000", "black", ),
+        (
+            "#FFFFFF",
+            "white",
+        ),
+        (
+            "#000000",
+            "black",
+        ),
     ]
 
     # not restrictive, allows the selection of another color from the spectrum.
@@ -112,6 +121,7 @@ When used in a model form, the field automatically validates the color format ba
 ```python
 from django import forms
 
+
 class MyModelForm(forms.ModelForm):
     class Meta:
         model = MyModel
@@ -126,6 +136,7 @@ This is useful when you need a color input outside of a model context.
 ```python
 from django import forms
 from colorfield.forms import ColorField
+
 
 class MyForm(forms.Form):
     color = ColorField(initial="#FF0000", format="hex")
