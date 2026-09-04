@@ -6,50 +6,23 @@ try:
 except ImportError:
     ModuleNotFoundError("Django REST Framework is not installed.")
 
-from colorfield.validators import (
-    color_hex_validator,
-    color_hexa_validator,
-    color_rgb_validator,
-    color_rgba_validator,
-)
+from colorfield.validators import VALIDATORS_PER_FORMAT
 
 
 class ColorField(CharField):
     default_error_messages = {
-        "invalid": [
-            color_hex_validator.message,
-            color_hexa_validator.message,
-            color_rgb_validator.message,
-            color_rgba_validator.message,
-        ]
+        "invalid": [fn.message for fn in VALIDATORS_PER_FORMAT.values()]
     }
 
     def to_internal_value(self, data):
-        errors = {
-            "hex": False,
-            "hexa": False,
-            "rgb": False,
-            "rgba": False,
-        }
-        try:
-            color_hex_validator(data)
-        except DjangoValidationError:
-            errors["hex"] = True
+        errors = {}
 
-        try:
-            color_hexa_validator(data)
-        except DjangoValidationError:
-            errors["hexa"] = True
-
-        try:
-            color_rgb_validator(data)
-        except DjangoValidationError:
-            errors["rgb"] = True
-
-        try:
-            color_rgba_validator(data)
-        except DjangoValidationError:
-            errors["rgba"] = True
+        for key, validator_fn in VALIDATORS_PER_FORMAT.items():
+            try:
+                validator_fn(data)
+                errors[key] = False
+            except DjangoValidationError:
+                errors[key] = True
 
         if all(errors.values()):
             raise DRFValidationError(self.default_error_messages.get("invalid"))
