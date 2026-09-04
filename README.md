@@ -17,8 +17,9 @@
 # django-colorfield
 simple color field for your models with a nice color-picker in the admin-interface.
 
-![django-colorfield-hex](https://user-images.githubusercontent.com/7900305/104512324-51ed0f80-55ee-11eb-9144-de03d922c2ce.png)
-![django-colorfield-hexa](https://user-images.githubusercontent.com/7900305/104512063-ec991e80-55ed-11eb-95b6-9174ac3f4f38.png)
+![django-colorfield-hex](./images/hex.png)
+![django-colorfield-hexa](./images/hexa.png)
+![django-colorfield-choices](./images/choices.png)
 
 ---
 
@@ -82,7 +83,7 @@ It is possible to provide a palette of colors to choose from to the widget using
 
 This option **is not restrictive** (on the contrary of `choices` option), it is also possible to choose another color from the spectrum.
 
-![django-colorfield-samples](https://user-images.githubusercontent.com/7900305/104512178-194d3600-55ee-11eb-8cba-91cca156da06.png)
+![django-colorfield-samples](./images/samples.png)
 
 ```python
 from colorfield.fields import ColorField
