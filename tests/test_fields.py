@@ -2,6 +2,7 @@ import os
 import shutil
 
 from django.conf import settings
+from django.contrib.admindocs.views import get_readable_field_data_type
 from django.core.exceptions import ImproperlyConfigured, ValidationError
 from django.core.files import File
 from django.forms import fields_for_model
@@ -12,10 +13,12 @@ from tests.models import (
     COLOR_PALETTE,
     Color,
     ColorChoices,
+    ColorFieldHSLFormat,
     ColorFieldRGBFormat,
     ColorImageField,
     ColorImageFieldAndDefault,
     ColorImageFieldAndFormat,
+    ColorImageFieldHSLFormat,
     ColorImageFieldRGBFormat,
     ColorInvalidImageField,
     ColorNoImageField,
@@ -207,3 +210,58 @@ class ColorFieldTestCase(TestCase):
         obj_saved = ColorImageFieldRGBFormat.objects.get(pk=obj.pk)
         self.assertEqual(obj_saved.color_rgb, "rgb(8, 45, 32)")
         self.assertEqual(obj_saved.color_rgba, "rgba(8, 45, 32, 1.0)")
+
+    def test_model_hsl_formats(self):
+        obj = ColorFieldHSLFormat(
+            color_hsl="hsl(123, 13%, 23%)",
+            color_hsla="hsla(128, 99%, 55%, 0.55)",
+        )
+        obj.save()
+        # check in-memory values
+        self.assertEqual(obj.color_hsl, "hsl(123, 13%, 23%)")
+        self.assertEqual(obj.color_hsla, "hsla(128, 99%, 55%, 0.55)")
+        # check stored value
+        obj_saved = ColorFieldHSLFormat.objects.get(pk=obj.pk)
+        self.assertEqual(obj_saved.color_hsl, "hsl(123, 13%, 23%)")
+        self.assertEqual(obj_saved.color_hsla, "hsla(128, 99%, 55%, 0.55)")
+
+    def test_model_with_image_hsl_format(self):
+        obj = ColorImageFieldHSLFormat()
+        filename = "django.png"
+        self.save_image_to_field_from_path(obj.image, filename)
+        obj.save()
+        # ensure the image has been saved correctly
+        self.assertTrue(obj.image.path.endswith(filename))
+        # check in-memory value
+        self.assertEqual(obj.color_hsl, "hsl(159, 70%, 10%)")
+        self.assertEqual(obj.color_hsla, "hsla(159, 70%, 10%, 1.0)")
+        # check stored value
+        obj_saved = ColorImageFieldHSLFormat.objects.get(pk=obj.pk)
+        self.assertEqual(obj_saved.color_hsl, "hsl(159, 70%, 10%)")
+        self.assertEqual(obj_saved.color_hsla, "hsla(159, 70%, 10%, 1.0)")
+
+    def test_field_description(self):
+        color_no_format = get_readable_field_data_type(ColorField())
+        self.assertEqual(color_no_format, "Color (hex)")
+
+        color_hex = get_readable_field_data_type(ColorField(format="hex"))
+        self.assertEqual(color_hex, "Color (hex)")
+
+        color_hexa = get_readable_field_data_type(ColorField(format="hexa"))
+        self.assertEqual(color_hexa, "Color (hexa)")
+
+        color_rgb = get_readable_field_data_type(ColorField(format="rgb"))
+        self.assertEqual(color_rgb, "Color (rgb)")
+
+        color_rgba = get_readable_field_data_type(ColorField(format="rgba"))
+        self.assertEqual(color_rgba, "Color (rgba)")
+
+        color_hsl = get_readable_field_data_type(ColorField(format="hsl"))
+        self.assertEqual(color_hsl, "Color (hsl)")
+
+        color_hsla = get_readable_field_data_type(ColorField(format="hsla"))
+        self.assertEqual(color_hsla, "Color (hsla)")
+
+    def test_field_format_unknown(self):
+        with self.assertRaises(ValueError):
+            ColorField(format="what")

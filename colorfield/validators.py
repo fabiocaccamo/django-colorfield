@@ -64,3 +64,60 @@ color_rgba_validator = RegexValidator(
     _("Enter a valid rgba color, eg. rgba(128, 128, 128, 0.5)"),
     "invalid",
 )
+
+COLOR_HSL_RE = re.compile(
+    # prefix and opening parenthesis
+    r"^hsl\("
+    # first number: hue channel
+    r"(\d+\.?\d*)"
+    # comma and optional space
+    r",\s?"
+    # second number: saturation channel, percentage
+    r"(\d+\.?\d*)%"
+    # comma and optional space
+    r",\s?"
+    # third number: lightness channel, percentage
+    r"(\d+\.?\d*)%"
+    # closing parenthesis
+    r"\)$"
+)
+color_hsl_validator = RegexValidator(
+    COLOR_HSL_RE,
+    _("Enter a valid hsl color, eg. hsl(128, 28%, 12%)"),
+    "invalid",
+)
+COLOR_HSLA_RE = re.compile(
+    # prefix and opening parenthesis
+    r"^hsla\("
+    # first number: hue channel
+    r"(\d+\.?\d*)"
+    # comma and optional space
+    r",\s?"
+    # second number: saturation channel, percentage
+    r"(\d+\.?\d*)%"
+    # comma and optional space
+    r",\s?"
+    # third number: lightness channel, percentage
+    r"(\d+\.?\d*)%"
+    # comma and optional space
+    r",\s?"
+    # alpha channel: decimal number between 0 and 1
+    r"(0(\.\d{1,2})?|1(\.0)?)"
+    # closing parenthesis
+    r"\)$"
+)
+color_hsla_validator = RegexValidator(
+    COLOR_HSLA_RE,
+    _("Enter a valid hsla color, eg. hsla(128, 28%, 12%, 0.5)"),
+    "invalid",
+)
+
+
+VALIDATORS_PER_FORMAT = {
+    "hex": color_hex_validator,
+    "hexa": color_hexa_validator,
+    "rgb": color_rgb_validator,
+    "rgba": color_rgba_validator,
+    "hsl": color_hsl_validator,
+    "hsla": color_hsla_validator,
+}
