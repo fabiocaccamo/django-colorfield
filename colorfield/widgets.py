@@ -10,13 +10,13 @@ class ColorWidget(TextInput):
 
     class Media:
         if settings.DEBUG:
-            css = {"all": ["colorfield/coloris/coloris.css"]}
+            css = {"all": ["colorfield/coloris/coloris.css", "colorfield/css/colorfield.css"]}
             js = [
                 "colorfield/coloris/coloris.js",
                 "colorfield/colorfield.js",
             ]
         else:
-            css = {"all": ["colorfield/coloris/coloris.min.css"]}
+            css = {"all": ["colorfield/coloris/coloris.min.css", "colorfield/css/colorfield.css"]}
             js = [
                 "colorfield/coloris/coloris.min.js",
                 "colorfield/colorfield.js",

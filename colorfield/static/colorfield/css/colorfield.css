@@ -1,0 +1,19 @@
+/*
+ * Django's forms.css adds vertical padding to the label that wraps a widget,
+ * and gives text inputs a text cursor. Both push the color field out of line
+ * with the other form controls in the admin.
+ */
+
+/* The swatch sits in the input's background, so a 4px offset shows up as a
+ * visibly taller field next to the labels around it. */
+.colorfield_field.coloris {
+    padding-top: 0;
+    padding-bottom: 0;
+    /* The field opens a picker rather than accepting typing. */
+    cursor: pointer;
+}
+
+/* Keep the swatch readable while the picker is open. */
+.colorfield_field.coloris:focus {
+    outline: none;
+}

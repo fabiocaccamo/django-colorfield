@@ -90,3 +90,25 @@ class ColorWidgetTestCase(TestCase):
         self.assertIn('data-coloris=""', text)
         self.assertIn('data-coloris-options-json-script-id="coloris-', text)
         self.assertIn(json.dumps(expected), text)
+
+
+class ColorWidgetMediaTestCase(TestCase):
+    def test_media_includes_the_alignment_stylesheet(self):
+        # The widget's own rules must load after Coloris so they win on the
+        # input itself, and they must be present in both debug and minified
+        # modes.
+        css = ColorWidget.Media.css["all"]
+        self.assertIn("colorfield/css/colorfield.css", css)
+        self.assertEqual(css[-1], "colorfield/css/colorfield.css")
+
+    def test_alignment_stylesheet_ships_with_the_package(self):
+        from pathlib import Path
+
+        import colorfield
+
+        path = Path(colorfield.__file__).parent / "static" / "colorfield" / "css" / "colorfield.css"
+        self.assertTrue(path.is_file())
+        text = path.read_text(encoding="utf-8")
+        # The reported cause: vertical padding on the field, plus a text cursor.
+        self.assertIn("padding-top: 0", text)
+        self.assertIn("cursor: pointer", text)
