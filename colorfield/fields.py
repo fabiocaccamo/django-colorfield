@@ -88,6 +88,8 @@ class ColorField(CharField):
 
     def deconstruct(self):
         name, path, args, kwargs = super().deconstruct()
+        if self.format != "hex":
+            kwargs["format"] = self.format
         kwargs["samples"] = self.samples
         kwargs["image_field"] = self.image_field
         return name, path, args, kwargs
