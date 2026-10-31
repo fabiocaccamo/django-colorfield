@@ -124,6 +124,17 @@ class ColorFieldTestCase(TestCase):
                 f"to ColorField model instance. Message: {e}"
             )
 
+    def test_clean_hexa_field_rejects_prefixed_values(self):
+        """
+        Checks that the hexa validator only accepts values starting with '#'.
+        """
+        field = ColorField(format="hexa")
+        self.assertEqual(field.clean("#12345678", None), "#12345678")
+        self.assertEqual(field.clean("#1234", None), "#1234")
+        for value in (" #12345678", "foo#12345678"):
+            with self.assertRaises(ValidationError):
+                field.clean(value, None)
+
     def test_model_with_null(self):
         obj = ColorNull()
         obj.save()

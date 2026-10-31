@@ -11,7 +11,7 @@ color_hex_validator = RegexValidator(
 )
 
 
-COLOR_HEXA_RE = re.compile("#([A-Fa-f0-9]{8}|[A-Fa-f0-9]{4})$")
+COLOR_HEXA_RE = re.compile("^#([A-Fa-f0-9]{8}|[A-Fa-f0-9]{4})$")
 color_hexa_validator = RegexValidator(
     COLOR_HEXA_RE,
     _("Enter a valid hexa color, eg. #00000000"),
