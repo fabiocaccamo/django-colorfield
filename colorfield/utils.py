@@ -1,3 +1,4 @@
+import colorsys
 import contextlib
 import string
 
@@ -7,13 +8,15 @@ from django.utils.crypto import get_random_string as dj_get_random_string
 
 
 def get_image_background_color(img, img_format: str):
-    has_alpha = img_format in {"hexa", "rgba"}
+    has_alpha = img_format in {"hexa", "rgba", "hsla"}
     img = img.convert("RGBA" if has_alpha else "RGB")
     pixel_color = img.getpixel((1, 1))
+
     if img_format in {"hex", "hexa"}:
         color_format = "#" + "%02x" * len(pixel_color)
         color = color_format % pixel_color
         color = color.upper()
+
     elif img_format in {"rgb", "rgba"}:
         if has_alpha:
             # Normalize alpha channel to be between 0 and 1
@@ -23,8 +26,25 @@ def get_image_background_color(img, img_format: str):
             )
         # Should look like `rgb(1, 2, 3) or rgba(1, 2, 3, 1.0)
         color = f"{img_format}{pixel_color}"
+
+    elif img_format in {"hsl", "hsla"}:
+        rgb = [x / 255.0 for x in pixel_color[:3]]
+        hue, lightness, saturation = colorsys.rgb_to_hls(*rgb)
+        hsl = (
+            round(hue * 360.0),
+            round(saturation * 100.0),
+            round(lightness * 100.0),
+        )
+
+        color = f"{img_format}({hsl[0]}, {hsl[1]}%, {hsl[2]}%"
+        if has_alpha:
+            alpha = round(pixel_color[3] / 255, 2) if has_alpha else None
+            color += f", {alpha}"
+        color += ")"
+
     else:  # pragma: no cover
         raise NotImplementedError(f"Unsupported color format: {img_format}")
+
     return color
 
 

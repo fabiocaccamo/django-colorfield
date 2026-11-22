@@ -18,6 +18,10 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
+#: colorfield/fields.py:59
+msgid "Color (%(format)s)"
+msgstr ""
+
 #: colorfield/validators.py:9
 msgid "Enter a valid hex color, eg. #000000"
 msgstr ""
@@ -32,4 +36,12 @@ msgstr ""
 
 #: colorfield/validators.py:64
 msgid "Enter a valid rgba color, eg. rgba(128, 128, 128, 0.5)"
+msgstr ""
+
+#: colorfield/validators.py:86
+msgid "Enter a valid hsl color, eg. hsl(128, 28%, 12%)"
+msgstr ""
+
+#: colorfield/validators.py:111
+msgid "Enter a valid hsla color, eg. hsla(128, 28%, 12%, 0.5)"
 msgstr ""

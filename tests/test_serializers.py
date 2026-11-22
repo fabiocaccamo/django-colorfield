@@ -69,6 +69,48 @@ class ColorFieldTestCase(TestCase):
             "rgba(128, 12, 35, 1, 1, 2)",
         ]
 
+        self.valid_hsl_colors = [
+            "hsl(5, 3%, 6%)",
+            "hsl(5,3%,6%)",
+            "hsl(50, 30%, 28%)",
+            "hsl(45,10%, 99%)",
+            "hsl(128, 28%, 28%)",
+            "hsl(128, 28%, 28%)",
+            "hsl(128, 28%, 28%)",
+            "hsl(156,20%,50%)",
+        ]
+        self.invalid_hsl_colors = [
+            "hsl(10)",
+            "hsl(50, 100%)",
+            "hsl(120,199%)",
+            "hsl(1, 2, 3%)",
+            "hsl(128,255%,127)",
+        ]
+
+        self.valid_hsla_colors = [
+            "hsla(5, 3%, 6%, 1)",
+            "hsla(5,3%,6%,1)",
+            "hsla(50, 30%, 28%, 0.5)",
+            "hsla(45,10%, 99%, 0.6)",
+            "hsla(128, 28%, 28%, 0.3)",
+            "hsla(128, 28%, 28%, 0.34)",
+            "hsla(128, 28%, 28%, 1.0)",
+            "hsla(156,20%,50%,0)",
+        ]
+        self.invalid_hsla_colors = [
+            "hsla(10)",
+            "hsla(50, 100%)",
+            "hsla(120,199%)",
+            "hsla(1, 2%, 3%)",
+            "hsla(128,255%,127%)",
+            "hsla(128,255%,127%,A)",
+            "hsla(128, 255%, 127%, A)",
+            "hsla(128, 255%, 127%, 1.5)",
+            "hsla(128, 255%, 127%, 0.6777777)",
+            "hsla(128, 12, 35%, 1%, 1)",
+            "hsla(128, 12, 35%, 1%, 1, 2)",
+        ]
+
     def test_valid_serializer(self):
         data = {"color": self.valid_hex_full_color}
         serializer = SerializerWithColor(data=data)
@@ -94,6 +136,18 @@ class ColorFieldTestCase(TestCase):
 
         for value in self.valid_rgba_colors:
             with self.subTest(f"RGBA={value}"):
+                data = {"color": value}
+                serializer = SerializerWithColor(data=data)
+                self.assertTrue(serializer.is_valid())
+
+        for value in self.valid_hsl_colors:
+            with self.subTest(f"HSL={value}"):
+                data = {"color": value}
+                serializer = SerializerWithColor(data=data)
+                self.assertTrue(serializer.is_valid())
+
+        for value in self.valid_hsla_colors:
+            with self.subTest(f"HSLA={value}"):
                 data = {"color": value}
                 serializer = SerializerWithColor(data=data)
                 self.assertTrue(serializer.is_valid())
@@ -157,6 +211,22 @@ class ColorFieldTestCase(TestCase):
 
         for value in self.invalid_rgba_colors:
             with self.subTest(f"RGBA={value}"):
+                data = {"color": value}
+                serializer = SerializerWithColor(data=data)
+                self.assertFalse(serializer.is_valid())
+                with self.assertRaises(DRFValidationError):
+                    serializer.is_valid(raise_exception=True)
+
+        for value in self.invalid_hsl_colors:
+            with self.subTest(f"HSL={value}"):
+                data = {"color": value}
+                serializer = SerializerWithColor(data=data)
+                self.assertFalse(serializer.is_valid())
+                with self.assertRaises(DRFValidationError):
+                    serializer.is_valid(raise_exception=True)
+
+        for value in self.invalid_hsla_colors:
+            with self.subTest(f"HSLA={value}"):
                 data = {"color": value}
                 serializer = SerializerWithColor(data=data)
                 self.assertFalse(serializer.is_valid())

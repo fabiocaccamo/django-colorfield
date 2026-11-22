@@ -1,28 +1,21 @@
 from django.core.exceptions import FieldDoesNotExist, ImproperlyConfigured
 from django.db.models import CharField, signals
 from django.db.models.fields.files import ImageField
+from django.utils.translation import gettext_lazy as _
 
 from colorfield.utils import get_image_file_background_color
-from colorfield.validators import (
-    color_hex_validator,
-    color_hexa_validator,
-    color_rgb_validator,
-    color_rgba_validator,
-)
+from colorfield.validators import VALIDATORS_PER_FORMAT
 from colorfield.widgets import ColorWidget
 
-VALIDATORS_PER_FORMAT = {
-    "hex": color_hex_validator,
-    "hexa": color_hexa_validator,
-    "rgb": color_rgb_validator,
-    "rgba": color_rgba_validator,
-}
+FORMATS = ["hex", "hexa", "rgb", "rgba", "hsl", "hsla"]
 
 DEFAULT_PER_FORMAT = {
     "hex": "#FFFFFF",
     "hexa": "#FFFFFFFF",
     "rgb": "rgb(255, 255, 255)",
     "rgba": "rgba(255, 255, 255, 1)",
+    "hsl": "hsl(0, 0%, 100%)",
+    "hsla": "hsla(0, 0%, 100%, 1)",
 }
 
 
@@ -33,7 +26,7 @@ class ColorField(CharField):
         # works like Django choices, but does not restrict input to the given choices
         self.samples = kwargs.pop("samples", None)
         self.format = kwargs.pop("format", "hex").lower()
-        if self.format not in ["hex", "hexa", "rgb", "rgba"]:
+        if self.format not in FORMATS:
             raise ValueError(f"Unsupported color format: {self.format}")
         self.default_validators = [VALIDATORS_PER_FORMAT[self.format]]
 
@@ -60,6 +53,10 @@ class ColorField(CharField):
         # change choices to lower case (case-insensitive workaround)
         if self.choices:
             self.choices = [(k.lower(), *v) for (k, *v) in self.choices]
+
+    @property
+    def description(self):
+        return _("Color (%(format)s)")
 
     def formfield(self, **kwargs):
         palette = []
